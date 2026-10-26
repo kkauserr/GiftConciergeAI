@@ -1,0 +1,21 @@
+# Large datasets
+*.jsonl
+*.jsonl.gz
+*.gz
+
+# Logs
+*.log
+logs/
+
+# SLURM output
+slurm-*.out
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS/editor files
+.DS_Store
+.vscode/
