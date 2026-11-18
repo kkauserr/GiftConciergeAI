@@ -29,3 +29,12 @@ venv/
 *.slurm
 *_*.out
 *_*.err
+
+# Secrets (LLM provider keys)
+.env
+
+# Embeddings / vector index artifacts (built from the corpus; never commit)
+DATA/embeddings/
+*.faiss
+*.npy
+*.npz

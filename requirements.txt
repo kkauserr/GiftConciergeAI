@@ -1,0 +1,11 @@
+# Semantic retrieval + LLM/conversation layer (CODE/retrieval, CODE/llm)
+numpy>=2.0
+faiss-cpu>=1.9
+sentence-transformers>=3.0
+torch>=2.4
+openai>=1.55
+pydantic>=2.7
+python-dotenv>=1.0
+
+# Tests
+pytest>=8.0
