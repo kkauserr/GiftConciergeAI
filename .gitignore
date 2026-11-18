@@ -19,3 +19,13 @@ venv/
 # OS/editor files
 .DS_Store
 .vscode/
+
+# Allow small development samples in GitHub
+!DATA/samples/
+!DATA/samples/*.jsonl
+
+
+# SLURM job files and logs
+*.slurm
+*_*.out
+*_*.err

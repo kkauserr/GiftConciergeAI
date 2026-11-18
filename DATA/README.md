@@ -4,9 +4,9 @@
 
 Gift Concierge uses product metadata and customer review data from the Amazon Reviews 2023 dataset released by McAuley Lab.
 
-The dataset is used to support product retrieval, semantic search, ranking, knowledge-graph construction, and evidence-grounded gift recommendations.
+The dataset supports lexical retrieval, semantic retrieval, constraint filtering, ranking, knowledge-graph construction, and evidence-grounded gift recommendations.
 
-Because the complete raw and processed datasets are large, they are not stored directly in this GitHub repository. Instead, this repository contains the preprocessing code required to construct the processed corpus from the original public dataset.
+Because the complete raw and processed datasets are large, they are not stored in this GitHub repository. The repository instead contains the preprocessing code, schema documentation, and a small development sample.
 
 ---
 
@@ -15,180 +15,238 @@ Because the complete raw and processed datasets are large, they are not stored d
 **Dataset:** Amazon Reviews 2023  
 **Source:** McAuley Lab
 
-The original dataset contains product metadata and customer reviews across multiple Amazon product domains.
+Nine candidate Amazon product domains were initially evaluated for field completeness and suitability for the recommendation pipeline.
 
-For Gift Concierge, nine candidate product domains were initially evaluated for data quality and suitability for gift recommendation. The final three domains were selected based on the availability of the fields required by the recommendation system:
+The final three domains were selected based on usable metadata coverage:
 
 - Books
 - Handmade Products
 - Toys & Games
 
-These categories provide strong coverage of price, rating, and descriptive product information while also representing diverse gift types.
+These domains also provide a diverse mix of interest-based, personalized, recreational, and family-oriented gift products.
 
 ---
 
-## Dataset Statistics
-
-### Product Metadata
+## V2 Product Metadata Statistics
 
 | Domain | Raw Products | Retained Products | Retention |
 |---|---:|---:|---:|
-| Books | 4,448,181 | 3,526,180 | 79.27% |
+| Books | 4,448,181 | 3,266,409 | 73.43% |
 | Handmade Products | 164,817 | 94,173 | 57.14% |
 | Toys & Games | 890,874 | 416,179 | 46.72% |
-| **Total** | **5,503,872** | **4,036,532** | **73.34%** |
+| **Total** | **5,503,872** | **3,776,761** | **68.62%** |
 
-The final processed product corpus contains **4,036,532 products**.
+The v2 preprocessing pipeline applies stricter numeric price validation than v1 and retains only products suitable for downstream constraint-aware retrieval.
 
-### Review Data
+---
 
-Reviews from the same three Amazon domains were processed and joined with the retained products.
+## Review Statistics
 
-- Raw reviews processed: **46,404,096**
-- Products in final corpus: **4,036,532**
-- Products with review evidence: **4,034,775**
-- Products without review evidence: **1,757**
+Reviews from the same three Amazon domains are joined to retained products using `parent_asin`.
+
+| Domain | Reviews Processed | Products with Review Evidence |
+|---|---:|---:|
+| Books | 29,475,453 | 3,264,872 |
+| Handmade Products | 664,162 | 94,124 |
+| Toys & Games | 16,264,812 | 416,078 |
+| **Total** | **46,404,427** | **3,775,074** |
+
+Final review coverage:
+
+- Final products: **3,776,761**
+- Products with review evidence: **3,775,074**
+- Products without review evidence: **1,687**
 - Review coverage: **99.96%**
 
 ---
 
 ## Product Preprocessing
 
-Raw product metadata is filtered to retain products containing the fields necessary for retrieval and recommendation.
+The v2 pipeline validates and standardizes product metadata before retrieval.
 
-A product must contain:
+Core validation includes:
 
-- `parent_asin`
-- `title`
-- `price`
-- `average_rating`
-- at least one descriptive field: `features` or `description`
+- valid `parent_asin`
+- non-empty title
+- positive numeric price
+- available product rating
+- usable descriptive content
 
-Additional descriptive information is retained when available.
+The preprocessing pipeline additionally extracts or normalizes:
 
-The searchable `product_text` representation is constructed by combining:
+- numeric price
+- store information
+- brand or author
+- broad and specific categories
+- recommended age information when available
+- product features
+- descriptions
+- selected useful product details
+
+Products are not filtered using a minimum `rating_number` threshold during preprocessing. Such thresholds can instead be applied during retrieval or ranking experiments.
+
+---
+
+## Retrieval Representations
+
+V2 maintains separate textual representations for lexical and semantic retrieval.
+
+### `bm25_text`
+
+A richer representation containing:
 
 - title
 - features
 - description
 - categories
-- product details
+- filtered product details
 
-This provides a unified textual representation that can be used by lexical and semantic retrieval methods.
+This field is intended for lexical/BM25 retrieval.
+
+### `embed_text`
+
+A more concise semantic representation emphasizing:
+
+- title
+- specific category
+- category hierarchy
+- brand or author
+- recommended age when available
+- selected product features
+
+This field is intended for embedding generation and vector retrieval.
+
+Keeping these representations separate allows each retrieval method to use text appropriate to its strengths.
 
 ---
 
 ## Review Processing
 
-Amazon review records are linked to product metadata using `parent_asin`.
+Review records are matched to retained products using `parent_asin`.
 
-Reviews are aggregated at the product level to produce:
+For each retained product, the pipeline aggregates:
 
 - `review_count`
+- `rated_review_count`
 - `average_review_rating`
 - `verified_review_count`
 - `helpful_votes`
-- `review_samples`
+- up to five recent structured review samples
 
-This review evidence can be used by downstream ranking, knowledge-graph, and explanation components of Gift Concierge.
+Each review sample can contain:
+
+- title
+- review text
+- rating
+- helpful votes
+- verified-purchase status
+- timestamp
+
+Review text is cleaned before storage, and the average review rating is calculated only from reviews containing valid ratings.
 
 ---
 
-## Final Corpus Schema
+## Final V2 Corpus
 
-Each record in the final processed corpus contains:
+The metadata and review summaries are joined into:
 
-| Field | Description |
-|---|---|
-| `parent_asin` | Amazon parent product identifier |
-| `domain` | Product domain |
-| `title` | Product title |
-| `price` | Product price |
-| `average_rating` | Metadata average rating |
-| `rating_number` | Number of product ratings |
-| `product_text` | Combined searchable product representation |
-| `review_count` | Number of processed reviews |
-| `average_review_rating` | Average rating calculated from review records |
-| `verified_review_count` | Number of verified-purchase reviews |
-| `helpful_votes` | Total helpful votes across reviews |
-| `review_samples` | Representative review text samples |
+`final_product_corpus_v2.jsonl`
+
+Confirmed final statistics:
+
+- **3,776,761 products**
+- **3,775,074 products with review evidence**
+- **99.96% review coverage**
+- approximately **27 GB**
+
+The complete corpus is maintained on ASU Sol and is intentionally excluded from GitHub.
+
+Detailed field documentation is available in:
+
+`DATA/schema/product_schema.md`
+
+---
+
+## Development Sample
+
+The repository includes:
+
+`DATA/samples/sample_corpus_v2.jsonl`
+
+This contains **900 products**:
+
+- 300 Books
+- 300 Handmade Products
+- 300 Toys & Games
+
+The sample is intended for development and component integration so retrieval, ranking, LLM, and knowledge-graph code can be developed without loading the full corpus.
+
+It is deliberately balanced across the three domains and should not be interpreted as a statistically representative sample of the full corpus.
 
 ---
 
 ## Preprocessing Pipeline
 
-The complete data pipeline follows:
+The v2 data pipeline is:
 
-Amazon Reviews 2023 raw data
+Amazon Reviews 2023 raw metadata
 
-→ Product metadata validation and filtering
+→ metadata validation and normalization
 
-→ Product text construction
+→ BM25 and embedding text construction
 
-→ Review aggregation by `parent_asin`
+→ retained product corpus
 
-→ Metadata and review join
+→ review filtering and aggregation by `parent_asin`
 
-→ Final standardized product corpus
+→ metadata-review join
 
-The preprocessing implementation is located in:
+→ final v2 product corpus
+
+The implementation is located in:
 
 `CODE/data/`
 
-The main scripts are:
+Main scripts:
 
-- `analyze_metadata.py` — evaluates metadata completeness and category feasibility
-- `preprocess_products.py` — filters and standardizes product metadata and constructs `product_text`
-- `process_reviews.py` — aggregates review information by product
-- `build_final_corpus.py` — joins processed metadata with review aggregates and produces the final corpus
+- `analyze_metadata.py` — evaluates category metadata completeness
+- `analyze_prices.py` — analyzes raw price quality and formats
+- `preprocess_products.py` — validates and standardizes product metadata and constructs retrieval representations
+- `process_reviews.py` — aggregates review evidence for retained products
+- `build_final_corpus.py` — joins product metadata with review summaries
+- `create_sample_corpus.py` — creates the balanced development sample
 
 ---
 
-## Reproducing the Dataset
+## Downstream Component Usage
 
-The complete processed corpus is not committed to GitHub because of its size.
+The processed corpus provides a shared interface for the remaining Gift Concierge components.
 
-To reproduce the dataset, obtain the Amazon Reviews 2023 metadata and review files for:
+**Lexical retrieval:** use `bm25_text`.
 
-1. Books
-2. Handmade Products
-3. Toys & Games
+**Semantic retrieval:** use `embed_text`.
 
-Then run the preprocessing scripts in `CODE/data/` in the following order:
+**Hard constraint filtering:** use structured fields such as `price_num`, `age_min`, and `age_max`.
 
-1. `preprocess_products.py`
-2. `process_reviews.py`
-3. `build_final_corpus.py`
+**Ranking:** use retrieval scores together with metadata rating and review statistics.
 
-The scripts transform the original Amazon Reviews 2023 files into the standardized corpus used by Gift Concierge.
+**Knowledge graph and explanation:** use structured product metadata and review evidence.
 
-The resulting dataset is:
-
-`final_product_corpus.jsonl`
-
-Final corpus statistics:
-
-- **4,036,532 products**
-- **4,034,775 products with review evidence**
-- **99.96% review coverage**
-- approximately **15 GB**
-
-The full corpus is maintained on ASU Sol for project development and large-scale retrieval experiments.
+The master corpus retains products that pass data-quality requirements. Query-specific constraints and experimental thresholds should be applied by downstream retrieval and ranking components rather than permanently removing those products during preprocessing.
 
 ---
 
 ## Repository Data Policy
 
-Large raw and processed data files are intentionally excluded from version control.
+Large raw and processed datasets are intentionally excluded from version control.
 
-GitHub is used to store:
+GitHub stores:
 
 - preprocessing code
-- documentation
-- small example/sample data
+- schema documentation
+- small development samples
 - retrieval and ranking code
+- LLM and knowledge-graph components
 - evaluation code and results
 
-Large Amazon source files and the complete processed corpus remain outside the repository.
-
-This separation keeps the repository lightweight while allowing the dataset construction process to remain documented and reproducible.
+The complete Amazon source files and full processed corpus remain on ASU Sol.
