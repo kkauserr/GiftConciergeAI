@@ -1,0 +1,116 @@
+# Classical Baseline, Hybrid Fusion & Ranking (Disha)
+
+This part takes a gift request (as structured constraints), finds candidate products, removes the ones that break hard rules, scores the rest and returns a ranked top-K with a score for every signal.
+
+```
+constraints ──► keyword query ──► BM25 top-200 ─┐
+                                                ├─► RRF fusion ─► filters ─► 4-signal score ─► MMR ─► top-K
+semantic top-200 (from LLM/retrieval part) ─────┘
+```
+
+## Files
+
+| File | What it does |
+|---|---|
+| `CODE/retrieval/bm25_baseline.py` | Builds and searches the BM25 index (and TF-IDF as the simpler reference) over `bm25_text`. Also saves a small product table (`catalog.parquet`) and corpus stats used by ranking. |
+| `CODE/ranking/filters.py` | Hard constraints: budget (min/max), recipient age vs `age_min`/`age_max`, exclusions. |
+| `CODE/ranking/fusion.py` | Reciprocal Rank Fusion of the BM25 list and the semantic list. |
+| `CODE/ranking/ranker.py` | Relevance, Bayesian-adjusted rating, log popularity and budget fit, combined by weights; then MMR for variety. |
+| `CODE/ranking/pipeline.py` | Puts it all together. `GiftRanker.recommend()` is the function other parts call. |
+| `CODE/ranking/ablation.py` | Turns each component off one at a time and compares the results. |
+| `CODE/ranking/tune_weights.py` | Exports results for labelling, then grid-searches the weights on labelled dev queries. |
+| `CODE/ranking/dev_queries.json` | 12 development queries for tuning (kept separate from the evaluation queries). |
+| `CODE/data/make_dev_subset.py` | For Sol: random per-domain subset of the full corpus, small enough to download. |
+
+## Setup
+
+Run everything from the repo root.
+
+```bash
+pip install -r CODE/ranking/requirements.txt
+python -m CODE.retrieval.bm25_baseline build                 # indexes the 900-product sample into indexes/sample
+python -m pytest -q CODE/ranking/test_ranking.py
+```
+
+## Try it
+
+```bash
+python -m CODE.retrieval.bm25_baseline search "dinosaur toy" -k 5
+python -m CODE.ranking.pipeline --constraints '{"recipient_age": 7, "occasion": "birthday", "interests": ["dinosaur"], "budget_max": 30}'
+python -m CODE.ranking.ablation                               # writes to EVALUATIONS/results/ranking/
+python -m CODE.ranking.ablation --semantic-standin           # tests the fusion path, with TF-IDF standing in for semantic retrieval
+```
+
+## Interface for the other parts
+
+**Constraints in** (from the LLM constraint extraction). Every field is optional:
+
+```json
+{
+  "recipient": "sister",
+  "recipient_age": 22,
+  "occasion": "graduation",
+  "interests": ["coffee", "reading"],
+  "keywords": [],
+  "budget_min": null,
+  "budget_max": 80,
+  "exclusions": ["books", "mugs"]
+}
+```
+
+- `interests` are counted twice in the BM25 query, `occasion` once. `recipient` is not used for search.
+- `exclusions` can be a domain (`books`, `toys`, `handmade`) or any word/phrase matched against title and categories.
+- `recipient_age` only removes products that state an age range; products with no age info stay in.
+
+**Semantic results in** (from semantic retrieval): top ~200 as `[[parent_asin, score], ...]` or `[{"parent_asin": ..., "score": ...}, ...]`, best first.
+
+**Ranked results out** (to explanation and evaluation):
+
+```python
+from CODE.ranking.pipeline import GiftRanker, RankConfig
+ranker = GiftRanker("indexes/sample")
+out = ranker.recommend(constraints, semantic_results=semantic_list)
+```
+
+```json
+{
+  "query": "coffee reading coffee reading graduation",
+  "n_after_filters": 143,
+  "dropped": {"over_budget": 40, "excluded": 12},
+  "latency_ms": 31.2,
+  "results": [
+    {"rank": 1, "parent_asin": "B0...", "title": "...", "domain": "Handmade Products", "price": 34.0,
+     "average_rating": 4.8, "rating_number": 512, "final_score": 0.871,
+     "signals": {"relevance": 0.94, "quality": 0.91, "popularity": 0.72, "budget_fit": 0.88},
+     "sources": {"bm25_rank": 3, "semantic_rank": 1}}
+  ]
+}
+```
+
+## How the score works
+
+- **Relevance**: retrieval score (BM25, or the RRF score when fused), scaled 0–1 within the candidate set. Items below 0.25 are dropped, so a well-rated but off-topic product can't climb the list.
+- **Quality**: `(n * avg + m * C) / (n + m)` with C = corpus mean rating and m = median rating count. One 5-star rating counts for less than thousands of 4.7s.
+- **Popularity**: `log(1 + rating_count)` divided by the 99th-percentile value.
+- **Budget fit**: highest when price is about 70% of `budget_max` (or the middle of the range if `budget_min` is given). Neutral when there's no budget.
+- **Default weights**: relevance 0.55, quality 0.20, popularity 0.10, budget fit 0.15. Replace them after tuning.
+- **MMR** (λ = 0.7) re-orders the top 50. Item similarity = 0.6 text cosine + 0.25 same category + 0.15 same domain.
+
+## Tuning the weights
+
+```bash
+python -m CODE.ranking.tune_weights pool                      # writes CODE/ranking/dev_labels.csv
+# fill the grade column: 2 = great gift, 1 = okay, 0 = not relevant
+python -m CODE.ranking.tune_weights tune
+```
+
+## Full corpus (on Sol)
+
+The 900-row sample is the first 300 rows of each domain, so it's fine for testing the code but not for judging quality. To get something bigger, someone with Sol access runs:
+
+```bash
+python CODE/data/make_dev_subset.py --per-domain 20000 --output dev_subset_v2.jsonl   # ~190 MB, 60K products
+python -m CODE.retrieval.bm25_baseline build --corpus dev_subset_v2.jsonl --out indexes/dev60k
+```
+
+For the full 3.78M products, run the same `build` on Sol with plenty of memory (64 GB+). Add `--skip-tfidf` if TF-IDF isn't needed at full scale.

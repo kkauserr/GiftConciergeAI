@@ -1,0 +1,9 @@
+bm25s>=0.2.13
+PyStemmer
+numpy
+scipy
+pandas
+pyarrow
+scikit-learn
+tabulate
+pytest
