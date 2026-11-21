@@ -5,7 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 SIGNALS = ["relevance", "quality", "popularity", "budget_fit"]
 
-DEFAULT_WEIGHTS = {"relevance": 0.55, "quality": 0.20, "popularity": 0.10, "budget_fit": 0.15}
+DEFAULT_WEIGHTS = {"relevance": 0.7, "quality": 0.1, "popularity": 0.0, "budget_fit": 0.2}
 
 BUDGET_TARGET = 0.7
 BUDGET_WIDTH = 0.25
@@ -100,7 +100,7 @@ def mmr(scores, sim, k, lam=0.7):
 
 
 def rank(candidates, catalog, constraints, weights=None, top_k=10, use_mmr=True,
-         mmr_lambda=0.7, mmr_pool=50, min_relevance=0.25):
+         mmr_lambda=0.9, mmr_pool=50, min_relevance=0.25):
     if not candidates:
         return pd.DataFrame()
     weights = DEFAULT_WEIGHTS if weights is None else weights

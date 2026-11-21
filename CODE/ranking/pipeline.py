@@ -20,7 +20,7 @@ class RankConfig:
     pool_size: int = 200
     top_k: int = 10
     rrf_k: int = 60
-    mmr_lambda: float = 0.7
+    mmr_lambda: float = 0.9
     min_relevance: float = 0.25
 
 
