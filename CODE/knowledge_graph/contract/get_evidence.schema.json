@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "kg-evidence/1.0",
+  "title": "Gift Concierge KG get_evidence() response",
+  "description": "Response of knowledge_graph.api.get_evidence(). See INTEGRATION.md for semantics.",
+  "type": "object",
+  "required": ["contract_version", "vocabulary", "query", "warnings", "results"],
+  "properties": {
+    "contract_version": {"type": "string", "enum": ["kg-evidence/1.0"]},
+    "vocabulary": {
+      "type": "object",
+      "required": ["interests", "aspects"],
+      "properties": {"interests": {"type": "string"}, "aspects": {"type": "string"}}
+    },
+    "query": {
+      "type": "object",
+      "required": ["parent_asins", "query_interests", "max_reviews"],
+      "properties": {
+        "parent_asins": {"type": "array", "items": {"type": "string"}},
+        "query_interests": {"type": "array", "items": {"type": "string"}},
+        "max_reviews": {"type": "integer"}
+      }
+    },
+    "warnings": {"type": "array", "items": {"$ref": "#/$defs/warning"}},
+    "results": {"type": "array", "items": {"$ref": "#/$defs/result"}}
+  },
+  "$defs": {
+    "warning": {
+      "type": "object",
+      "required": ["code", "value"],
+      "properties": {
+        "code": {"type": "string", "enum": ["unknown_asin", "invalid_asin", "unknown_interest",
+                                             "normalized_interest", "max_reviews_capped"]},
+        "value": {},
+        "index": {"type": "integer"},
+        "normalized": {"type": "string"},
+        "message": {"type": "string"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source", "fields", "text", "confidence", "rule_id"],
+      "properties": {
+        "source": {"type": "string"},
+        "fields": {"type": "array", "items": {"type": "string"}},
+        "text": {"type": ["string", "null"]},
+        "confidence": {"type": "number"},
+        "rule_id": {"type": ["string", "null"]},
+        "context": {"type": "string"}
+      }
+    },
+    "result": {
+      "type": "object",
+      "required": ["index", "parent_asin", "found", "product", "brand", "category", "interests",
+                   "query_interest_match", "attributes", "review_qualities", "review_concerns",
+                   "review_observations", "review_summary", "grounding", "reasoning_paths"],
+      "properties": {
+        "index": {"type": "integer"},
+        "parent_asin": {"type": ["string", "null"]},
+        "found": {"type": "boolean"},
+        "product": {
+          "type": ["object", "null"],
+          "required": ["title", "domain", "price", "average_rating", "rating_number", "store",
+                       "age_min", "age_max", "review_count", "average_review_rating"],
+          "properties": {
+            "title": {"type": ["string", "null"]},
+            "domain": {"type": ["string", "null"], "enum": ["Books", "Handmade Products", "Toys & Games", null]},
+            "price": {"type": ["number", "null"]},
+            "average_rating": {"type": ["number", "null"]},
+            "rating_number": {"type": ["number", "null"]},
+            "store": {"type": ["string", "null"]},
+            "age_min": {"type": ["number", "null"]},
+            "age_max": {"type": ["number", "null"]},
+            "review_count": {"type": ["number", "null"]},
+            "average_review_rating": {"type": ["number", "null"]}
+          }
+        },
+        "brand": {
+          "type": ["object", "null"],
+          "required": ["id", "name", "kind", "provenance"],
+          "properties": {
+            "id": {"type": "string"}, "name": {"type": "string"},
+            "kind": {"type": "string", "enum": ["brand", "author"]},
+            "provenance": {"$ref": "#/$defs/provenance"}
+          }
+        },
+        "category": {
+          "type": ["object", "null"],
+          "required": ["id", "path", "from_domain_fallback", "provenance"],
+          "properties": {
+            "id": {"type": "string"},
+            "path": {"type": "array", "items": {"type": "string"}},
+            "from_domain_fallback": {"type": "boolean"},
+            "provenance": {"$ref": "#/$defs/provenance"}
+          }
+        },
+        "interests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "display_name", "match_type", "confidence", "matches_query", "evidence", "path_id"],
+            "properties": {
+              "label": {"type": "string"}, "display_name": {"type": "string"},
+              "match_type": {"type": "string", "enum": ["primary", "themed"]},
+              "confidence": {"type": "number"}, "matches_query": {"type": "boolean"},
+              "evidence": {"type": "array", "items": {"$ref": "#/$defs/provenance"}},
+              "path_id": {"type": "string"}
+            }
+          }
+        },
+        "query_interest_match": {
+          "type": ["object", "null"],
+          "required": ["requested", "matched", "unmatched"],
+          "properties": {
+            "requested": {"type": "array", "items": {"type": "string"}},
+            "matched": {"type": "array", "items": {"type": "string"}},
+            "unmatched": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "display_name", "basis", "confidence", "evidence", "path_id"],
+            "properties": {
+              "label": {"type": "string"}, "display_name": {"type": "string"},
+              "basis": {"type": "string", "enum": ["structured_metadata", "seller_listing"]},
+              "confidence": {"type": "number"},
+              "evidence": {"type": "array", "items": {"$ref": "#/$defs/provenance"}},
+              "path_id": {"type": "string"}
+            }
+          }
+        },
+        "review_qualities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "display_name", "conclusion", "polarity", "confidence", "counts",
+                         "supporting_reviews", "supporting_reviews_omitted", "path_id"],
+            "properties": {
+              "label": {"type": "string"}, "display_name": {"type": "string"},
+              "conclusion": {"type": "string", "enum": ["supported"]},
+              "polarity": {"type": "string", "enum": ["positive"]},
+              "confidence": {"type": "number"},
+              "counts": {
+                "type": "object",
+                "required": ["positive", "negative", "mixed", "neutral", "rating_conflict",
+                             "positive_verified", "reviews_in_graph"],
+                "properties": {
+                  "positive": {"type": "integer"}, "negative": {"type": "integer"},
+                  "mixed": {"type": "integer"}, "neutral": {"type": "integer"},
+                  "rating_conflict": {"type": "integer"}, "positive_verified": {"type": "integer"},
+                  "reviews_in_graph": {"type": "integer"}
+                }
+              },
+              "supporting_reviews": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["review_id", "text", "rating", "verified_purchase"],
+                  "properties": {
+                    "review_id": {"type": "string"}, "text": {"type": "string"},
+                    "rating": {"type": ["number", "null"]}, "verified_purchase": {"type": ["boolean", "null"]}
+                  }
+                }
+              },
+              "supporting_reviews_omitted": {"type": "integer"},
+              "path_id": {"type": "string"}
+            }
+          }
+        },
+        "review_concerns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "display_name", "status", "polarity", "counts", "examples", "path_id"],
+            "properties": {
+              "label": {"type": "string"}, "display_name": {"type": "string"},
+              "status": {"type": "string", "enum": ["concern"]},
+              "polarity": {"type": "string", "enum": ["negative"]},
+              "counts": {"type": "object"},
+              "examples": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["review_id", "rating", "verified_purchase", "text"],
+                  "properties": {
+                    "review_id": {"type": "string"}, "rating": {"type": ["number", "null"]},
+                    "verified_purchase": {"type": ["boolean", "null"]}, "text": {"type": ["string", "null"]}
+                  }
+                }
+              },
+              "path_id": {"type": "string"}
+            }
+          }
+        },
+        "review_observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["review_id", "aspect", "aspect_display_name", "polarity", "rating",
+                         "verified_purchase", "helpful_votes", "rating_conflict", "snippets",
+                         "confidence", "path_id"],
+            "properties": {
+              "review_id": {"type": "string"}, "aspect": {"type": "string"},
+              "aspect_display_name": {"type": "string"},
+              "polarity": {"type": "string", "enum": ["positive", "negative", "neutral", "mixed"]},
+              "rating": {"type": ["number", "null"]},
+              "verified_purchase": {"type": ["boolean", "null"]},
+              "helpful_votes": {"type": ["number", "null"]},
+              "rating_conflict": {"type": "boolean"},
+              "snippets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["text", "polarity", "confidence", "rule_id"],
+                  "properties": {
+                    "text": {"type": "string"},
+                    "polarity": {"type": "string", "enum": ["positive", "negative", "neutral"]},
+                    "confidence": {"type": "number"}, "rule_id": {"type": "string"}
+                  }
+                }
+              },
+              "confidence": {"type": "number"},
+              "path_id": {"type": "string"}
+            }
+          }
+        },
+        "review_summary": {
+          "type": ["object", "null"],
+          "required": ["reviews_in_graph", "verified_reviews_in_graph", "review_count_in_corpus",
+                       "aspects_with_observations", "observations_omitted", "aspect_status"],
+          "properties": {
+            "reviews_in_graph": {"type": "integer"},
+            "verified_reviews_in_graph": {"type": "integer"},
+            "review_count_in_corpus": {"type": ["number", "null"]},
+            "aspects_with_observations": {"type": "array", "items": {"type": "string"}},
+            "observations_omitted": {"type": "object"},
+            "aspect_status": {"type": "object"}
+          }
+        },
+        "grounding": {
+          "type": "object",
+          "required": ["assertable_claims", "cautions"],
+          "properties": {
+            "assertable_claims": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["text", "basis", "path_id"],
+                "properties": {
+                  "text": {"type": "string"},
+                  "basis": {"type": "string", "enum": ["interest_primary", "interest_themed",
+                                                         "structured_metadata", "seller_listing",
+                                                         "review_aggregate"]},
+                  "path_id": {"type": "string"}
+                }
+              }
+            },
+            "cautions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["text", "path_id"],
+                "properties": {"text": {"type": "string"}, "path_id": {"type": "string"}}
+              }
+            }
+          }
+        },
+        "reasoning_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "kind", "claim", "assertable", "edges"],
+            "properties": {
+              "id": {"type": "string"},
+              "kind": {"type": "string", "enum": ["brand", "interest", "attribute", "review_quality",
+                                                   "review_concern", "review_observation"]},
+              "claim": {"type": "string"},
+              "assertable": {"type": "boolean"},
+              "edges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["src", "rel", "dst"],
+                  "properties": {
+                    "src": {"type": "string"},
+                    "rel": {"type": "string", "enum": ["MADE_BY", "BELONGS_TO", "MATCHES", "HAS_ASPECT",
+                                                        "ABOUT", "SUPPORTS"]},
+                    "dst": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1802 @@
+{
+  "vocabulary": "aspects",
+  "version": "1.2.0",
+  "notes": [
+    "Two aspect classes. 'attribute' = objective facts about what a product is, from structured metadata or seller-stated listing text. 'quality' = subjective judgements that may ONLY be supported by reviews.",
+    "Every HAS_ASPECT edge records evidence_type: 'structured' (details/categories/domain) or 'listing_stated' (seller title/features). Listing-stated attributes are seller statements, not verified facts.",
+    "Unverified seller quality claims ('durable', 'premium', 'safe', 'high quality') are never recorded in v1.",
+    "Values used for filtering (page count, format, reading level, language, piece count, player count, battery type) stay on the Product node or in the corpus. They are not aspects.",
+    "Confidence values are heuristic rule scores, not calibrated probabilities. An edge with several evidence items takes the max.",
+    "Text matches are dropped when negated within their clause (e.g. 'not printed on wood', 'alternative to plastic') or when the material names packaging or finish rather than the product (e.g. 'velvet gift bag', 'satin clear coat').",
+    "component_guard (material aspects): text matches inside counted kit-content lists (\"1 Plastic Funnel, 1 Wooden Stick, 1 Plastic Flask\") or marked as spare, replaced or not included (\"Cotton is not included\") are ignored. Cross-sell sentences in features are ignored for every aspect.",
+    "Quality aspects take review_cues only. They are matched in review text by review_inference.py and never in listing text; listing rules on quality aspects are still rejected."
+  ],
+  "attribute_aspects": [
+    {
+      "label": "handcrafted",
+      "display_name": "Handcrafted",
+      "description": "Made by hand. Products in the Amazon Handmade program qualify by domain.",
+      "phrases": [
+        "handmade",
+        "hand made",
+        "handcrafted",
+        "hand crafted",
+        "hand painted",
+        "hand stamped",
+        "hand knit",
+        "hand sewn",
+        "hand carved",
+        "hand poured",
+        "hand blown"
+      ],
+      "exclude": [
+        "handmade look",
+        "handmade style",
+        "hand painted look"
+      ],
+      "rules": [
+        {
+          "type": "domain",
+          "domain": "Handmade Products",
+          "confidence": 0.9
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "personalizable",
+      "display_name": "Personalizable",
+      "description": "Can be personalized with a name, text, photo, monogram or custom engraving. Decorative engraving alone does not count.",
+      "phrases": [
+        "personalized",
+        "personalised",
+        "personalizable",
+        "customized",
+        "customised",
+        "customizable",
+        "custom name",
+        "custom text",
+        "custom photo",
+        "monogram",
+        "monogrammed",
+        "add your name",
+        "name necklace",
+        "custom engraved",
+        "custom engraving",
+        "personalized engraving",
+        "add engraving",
+        "engrave your",
+        "engraved with your",
+        "engraving your",
+        "engraving of your"
+      ],
+      "exclude": [
+        "personalized learning",
+        "personalized instruction",
+        "personalized service",
+        "personalized attention",
+        "personalized care",
+        "personalized recommendations",
+        "personalized approach",
+        "personalized plan",
+        "personalized medicine",
+        "custom photo booth"
+      ],
+      "rules": [
+        {
+          "type": "title",
+          "domains": [
+            "Books",
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_wood",
+      "display_name": "Wood",
+      "description": "Made of wood or bamboo.",
+      "phrases": [
+        "wood",
+        "wooden",
+        "solid wood",
+        "bamboo",
+        "plywood",
+        "driftwood",
+        "beechwood",
+        "mdf",
+        "oak wood",
+        "maple wood",
+        "birch wood",
+        "pine wood",
+        "cedar wood",
+        "walnut wood",
+        "acacia wood",
+        "engineered wood"
+      ],
+      "exclude": [
+        "faux wood",
+        "wood look",
+        "wood grain look",
+        "wood effect",
+        "wood tone",
+        "wood grain print",
+        "wooden gift box",
+        "wooden box packaging",
+        "wood finish"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_precious_metal",
+      "display_name": "Precious metal",
+      "description": "Sterling silver, karat gold, gold-filled or platinum. Plated or 'tone' finishes do not count.",
+      "phrases": [
+        "sterling silver",
+        "925 sterling",
+        "solid gold",
+        "10k gold",
+        "14k gold",
+        "18k gold",
+        "24k gold",
+        "10k",
+        "14k",
+        "18k",
+        "gold filled",
+        "platinum",
+        "fine silver",
+        "999 silver"
+      ],
+      "exclude": [
+        "gold plated",
+        "silver plated",
+        "rhodium plated",
+        "gold tone",
+        "silver tone",
+        "gold color",
+        "silver color",
+        "14k gold plated",
+        "18k gold plated",
+        "gold vermeil plated",
+        "plated"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "details_match",
+          "field": "Metal Type",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_metal",
+      "display_name": "Metal",
+      "description": "Non-precious metal: stainless steel, aluminum, brass, copper, iron, pewter, titanium.",
+      "phrases": [
+        "stainless steel",
+        "surgical steel",
+        "surgical stainless steel",
+        "aluminum",
+        "aluminium",
+        "brass",
+        "copper",
+        "cast iron",
+        "wrought iron",
+        "pewter",
+        "titanium",
+        "metal sign",
+        "metal wall art",
+        "die-cast metal",
+        "metal",
+        "steel",
+        "iron",
+        "zinc alloy",
+        "alloy"
+      ],
+      "exclude": [
+        "heavy metal",
+        "metal music",
+        "metallic look",
+        "metal look",
+        "steel wool"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "phrases": [
+            "stainless steel",
+            "surgical steel",
+            "surgical stainless steel",
+            "aluminum",
+            "aluminium",
+            "brass",
+            "copper",
+            "cast iron",
+            "wrought iron",
+            "pewter",
+            "titanium",
+            "metal sign",
+            "metal wall art",
+            "die-cast metal"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "phrases": [
+            "stainless steel",
+            "surgical steel",
+            "surgical stainless steel",
+            "aluminum",
+            "aluminium",
+            "brass",
+            "copper",
+            "cast iron",
+            "wrought iron",
+            "pewter",
+            "titanium"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_ceramic_glass",
+      "display_name": "Ceramic or glass",
+      "description": "Ceramic, porcelain, stoneware, pottery or glass.",
+      "phrases": [
+        "ceramic",
+        "porcelain",
+        "stoneware",
+        "earthenware",
+        "pottery",
+        "glass",
+        "stained glass",
+        "fused glass",
+        "sea glass",
+        "glassware",
+        "tempered glass",
+        "borosilicate glass"
+      ],
+      "exclude": [
+        "glass like",
+        "glass look",
+        "glass effect",
+        "magnifying glass",
+        "looking glass",
+        "glass slipper",
+        "ceramic look",
+        "glass gift box"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_leather",
+      "display_name": "Leather",
+      "description": "Genuine leather. Faux, vegan, PU and imitation leather do not count.",
+      "phrases": [
+        "leather",
+        "genuine leather",
+        "full grain leather",
+        "top grain leather"
+      ],
+      "exclude": [
+        "faux leather",
+        "vegan leather",
+        "pu leather",
+        "imitation leather",
+        "synthetic leather",
+        "artificial leather",
+        "leather like",
+        "leather look",
+        "leather texture",
+        "feel of leather",
+        "look of leather",
+        "leather alternative"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_textile",
+      "display_name": "Textile",
+      "description": "Fabric or fibre: cotton, wool, linen, silk, felt, fleece, canvas, polyester and similar.",
+      "phrases": [
+        "cotton",
+        "organic cotton",
+        "wool",
+        "merino",
+        "linen",
+        "fleece",
+        "silk",
+        "velvet",
+        "satin",
+        "canvas",
+        "denim",
+        "burlap",
+        "jute",
+        "muslin",
+        "fabric",
+        "polyester",
+        "flannel",
+        "cashmere",
+        "felt",
+        "plush",
+        "nylon",
+        "yarn"
+      ],
+      "exclude": [
+        "cotton candy",
+        "steel wool",
+        "silk screen",
+        "silk screened",
+        "canvas print look",
+        "satin finish",
+        "satin clear coat",
+        "satin coat",
+        "satin bow",
+        "satin ribbon",
+        "velvet gift bag",
+        "velvet bag",
+        "velvet pouch",
+        "satin bag",
+        "satin pouch",
+        "organza bag",
+        "cotton gift bag",
+        "jute gift bag",
+        "burlap gift bag",
+        "satin paper",
+        "satin photo paper",
+        "satin finish paper"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "details_match",
+          "field": "Fabric Type",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "phrases": [
+            "cotton",
+            "organic cotton",
+            "wool",
+            "merino",
+            "linen",
+            "fleece",
+            "silk",
+            "velvet",
+            "satin",
+            "canvas",
+            "denim",
+            "burlap",
+            "jute",
+            "muslin",
+            "flannel",
+            "cashmere"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "phrases": [
+            "100% cotton",
+            "organic cotton",
+            "cotton",
+            "wool",
+            "merino",
+            "linen",
+            "fleece",
+            "silk",
+            "velvet",
+            "satin",
+            "denim",
+            "burlap",
+            "jute",
+            "muslin",
+            "flannel",
+            "cashmere"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_plastic_rubber",
+      "display_name": "Plastic, vinyl or rubber",
+      "description": "Synthetic polymers: plastic, ABS, PVC, vinyl, resin, acrylic, silicone, rubber, latex, foam.",
+      "phrases": [
+        "plastic",
+        "abs",
+        "pvc",
+        "polyvinyl chloride",
+        "vinyl",
+        "resin",
+        "epoxy resin",
+        "acrylic",
+        "silicone",
+        "rubber",
+        "latex",
+        "polypropylene",
+        "polyethylene",
+        "eva foam",
+        "foam"
+      ],
+      "exclude": [
+        "plastic free",
+        "no plastic",
+        "non plastic",
+        "latex free",
+        "vinyl record",
+        "vinyl records",
+        "acrylic paint",
+        "acrylic paints",
+        "rubber stamp look",
+        "plastic bag",
+        "plastic bags",
+        "plastic packaging",
+        "plastic sleeve",
+        "plastic wrap",
+        "plastic box",
+        "plastic case",
+        "acrylic gift box",
+        "acrylic yarn",
+        "acrylic finish",
+        "acrylic coating",
+        "resin finish",
+        "resin coating"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "phrases": [
+            "plastic",
+            "pvc",
+            "vinyl",
+            "resin",
+            "epoxy resin",
+            "acrylic",
+            "silicone",
+            "rubber",
+            "latex"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "phrases": [
+            "plastic",
+            "abs plastic",
+            "pvc",
+            "vinyl",
+            "epoxy resin",
+            "resin",
+            "acrylic",
+            "silicone",
+            "rubber",
+            "latex"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "material_paper",
+      "display_name": "Paper or card",
+      "description": "Paper, cardstock, cardboard or parchment. Not applied to Books.",
+      "phrases": [
+        "paper",
+        "cardstock",
+        "card stock",
+        "kraft paper",
+        "cardboard",
+        "paperboard",
+        "parchment",
+        "watercolor paper",
+        "archival paper",
+        "art paper"
+      ],
+      "exclude": [
+        "paper towel",
+        "paper towels",
+        "toilet paper",
+        "paper clip",
+        "paper clips",
+        "paperless",
+        "gift wrapping paper",
+        "wrapping paper",
+        "tissue paper",
+        "paper gift box",
+        "paper packaging",
+        "paper bag",
+        "cardboard box",
+        "cardboard boxes",
+        "vinyl sticker paper",
+        "paper instruction",
+        "paper instructions",
+        "instruction paper",
+        "paper manual"
+      ],
+      "component_guard": true,
+      "rules": [
+        {
+          "type": "details_match",
+          "field": "Material",
+          "confidence": 0.95
+        },
+        {
+          "type": "title",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.8
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Handmade Products",
+            "Toys & Games"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    },
+    {
+      "label": "multiplayer",
+      "display_name": "Multiplayer",
+      "description": "Designed for two or more players.",
+      "rules": [
+        {
+          "type": "details_min_number",
+          "field": "Number of Players",
+          "min": 2,
+          "confidence": 0.95
+        },
+        {
+          "type": "category",
+          "segments": [
+            "Board Games"
+          ],
+          "confidence": 0.8
+        }
+      ]
+    },
+    {
+      "label": "battery_powered",
+      "display_name": "Battery powered",
+      "description": "Requires batteries (details states a battery requirement).",
+      "rules": [
+        {
+          "type": "details_flag",
+          "field": "Batteries Required?",
+          "values": [
+            "yes"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "type": "details_flag",
+          "field": "Batteries",
+          "contains": [
+            "batteries required",
+            "battery required"
+          ],
+          "not_contains": [
+            "not required",
+            "no batteries"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "label": "assembly_required",
+      "display_name": "Assembly required",
+      "description": "Requires assembly (details states it).",
+      "rules": [
+        {
+          "type": "details_flag",
+          "field": "Assembly Required",
+          "values": [
+            "yes"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "label": "educational_focus",
+      "display_name": "Educational focus",
+      "description": "Placed in a learning-oriented category. The listing word 'educational' alone is a seller claim and is not used.",
+      "rules": [
+        {
+          "type": "category",
+          "segments": [
+            "Learning & Education",
+            "STEM Toys",
+            "Science Kits & Toys",
+            {
+              "segment": "Early Learning",
+              "ancestor": "Children's Books"
+            },
+            {
+              "segment": "Education & Reference",
+              "ancestor": "Children's Books"
+            }
+          ],
+          "confidence": 0.85
+        }
+      ]
+    },
+    {
+      "label": "collectible",
+      "display_name": "Collectible",
+      "description": "Placed in a collectible category (collectible toys, collectible card games).",
+      "rules": [
+        {
+          "type": "category",
+          "segments": [
+            "Collectible Toys",
+            "Collectible Card Games"
+          ],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "label": "illustrated",
+      "display_name": "Illustrated",
+      "description": "Book containing illustrations. Only explicit illustration phrases are used, because Book blurbs are unreliable.",
+      "rules": [
+        {
+          "type": "title",
+          "domains": [
+            "Books"
+          ],
+          "phrases": [
+            "illustrated",
+            "illustrated edition",
+            "picture book"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "type": "features",
+          "domains": [
+            "Books"
+          ],
+          "phrases": [
+            "illustrations by",
+            "illustrated by",
+            "full color illustrations",
+            "full-color illustrations",
+            "color illustrations",
+            "black and white illustrations",
+            "fully illustrated",
+            "beautifully illustrated",
+            "illustrated throughout",
+            "photographs and illustrations"
+          ],
+          "confidence": 0.6
+        }
+      ]
+    }
+  ],
+  "quality_aspects": [
+    {
+      "label": "durability",
+      "display_name": "Durability",
+      "description": "Holds up over time (sturdy vs. broke/flimsy).",
+      "review_cues": {
+        "domains": [
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "durable",
+          "very durable",
+          "sturdy",
+          "very sturdy",
+          "holds up well",
+          "held up well",
+          "holding up well",
+          "holding up great",
+          "has held up",
+          "held up great",
+          "holds up great",
+          "still going strong",
+          "long lasting",
+          "built to last",
+          "heavy duty",
+          "survived",
+          "withstood",
+          "has lasted",
+          "have lasted",
+          "lasted for years",
+          "lasted years",
+          "lasted a long time"
+        ],
+        "negative": [
+          "fell apart",
+          "falling apart",
+          "came apart",
+          "broke",
+          "broken",
+          "breaks",
+          "broke off",
+          "cracked",
+          "snapped",
+          "tore",
+          "ripped",
+          "flimsy",
+          "stopped working",
+          "quit working",
+          "wore out",
+          "worn out",
+          "tarnished",
+          "tarnish",
+          "peeling",
+          "peeled off",
+          "rusted",
+          "fell off",
+          "came loose",
+          "came off"
+        ],
+        "exclude": [
+          "arrived broken",
+          "came broken",
+          "broken on arrival",
+          "arrived cracked",
+          "came cracked",
+          "broken when it arrived",
+          "broke the bank",
+          "break in",
+          "heart broken",
+          "broken heart",
+          "breaking in",
+          "break them in",
+          "broken leg",
+          "broken legs",
+          "broken arm",
+          "broken arms",
+          "broken wrist",
+          "broken ankle",
+          "broken foot",
+          "broken feet",
+          "broken bone",
+          "broken bones",
+          "broken hand",
+          "broken finger",
+          "broken toe",
+          "broken back",
+          "broken neck",
+          "broken nose",
+          "broken hip",
+          "broken rib",
+          "broken ribs",
+          "broken collarbone",
+          "broke her leg",
+          "broke her legs",
+          "broke her arm",
+          "broke her arms",
+          "broke her wrist",
+          "broke her ankle",
+          "broke her foot",
+          "broke her feet",
+          "broke her bone",
+          "broke her bones",
+          "broke her hand",
+          "broke her finger",
+          "broke her toe",
+          "broke her back",
+          "broke her neck",
+          "broke her nose",
+          "broke her hip",
+          "broke her rib",
+          "broke her ribs",
+          "broke her collarbone",
+          "broke his leg",
+          "broke his legs",
+          "broke his arm",
+          "broke his arms",
+          "broke his wrist",
+          "broke his ankle",
+          "broke his foot",
+          "broke his feet",
+          "broke his bone",
+          "broke his bones",
+          "broke his hand",
+          "broke his finger",
+          "broke his toe",
+          "broke his back",
+          "broke his neck",
+          "broke his nose",
+          "broke his hip",
+          "broke his rib",
+          "broke his ribs",
+          "broke his collarbone",
+          "broke my leg",
+          "broke my legs",
+          "broke my arm",
+          "broke my arms",
+          "broke my wrist",
+          "broke my ankle",
+          "broke my foot",
+          "broke my feet",
+          "broke my bone",
+          "broke my bones",
+          "broke my hand",
+          "broke my finger",
+          "broke my toe",
+          "broke my back",
+          "broke my neck",
+          "broke my nose",
+          "broke my hip",
+          "broke my rib",
+          "broke my ribs",
+          "broke my collarbone",
+          "broke their leg",
+          "broke their legs",
+          "broke their arm",
+          "broke their arms",
+          "broke their wrist",
+          "broke their ankle",
+          "broke their foot",
+          "broke their feet",
+          "broke their bone",
+          "broke their bones",
+          "broke their hand",
+          "broke their finger",
+          "broke their toe",
+          "broke their back",
+          "broke their neck",
+          "broke their nose",
+          "broke their hip",
+          "broke their rib",
+          "broke their ribs",
+          "broke their collarbone",
+          "broke your leg",
+          "broke your legs",
+          "broke your arm",
+          "broke your arms",
+          "broke your wrist",
+          "broke your ankle",
+          "broke your foot",
+          "broke your feet",
+          "broke your bone",
+          "broke your bones",
+          "broke your hand",
+          "broke your finger",
+          "broke your toe",
+          "broke your back",
+          "broke your neck",
+          "broke your nose",
+          "broke your hip",
+          "broke your rib",
+          "broke your ribs",
+          "broke your collarbone",
+          "broken her leg",
+          "broken her legs",
+          "broken her arm",
+          "broken her arms",
+          "broken her wrist",
+          "broken her ankle",
+          "broken her foot",
+          "broken her feet",
+          "broken her bone",
+          "broken her bones",
+          "broken her hand",
+          "broken her finger",
+          "broken her toe",
+          "broken her back",
+          "broken her neck",
+          "broken her nose",
+          "broken her hip",
+          "broken her rib",
+          "broken her ribs",
+          "broken her collarbone",
+          "broken his leg",
+          "broken his legs",
+          "broken his arm",
+          "broken his arms",
+          "broken his wrist",
+          "broken his ankle",
+          "broken his foot",
+          "broken his feet",
+          "broken his bone",
+          "broken his bones",
+          "broken his hand",
+          "broken his finger",
+          "broken his toe",
+          "broken his back",
+          "broken his neck",
+          "broken his nose",
+          "broken his hip",
+          "broken his rib",
+          "broken his ribs",
+          "broken his collarbone",
+          "broken my leg",
+          "broken my legs",
+          "broken my arm",
+          "broken my arms",
+          "broken my wrist",
+          "broken my ankle",
+          "broken my foot",
+          "broken my feet",
+          "broken my bone",
+          "broken my bones",
+          "broken my hand",
+          "broken my finger",
+          "broken my toe",
+          "broken my back",
+          "broken my neck",
+          "broken my nose",
+          "broken my hip",
+          "broken my rib",
+          "broken my ribs",
+          "broken my collarbone",
+          "broken their leg",
+          "broken their legs",
+          "broken their arm",
+          "broken their arms",
+          "broken their wrist",
+          "broken their ankle",
+          "broken their foot",
+          "broken their feet",
+          "broken their bone",
+          "broken their bones",
+          "broken their hand",
+          "broken their finger",
+          "broken their toe",
+          "broken their back",
+          "broken their neck",
+          "broken their nose",
+          "broken their hip",
+          "broken their rib",
+          "broken their ribs",
+          "broken their collarbone",
+          "broken your leg",
+          "broken your legs",
+          "broken your arm",
+          "broken your arms",
+          "broken your wrist",
+          "broken your ankle",
+          "broken your foot",
+          "broken your feet",
+          "broken your bone",
+          "broken your bones",
+          "broken your hand",
+          "broken your finger",
+          "broken your toe",
+          "broken your back",
+          "broken your neck",
+          "broken your nose",
+          "broken your hip",
+          "broken your rib",
+          "broken your ribs",
+          "broken your collarbone"
+        ],
+        "context_exclude": [
+          "packaging",
+          "package",
+          "box",
+          "shipping",
+          "shipped",
+          "arrived",
+          "delivery",
+          "envelope",
+          "in the mail"
+        ]
+      }
+    },
+    {
+      "label": "craftsmanship",
+      "display_name": "Craftsmanship",
+      "description": "Build and finish quality (well made vs. cheaply made).",
+      "review_cues": {
+        "domains": [
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "well made",
+          "nicely made",
+          "beautifully made",
+          "solidly made",
+          "well crafted",
+          "expertly crafted",
+          "well constructed",
+          "quality craftsmanship",
+          "excellent craftsmanship",
+          "great craftsmanship",
+          "beautiful craftsmanship",
+          "high quality",
+          "great quality",
+          "excellent quality",
+          "good quality",
+          "quality is great",
+          "quality is excellent",
+          "attention to detail"
+        ],
+        "negative": [
+          "poorly made",
+          "cheaply made",
+          "badly made",
+          "poor quality",
+          "bad quality",
+          "low quality",
+          "cheap quality",
+          "shoddy",
+          "sloppy",
+          "poorly constructed",
+          "poor craftsmanship",
+          "poor workmanship",
+          "looks cheap",
+          "feels cheap",
+          "cheap looking"
+        ],
+        "exclude": [
+          "high quality photos",
+          "good quality photos",
+          "quality time"
+        ]
+      }
+    },
+    {
+      "label": "appearance_as_pictured",
+      "display_name": "Looks as pictured",
+      "description": "Appearance matches the listing.",
+      "review_cues": {
+        "domains": [
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "as pictured",
+          "as shown",
+          "just like the picture",
+          "exactly like the picture",
+          "looks like the picture",
+          "looks just like the picture",
+          "just like the photo",
+          "looks like the photo",
+          "same as the picture",
+          "as described",
+          "exactly as described",
+          "just as described",
+          "as advertised",
+          "matches the description",
+          "true to the picture"
+        ],
+        "negative": [
+          "nothing like the picture",
+          "nothing like the photo",
+          "looks nothing like",
+          "different from the picture",
+          "different than the picture",
+          "different from the photo",
+          "not what was pictured",
+          "misleading picture",
+          "misleading photo",
+          "color is off",
+          "colors are off",
+          "wrong color"
+        ],
+        "exclude": []
+      }
+    },
+    {
+      "label": "size_fit",
+      "display_name": "Size & fit",
+      "description": "True to size, fits as expected.",
+      "review_cues": {
+        "domains": [
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "fits perfectly",
+          "fit perfectly",
+          "perfect fit",
+          "fits great",
+          "fits well",
+          "fit well",
+          "true to size",
+          "perfect size",
+          "just the right size",
+          "great size",
+          "good size",
+          "size is perfect",
+          "fits just right"
+        ],
+        "negative": [
+          "too small",
+          "too big",
+          "too large",
+          "too tight",
+          "too loose",
+          "smaller than expected",
+          "smaller than i expected",
+          "smaller than pictured",
+          "smaller than it looks",
+          "much smaller",
+          "bigger than expected",
+          "larger than expected",
+          "runs small",
+          "runs large",
+          "wrong size",
+          "doesn't fit",
+          "does not fit",
+          "didn't fit",
+          "did not fit"
+        ],
+        "exclude": []
+      }
+    },
+    {
+      "label": "value_for_money",
+      "display_name": "Value for money",
+      "description": "Worth the price.",
+      "review_cues": {
+        "domains": [
+          "Books",
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "great value",
+          "good value",
+          "excellent value",
+          "great price",
+          "good price",
+          "worth the money",
+          "worth every penny",
+          "worth the price",
+          "well worth",
+          "great deal",
+          "good deal",
+          "bargain",
+          "reasonably priced"
+        ],
+        "negative": [
+          "overpriced",
+          "over priced",
+          "waste of money",
+          "too expensive",
+          "rip off",
+          "ripoff",
+          "pricey",
+          "not worth the money",
+          "not worth the price"
+        ],
+        "exclude": [
+          "worth reading",
+          "well worth reading",
+          "worth a read",
+          "worth the read",
+          "worth the wait",
+          "worth the time",
+          "worth your time"
+        ]
+      }
+    },
+    {
+      "label": "fun_engagement",
+      "display_name": "Fun & engagement",
+      "description": "Recipients enjoy and keep using it.",
+      "review_cues": {
+        "domains": [
+          "Toys & Games"
+        ],
+        "positive": [
+          "so much fun",
+          "lots of fun",
+          "a lot of fun",
+          "great fun",
+          "very fun",
+          "really fun",
+          "super fun",
+          "so fun",
+          "fun to play",
+          "fun game",
+          "hours of fun",
+          "entertaining",
+          "keeps them busy",
+          "keeps him busy",
+          "keeps her busy",
+          "keeps them entertained",
+          "kept them entertained",
+          "kept him busy",
+          "kept her busy",
+          "plays with it",
+          "played with it",
+          "a blast",
+          "addictive",
+          "engaging"
+        ],
+        "negative": [
+          "boring",
+          "lost interest",
+          "loses interest",
+          "got bored",
+          "gets bored",
+          "no fun",
+          "dull",
+          "never played with",
+          "tedious"
+        ],
+        "exclude": [
+          "engaging in",
+          "engaging with"
+        ]
+      }
+    },
+    {
+      "label": "ease_of_use",
+      "display_name": "Ease of use",
+      "description": "Easy to set up, assemble or use.",
+      "review_cues": {
+        "domains": [
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "easy to use",
+          "easy to assemble",
+          "easy to put together",
+          "easy to set up",
+          "easy setup",
+          "simple to use",
+          "simple to assemble",
+          "easy to learn",
+          "easy to follow",
+          "easy to install",
+          "easy to clean",
+          "user friendly",
+          "intuitive",
+          "easy instructions"
+        ],
+        "negative": [
+          "hard to use",
+          "difficult to use",
+          "hard to assemble",
+          "difficult to assemble",
+          "hard to put together",
+          "difficult to put together",
+          "hard to figure out",
+          "difficult to figure out",
+          "hard to install",
+          "confusing",
+          "complicated",
+          "frustrating",
+          "instructions were terrible",
+          "instructions are terrible",
+          "poor instructions",
+          "no instructions"
+        ],
+        "exclude": []
+      }
+    },
+    {
+      "label": "educational_value",
+      "display_name": "Educational value",
+      "description": "Reviewers report learning from it.",
+      "review_cues": {
+        "domains": [
+          "Toys & Games"
+        ],
+        "positive": [
+          "very educational",
+          "so educational",
+          "really educational",
+          "educational value",
+          "great for learning",
+          "great learning",
+          "learned a lot",
+          "learned so much",
+          "learning a lot",
+          "helps him learn",
+          "helps her learn",
+          "helps them learn",
+          "helped him learn",
+          "helped her learn",
+          "teaches them",
+          "taught him",
+          "taught her",
+          "great teaching tool"
+        ],
+        "negative": [
+          "no educational value",
+          "didn't learn",
+          "did not learn"
+        ],
+        "exclude": []
+      }
+    },
+    {
+      "label": "engaging_read",
+      "display_name": "Engaging read",
+      "description": "Well written, hard to put down.",
+      "review_cues": {
+        "domains": [
+          "Books"
+        ],
+        "positive": [
+          "couldn't put it down",
+          "could not put it down",
+          "hard to put down",
+          "page turner",
+          "great read",
+          "good read",
+          "enjoyable read",
+          "fun read",
+          "wonderful read",
+          "well written",
+          "beautifully written",
+          "captivating",
+          "gripping",
+          "riveting",
+          "engaging",
+          "loved this book",
+          "loved the book",
+          "enjoyed this book",
+          "enjoyed the book",
+          "fascinating",
+          "well worth reading",
+          "worth reading",
+          "worth a read",
+          "worth the read"
+        ],
+        "negative": [
+          "boring",
+          "hard to get into",
+          "couldn't finish",
+          "could not finish",
+          "didn't finish",
+          "did not finish",
+          "dragged",
+          "drags on",
+          "tedious",
+          "poorly written",
+          "badly written",
+          "waste of time",
+          "not worth reading"
+        ],
+        "exclude": [
+          "engaging in",
+          "engaging with"
+        ]
+      }
+    },
+    {
+      "label": "informative",
+      "display_name": "Informative",
+      "description": "Accurate, well researched content.",
+      "review_cues": {
+        "domains": [
+          "Books"
+        ],
+        "positive": [
+          "informative",
+          "very informative",
+          "well researched",
+          "great information",
+          "good information",
+          "lots of information",
+          "a lot of information",
+          "useful information",
+          "helpful information",
+          "great resource",
+          "excellent resource",
+          "good resource",
+          "great reference",
+          "insightful",
+          "eye opening",
+          "learned a lot",
+          "learned so much",
+          "comprehensive"
+        ],
+        "negative": [
+          "outdated",
+          "out of date",
+          "inaccurate",
+          "superficial",
+          "nothing new",
+          "no new information",
+          "not much information",
+          "little information",
+          "useless",
+          "full of errors",
+          "factual errors"
+        ],
+        "exclude": []
+      }
+    },
+    {
+      "label": "gift_reception",
+      "display_name": "Gift reception",
+      "description": "Recipients' reactions when given as a gift.",
+      "review_cues": {
+        "domains": [
+          "Books",
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "she loved it",
+          "he loved it",
+          "they loved it",
+          "she loves it",
+          "he loves it",
+          "they love it",
+          "she loved them",
+          "he loved them",
+          "they loved them",
+          "she loves them",
+          "he loves them",
+          "my son loves",
+          "my daughter loves",
+          "my grandson loves",
+          "my granddaughter loves",
+          "kids love it",
+          "kids loved it",
+          "was a hit",
+          "a big hit",
+          "a huge hit",
+          "great gift",
+          "perfect gift",
+          "wonderful gift",
+          "nice gift",
+          "good gift",
+          "great present",
+          "perfect present",
+          "was thrilled",
+          "were thrilled",
+          "was delighted"
+        ],
+        "negative": [
+          "she hated it",
+          "he hated it",
+          "they hated it",
+          "didn't like it",
+          "did not like it",
+          "doesn't like it",
+          "does not like it",
+          "didn't care for it",
+          "did not care for it",
+          "not interested in it"
+        ],
+        "exclude": [
+          "great gift idea",
+          "perfect gift idea"
+        ]
+      }
+    },
+    {
+      "label": "packaging_presentation",
+      "display_name": "Packaging & presentation",
+      "description": "Arrives well packaged and presentable.",
+      "review_cues": {
+        "domains": [
+          "Books",
+          "Handmade Products",
+          "Toys & Games"
+        ],
+        "positive": [
+          "beautifully packaged",
+          "nicely packaged",
+          "well packaged",
+          "packaged well",
+          "packaged nicely",
+          "packaged beautifully",
+          "beautiful packaging",
+          "nice packaging",
+          "great packaging",
+          "lovely packaging",
+          "cute packaging",
+          "arrived in perfect condition",
+          "arrived in great condition",
+          "arrived safely",
+          "well protected",
+          "ready to gift",
+          "gift ready",
+          "gift wrapped"
+        ],
+        "negative": [
+          "arrived broken",
+          "came broken",
+          "broken on arrival",
+          "arrived damaged",
+          "came damaged",
+          "received them damaged",
+          "received it damaged",
+          "arrived cracked",
+          "came cracked",
+          "poorly packaged",
+          "badly packaged",
+          "damaged packaging",
+          "box was damaged",
+          "box was crushed",
+          "crushed box",
+          "box was torn",
+          "dented"
+        ],
+        "exclude": []
+      }
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.2.0",
+      "changes": [
+        "review_cues for the 12 quality aspects",
+        "review_inference settings (negation, hedges, contrast, aggregation policy)",
+        "context_exclude (durability ignores packaging/shipping clauses)",
+        "cue exclusions for ambiguous phrases (engaging in, worth reading, break in)",
+        "durability ignores injuries (broken wrist, broke his arm)"
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "changes": [
+        "component_guard on material aspects",
+        "cross-sell sentences ignored in features",
+        "excludes for instructions and surface finishes"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "changes": [
+        "initial 16 attribute + 12 quality aspects"
+      ]
+    }
+  ],
+  "review_inference": {
+    "classifier": "review_rules",
+    "notes": [
+      "Review cues are matched only in review text, never in seller listing text.",
+      "Star ratings are never evidence on their own. They are recorded on each SUPPORTS edge, and a positive mention in a review rated at or below conflict_max_rating is flagged rating_conflict and excluded from aggregation.",
+      "A positive cue that is negated in its clause becomes negative evidence. A negated negative cue ('didn't break') becomes neutral, not positive. Hedged or questioning sentences ('hope it lasts', 'is it sturdy?') are neutral.",
+      "Sentences are split into clauses at contrast words (but, however, although...), so 'cute but broke in a week' yields separate evidence per clause.",
+      "A review with positive and negative evidence for the same aspect is 'mixed'. Mixed reviews never count as support.",
+      "Negation and hedges are scoped to the clause up to the nearest comma before the cue, so 'If you want X, this kit is overpriced' is still negative.",
+      "context_exclude: an aspect is skipped for a clause that mentions one of these words (durability is not judged from clauses about the box, packaging or shipping; see packaging_presentation)."
+    ],
+    "confidence": {
+      "direct": 0.7,
+      "negated_positive": 0.6,
+      "neutral": 0.5
+    },
+    "negators": [
+      "not",
+      "no",
+      "never",
+      "isn't",
+      "wasn't",
+      "aren't",
+      "weren't",
+      "doesn't",
+      "didn't",
+      "don't",
+      "won't",
+      "can't",
+      "cannot",
+      "couldn't",
+      "wouldn't",
+      "hardly",
+      "barely",
+      "nothing",
+      "neither",
+      "nor",
+      "hasn't",
+      "haven't",
+      "hadn't",
+      "shouldn't",
+      "isnt",
+      "wasnt",
+      "arent",
+      "werent",
+      "doesnt",
+      "didnt",
+      "dont",
+      "wont",
+      "cant",
+      "couldnt",
+      "wouldnt",
+      "hasnt",
+      "havent",
+      "hadnt"
+    ],
+    "negation_window_tokens": 3,
+    "negation_exceptions": [
+      "not only",
+      "no doubt"
+    ],
+    "hedges": [
+      "hope",
+      "hopefully",
+      "hoping",
+      "if",
+      "we'll see",
+      "we will see",
+      "time will tell",
+      "not sure",
+      "unsure",
+      "wonder",
+      "wondering",
+      "would be",
+      "would have been",
+      "thought it would",
+      "expected it to",
+      "supposed to",
+      "wish",
+      "wished",
+      "looked like it would"
+    ],
+    "contrast_markers": [
+      "but",
+      "however",
+      "although",
+      "though",
+      "except",
+      "yet",
+      "unfortunately"
+    ],
+    "aggregation": {
+      "min_positive_reviews": 2,
+      "positive_to_critical_ratio": 2.0,
+      "concern_min_negative_reviews": 2,
+      "conflict_max_rating": 2,
+      "description": "Product -HAS_ASPECT-> quality aspect only when at least min_positive_reviews distinct reviews (distinct text) give positive evidence without a rating conflict, and positive reviews number at least positive_to_critical_ratio times the negative plus mixed reviews. Negative-majority aspects become review concerns on the product, never HAS_ASPECT."
+    }
+  }
+}

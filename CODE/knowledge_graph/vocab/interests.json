@@ -1,0 +1,1251 @@
+{
+  "vocabulary": "interests",
+  "version": "1.1.0",
+  "notes": [
+    "Shared label set for KG MATCHES edges and LLM constraint extraction (coordinate changes with the conversation component owner).",
+    "Labels are coarse recipient interests. Recipient types, occasions, age and budget belong to the conversation state and must not be added here.",
+    "Confidence values are heuristic rule scores, not calibrated probabilities. An edge with several evidence items takes the max (no noisy-OR).",
+    "Phrases are matched case-insensitively on whole words; a space also matches a hyphen. A match overlapping an 'exclude' phrase is discarded.",
+    "Books: category rules plus a few explicit books_title_phrases only. Book features and all descriptions are never used for interests.",
+    "Feature text only corroborates (feature_evidence = corroborating_only). An interest supported by feature phrases alone is an incidental mention and creates no MATCHES edge.",
+    "text_suppression: in Handmade/Toys, products whose title head (text before the first separator or bracket) names a party/event supply or nursery/infant product get no title-, feature- or Theme-based interests. Their motif is decoration for an event or a baby's room, not the recipient's interest. Category rules still apply. For party_supplies, a phrase introduced by \"for\"/\"as\" (\"Coin Toys for Party Favor\") is a suggested use and does not count.",
+    "details.Theme values listing more than theme_max_values comma-separated motifs are ignored.",
+    "Each MATCHES edge carries match_type: primary (category rule, or a Books title phrase) or themed (motif, licensed character or design found in title/Theme)."
+  ],
+  "confidence": {
+    "category": 0.9,
+    "details_theme": 0.7,
+    "title": 0.7,
+    "title_books": 0.6,
+    "features": 0.5
+  },
+  "feature_evidence": "corroborating_only",
+  "theme_max_values": 2,
+  "text_suppression": {
+    "party_supplies": {
+      "description": "Event supplies bought by a host (favors, invitations, toppers, balloons, decorations).",
+      "use_suggestion_exempt": true,
+      "phrases": [
+        "party favor",
+        "party favors",
+        "party supplies",
+        "party supply",
+        "party decorations",
+        "party decoration",
+        "birthday decorations",
+        "birthday decoration",
+        "party invitations",
+        "birthday invitations",
+        "invitations",
+        "cake topper",
+        "cake toppers",
+        "cupcake topper",
+        "cupcake toppers",
+        "balloon",
+        "balloons",
+        "balloon garland",
+        "favor bags",
+        "goodie bags",
+        "treat bags",
+        "party bags",
+        "party pack",
+        "tableware",
+        "table toppers",
+        "centerpieces",
+        "party banner",
+        "birthday banner"
+      ]
+    },
+    "infant_nursery": {
+      "description": "Nursery decor and infant products; motifs are chosen for a baby room, not a recipient interest.",
+      "use_suggestion_exempt": false,
+      "phrases": [
+        "nursery",
+        "newborn",
+        "infant",
+        "infants"
+      ]
+    }
+  },
+  "text_domains": [
+    "Handmade Products",
+    "Toys & Games"
+  ],
+  "interests": [
+    {
+      "label": "history",
+      "display_name": "History",
+      "description": "History, historical events and military history.",
+      "aliases": [
+        "history buff",
+        "loves history",
+        "military history",
+        "civil war buff"
+      ],
+      "category": [
+        {
+          "segment": "History",
+          "domains": [
+            "Books"
+          ]
+        },
+        {
+          "segment": "Military",
+          "ancestor": "History"
+        }
+      ],
+      "phrases": [
+        "civil war",
+        "world war",
+        "world war ii",
+        "wwii",
+        "ww2"
+      ],
+      "books_title_phrases": [
+        "civil war",
+        "world war",
+        "wwii"
+      ],
+      "match_features": false
+    },
+    {
+      "label": "mystery_thriller",
+      "display_name": "Mystery & Thriller",
+      "description": "Mystery, crime, detective and suspense stories or games.",
+      "aliases": [
+        "mystery novels",
+        "thrillers",
+        "true crime",
+        "whodunits"
+      ],
+      "category": [
+        "Mystery, Thriller & Suspense",
+        {
+          "segment": "Mystery",
+          "domains": [
+            "Books"
+          ]
+        },
+        "Thrillers & Suspense"
+      ],
+      "phrases": [
+        "murder mystery",
+        "detective",
+        "whodunit"
+      ],
+      "match_features": false
+    },
+    {
+      "label": "scifi_fantasy",
+      "display_name": "Sci-Fi & Fantasy",
+      "description": "Science fiction and fantasy worlds, dragons, wizards.",
+      "aliases": [
+        "sci-fi fan",
+        "fantasy fan",
+        "dragons",
+        "wizards",
+        "tolkien"
+      ],
+      "category": [
+        "Science Fiction & Fantasy",
+        {
+          "segment": "Fantasy",
+          "domains": [
+            "Books"
+          ]
+        },
+        {
+          "segment": "Science Fiction",
+          "domains": [
+            "Books"
+          ]
+        }
+      ],
+      "theme": [
+        "Fantasy"
+      ],
+      "phrases": [
+        "dragon",
+        "dragons",
+        "wizard",
+        "wizards",
+        "sci-fi",
+        "science fiction"
+      ],
+      "suppress_text_in_categories": [
+        "Costumes",
+        "Role Play & Dress Up"
+      ]
+    },
+    {
+      "label": "romance",
+      "display_name": "Romance",
+      "description": "Romance fiction.",
+      "aliases": [
+        "romance novels",
+        "love stories"
+      ],
+      "category": [
+        {
+          "segment": "Romance",
+          "domains": [
+            "Books"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "poetry_literature",
+      "display_name": "Poetry & Literature",
+      "description": "Poetry, short stories, anthologies and literary criticism.",
+      "aliases": [
+        "poetry",
+        "classic literature",
+        "literary fiction"
+      ],
+      "category": [
+        "Poetry",
+        "Short Stories & Anthologies",
+        {
+          "segment": "History & Criticism",
+          "ancestor": "Literature & Fiction"
+        }
+      ],
+      "books_title_phrases": [
+        "poems",
+        "poetry"
+      ]
+    },
+    {
+      "label": "biography_memoir",
+      "display_name": "Biography & Memoir",
+      "description": "Biographies, memoirs and autobiographies.",
+      "aliases": [
+        "biographies",
+        "memoirs",
+        "true stories"
+      ],
+      "category": [
+        "Biographies & Memoirs"
+      ],
+      "books_title_phrases": [
+        "memoir",
+        "biography",
+        "autobiography"
+      ]
+    },
+    {
+      "label": "horror_spooky",
+      "display_name": "Horror",
+      "description": "Horror fiction, Lovecraftian and zombie themes. Halloween itself is an occasion, not an interest.",
+      "aliases": [
+        "horror fan",
+        "scary stories",
+        "stephen king",
+        "lovecraft"
+      ],
+      "category": [
+        "Horror"
+      ],
+      "phrases": [
+        "horror",
+        "zombie",
+        "zombies",
+        "lovecraft",
+        "lovecraftian"
+      ],
+      "books_title_phrases": [
+        "lovecraft"
+      ],
+      "match_features": false,
+      "suppress_text_in_categories": [
+        "Party Supplies",
+        "Costumes",
+        "Dress Up & Pretend Play",
+        "Role Play & Dress Up"
+      ]
+    },
+    {
+      "label": "humor",
+      "display_name": "Humor",
+      "description": "Comedy, satire, gag gifts and practical jokes.",
+      "aliases": [
+        "funny",
+        "jokes",
+        "pranks",
+        "comedy"
+      ],
+      "category": [
+        {
+          "segment": "Humor",
+          "domains": [
+            "Books"
+          ]
+        },
+        "Humor & Satire",
+        "Gag Toys & Practical Jokes"
+      ],
+      "phrases": [
+        "gag gift",
+        "gag gifts",
+        "prank",
+        "pranks",
+        "practical joke",
+        "practical jokes",
+        "whoopee cushion"
+      ]
+    },
+    {
+      "label": "faith_spirituality",
+      "display_name": "Faith & Spirituality",
+      "description": "Religious faith and spiritual practice. Occult & Paranormal is deliberately not mapped.",
+      "aliases": [
+        "christian",
+        "religious",
+        "faith",
+        "spiritual",
+        "church"
+      ],
+      "category": [
+        "Christian Books & Bibles",
+        "Christianity",
+        "Bibles",
+        "Islam",
+        "Judaism",
+        "Buddhism",
+        "Hinduism",
+        "New Age & Spirituality",
+        "Prayer & Meditation Beads",
+        {
+          "segment": "Religion & Spirituality",
+          "leaf_only": true
+        }
+      ],
+      "phrases": [
+        "bible",
+        "bible verse",
+        "scripture",
+        "rosary",
+        "christian",
+        "prayer",
+        "psalm",
+        "jesus"
+      ],
+      "books_title_phrases": [
+        "bible",
+        "devotional"
+      ]
+    },
+    {
+      "label": "science_tech",
+      "display_name": "Science & Technology",
+      "description": "Science, math, engineering, computing, robotics and STEM kits.",
+      "aliases": [
+        "science",
+        "stem",
+        "engineer",
+        "coding",
+        "tech",
+        "robotics",
+        "math"
+      ],
+      "category": [
+        {
+          "segment": "Science & Math",
+          "domains": [
+            "Books"
+          ]
+        },
+        {
+          "segment": "Engineering",
+          "ancestor": "Engineering & Transportation"
+        },
+        "Computers & Technology",
+        "STEM Toys",
+        "Science Kits & Toys"
+      ],
+      "phrases": [
+        "chemistry set",
+        "science kit",
+        "coding",
+        "robot kit",
+        "robotics",
+        "microscope"
+      ],
+      "match_features": false
+    },
+    {
+      "label": "space_astronomy",
+      "display_name": "Space & Astronomy",
+      "description": "Outer space, planets, astronauts and astronomy.",
+      "aliases": [
+        "space",
+        "astronomy",
+        "planets",
+        "astronauts",
+        "nasa"
+      ],
+      "category": [
+        "Astronomy & Space Science",
+        "Astronomy"
+      ],
+      "phrases": [
+        "astronaut",
+        "astronauts",
+        "planets",
+        "solar system",
+        "outer space",
+        "space themed",
+        "space theme",
+        "nasa",
+        "rocket ship",
+        "spaceship",
+        "telescope",
+        "astronomy"
+      ],
+      "books_title_phrases": [
+        "astronomy",
+        "solar system",
+        "astronaut",
+        "astronauts"
+      ]
+    },
+    {
+      "label": "dinosaurs",
+      "display_name": "Dinosaurs",
+      "description": "Dinosaurs and prehistoric creatures.",
+      "aliases": [
+        "dinosaurs",
+        "dino",
+        "t-rex",
+        "jurassic"
+      ],
+      "phrases": [
+        "dinosaur",
+        "dinosaurs",
+        "dino",
+        "t-rex",
+        "t rex",
+        "triceratops",
+        "velociraptor",
+        "brontosaurus",
+        "stegosaurus",
+        "jurassic"
+      ],
+      "books_title_phrases": [
+        "dinosaur",
+        "dinosaurs"
+      ]
+    },
+    {
+      "label": "animals_wildlife",
+      "display_name": "Animals & Wildlife",
+      "description": "Wild, farm and sea animals; birds. Dogs and cats have their own labels.",
+      "aliases": [
+        "animal lover",
+        "wildlife",
+        "birds",
+        "horses",
+        "ocean animals"
+      ],
+      "category": [
+        {
+          "segment": "Animals",
+          "ancestor": "Children's Books"
+        }
+      ],
+      "theme": [
+        "Animal",
+        "Animals"
+      ],
+      "phrases": [
+        "wildlife",
+        "safari",
+        "jungle animals",
+        "zoo animals",
+        "farm animals",
+        "sea animals",
+        "ocean animals",
+        "shark",
+        "sharks",
+        "owl",
+        "owls",
+        "elephant",
+        "elephants",
+        "horse",
+        "horses",
+        "bird watching",
+        "birdwatching",
+        "birds"
+      ],
+      "books_title_phrases": [
+        "birds",
+        "wildlife",
+        "bird watching"
+      ],
+      "match_features": false,
+      "exclude": [
+        "dark horse",
+        "scare birds"
+      ]
+    },
+    {
+      "label": "dogs",
+      "display_name": "Dogs",
+      "description": "Dog lovers and dog owners.",
+      "aliases": [
+        "dog lover",
+        "dog mom",
+        "dog dad",
+        "puppy",
+        "has a dog"
+      ],
+      "category": [
+        {
+          "segment": "Dogs",
+          "ancestor": "Pet Supplies"
+        }
+      ],
+      "phrases": [
+        "dog",
+        "dogs",
+        "puppy",
+        "puppies",
+        "dog lover",
+        "dog lovers",
+        "dog mom",
+        "dog dad",
+        "corgi",
+        "dachshund",
+        "golden retriever",
+        "labrador",
+        "pug",
+        "french bulldog",
+        "paw print"
+      ],
+      "exclude": [
+        "hot dog",
+        "hot dogs",
+        "dog tag",
+        "dog tags",
+        "dog ear",
+        "dog eared"
+      ],
+      "suppress_text_in_categories": [
+        "Remote & App Controlled Vehicle Parts"
+      ]
+    },
+    {
+      "label": "cats",
+      "display_name": "Cats",
+      "description": "Cat lovers and cat owners.",
+      "aliases": [
+        "cat lover",
+        "cat mom",
+        "cat lady",
+        "kitten",
+        "has a cat"
+      ],
+      "category": [
+        {
+          "segment": "Cats",
+          "ancestor": "Pet Supplies"
+        }
+      ],
+      "phrases": [
+        "cat",
+        "cats",
+        "kitten",
+        "kittens",
+        "kitty",
+        "cat lover",
+        "cat lovers",
+        "cat mom",
+        "cat lady"
+      ],
+      "exclude": [
+        "cat's eye",
+        "cats eye",
+        "cat eye",
+        "hello kitty",
+        "cat and mouse"
+      ]
+    },
+    {
+      "label": "cooking_baking",
+      "display_name": "Cooking & Baking",
+      "description": "Cooking, baking and recipes. Kitchenware alone and toy kitchens do not count.",
+      "aliases": [
+        "cooking",
+        "baking",
+        "home chef",
+        "foodie",
+        "recipes"
+      ],
+      "category": [
+        "Cookbooks, Food & Wine"
+      ],
+      "phrases": [
+        "chef",
+        "baking",
+        "baker",
+        "bakers",
+        "cookbook",
+        "recipe",
+        "recipes",
+        "cooking",
+        "sourdough"
+      ],
+      "books_title_phrases": [
+        "cookbook",
+        "recipes"
+      ],
+      "suppress_text_in_categories": [
+        "Pretend Play",
+        "Kitchen Sets & Play Food"
+      ],
+      "exclude": [
+        "baking soda",
+        "baking powder"
+      ]
+    },
+    {
+      "label": "coffee_tea",
+      "display_name": "Coffee & Tea",
+      "description": "Coffee and tea enthusiasts.",
+      "aliases": [
+        "coffee lover",
+        "tea lover",
+        "caffeine",
+        "espresso"
+      ],
+      "phrases": [
+        "coffee",
+        "coffee lover",
+        "coffee lovers",
+        "espresso",
+        "latte",
+        "barista",
+        "tea lover",
+        "tea lovers",
+        "teapot",
+        "tea cup",
+        "teacup",
+        "tea set",
+        "matcha"
+      ],
+      "exclude": [
+        "coffee table",
+        "coffee shop",
+        "coffeehouse",
+        "tea party",
+        "teacup chihuahua",
+        "teacup yorkie",
+        "teacup puppy",
+        "teacup pig"
+      ],
+      "suppress_text_in_categories": [
+        "Pretend Play",
+        "Kitchen Sets & Play Food"
+      ]
+    },
+    {
+      "label": "gardening_plants",
+      "display_name": "Gardening & Plants",
+      "description": "Gardening, houseplants and succulents. Garden decor such as yard signs does not count.",
+      "aliases": [
+        "gardener",
+        "gardening",
+        "plant lover",
+        "plant mom",
+        "green thumb"
+      ],
+      "category": [
+        "Gardening & Landscape Design",
+        "Garden Stakes",
+        "Planters"
+      ],
+      "phrases": [
+        "gardening",
+        "gardener",
+        "gardeners",
+        "succulent",
+        "succulents",
+        "plant lover",
+        "plant lovers",
+        "plant mom",
+        "plant lady",
+        "houseplant",
+        "houseplants",
+        "green thumb"
+      ],
+      "books_title_phrases": [
+        "gardening"
+      ]
+    },
+    {
+      "label": "outdoors_camping",
+      "display_name": "Outdoors & Camping",
+      "description": "Camping, hiking, backpacking and national parks.",
+      "aliases": [
+        "camping",
+        "hiking",
+        "outdoorsy",
+        "backpacking",
+        "nature lover"
+      ],
+      "category": [
+        "Hiking & Camping",
+        "Camping & Hiking"
+      ],
+      "phrases": [
+        "camping",
+        "hiking",
+        "hiker",
+        "hikers",
+        "campfire",
+        "national park",
+        "national parks",
+        "backpacking"
+      ],
+      "exclude": [
+        "national park style"
+      ],
+      "match_features": false
+    },
+    {
+      "label": "fishing_hunting",
+      "display_name": "Fishing & Hunting",
+      "description": "Fishing and hunting.",
+      "aliases": [
+        "fishing",
+        "fisherman",
+        "angler",
+        "hunting",
+        "hunter"
+      ],
+      "category": [
+        "Hunting & Fishing",
+        {
+          "segment": "Fishing",
+          "ancestor": "Sports & Outdoors"
+        }
+      ],
+      "phrases": [
+        "fishing",
+        "fisherman",
+        "fly fishing",
+        "fishing lure",
+        "fishing lures",
+        "bass fishing",
+        "trout",
+        "hunting",
+        "hunter",
+        "deer hunting",
+        "duck hunting"
+      ],
+      "books_title_phrases": [
+        "fly fishing",
+        "fishing lure",
+        "fishing lures"
+      ],
+      "exclude": [
+        "treasure hunting",
+        "egg hunting",
+        "ghost hunting",
+        "bargain hunting",
+        "job hunting",
+        "ghost hunter",
+        "treasure hunter",
+        "zombie hunter"
+      ],
+      "suppress_text_in_categories": [
+        "Dollhouse Accessories",
+        "Pretend Play"
+      ]
+    },
+    {
+      "label": "sports_fitness",
+      "display_name": "Sports & Fitness",
+      "description": "Playing or following sports; fitness and yoga.",
+      "aliases": [
+        "sports fan",
+        "athlete",
+        "soccer",
+        "baseball",
+        "golf",
+        "yoga",
+        "gym"
+      ],
+      "category": [
+        "Individual Sports",
+        "Team Sports",
+        "Toy Sports",
+        "Sports & Fitness",
+        {
+          "segment": "Golf",
+          "ancestor": "Sports & Outdoors"
+        }
+      ],
+      "phrases": [
+        "soccer",
+        "baseball",
+        "basketball",
+        "football",
+        "golf",
+        "golfer",
+        "golfers",
+        "hockey",
+        "tennis",
+        "volleyball",
+        "softball",
+        "yoga",
+        "workout",
+        "fitness",
+        "wrestling"
+      ],
+      "exclude": [
+        "baseball cap",
+        "baseball caps",
+        "baseball hat",
+        "baseball hats"
+      ]
+    },
+    {
+      "label": "travel",
+      "display_name": "Travel",
+      "description": "Travelers and travel planning. Keychains and badge reels under Luggage & Travel Gear do not count.",
+      "aliases": [
+        "traveler",
+        "travel lover",
+        "wanderlust",
+        "globetrotter"
+      ],
+      "category": [
+        {
+          "segment": "Travel",
+          "ancestor": "Books"
+        },
+        "Travel Accessories",
+        "Passport Covers & Wallets"
+      ],
+      "phrases": [
+        "passport",
+        "passport cover",
+        "passport holder",
+        "wanderlust",
+        "travel journal",
+        "world map",
+        "scratch off map",
+        "luggage tag",
+        "luggage tags",
+        "travel lover",
+        "travel lovers"
+      ]
+    },
+    {
+      "label": "music",
+      "display_name": "Music",
+      "description": "Playing or loving music and instruments.",
+      "aliases": [
+        "musician",
+        "music lover",
+        "guitarist",
+        "plays piano",
+        "band"
+      ],
+      "category": [
+        {
+          "segment": "Music",
+          "ancestor": "Arts & Photography"
+        },
+        "Musical Instruments"
+      ],
+      "phrases": [
+        "guitar",
+        "guitars",
+        "guitarist",
+        "piano",
+        "pianist",
+        "musician",
+        "musicians",
+        "music lover",
+        "music lovers",
+        "music notes",
+        "drum",
+        "drums",
+        "drummer",
+        "violin",
+        "ukulele",
+        "saxophone",
+        "trumpet",
+        "vinyl record",
+        "vinyl records"
+      ],
+      "books_title_phrases": [
+        "music theory",
+        "guitar",
+        "piano"
+      ],
+      "exclude": [
+        "music box"
+      ]
+    },
+    {
+      "label": "art_drawing",
+      "display_name": "Art & Drawing",
+      "description": "Making or studying visual art: drawing, painting, design. Buying wall art alone does not count.",
+      "aliases": [
+        "artist",
+        "painter",
+        "drawing",
+        "painting",
+        "art lover"
+      ],
+      "category": [
+        "Drawing & Painting Supplies",
+        "Painting, Drawing & Art Supplies",
+        "Easels",
+        {
+          "segment": "Graphic Design",
+          "ancestor": "Arts & Photography"
+        },
+        {
+          "segment": "Painting",
+          "ancestor": "Arts & Photography"
+        },
+        {
+          "segment": "History & Criticism",
+          "ancestor": "Arts & Photography"
+        },
+        {
+          "segment": "Individual Artists",
+          "ancestor": "Arts & Photography"
+        }
+      ],
+      "phrases": [
+        "sketchbook",
+        "sketch book",
+        "watercolor set",
+        "watercolor kit",
+        "paint set",
+        "painting kit",
+        "art supplies",
+        "colored pencils",
+        "drawing kit",
+        "how to draw"
+      ],
+      "books_title_phrases": [
+        "how to draw"
+      ],
+      "match_features": false
+    },
+    {
+      "label": "photography",
+      "display_name": "Photography",
+      "description": "Photographers and camera enthusiasts. A photographic print alone does not count.",
+      "aliases": [
+        "photographer",
+        "camera",
+        "photography hobby"
+      ],
+      "category": [
+        "Photography & Video",
+        "Camera & Photo Accessories"
+      ],
+      "phrases": [
+        "photographer",
+        "photographers",
+        "photography lover",
+        "camera strap",
+        "camera bag",
+        "film camera",
+        "lens cap"
+      ],
+      "books_title_phrases": [
+        "photography"
+      ]
+    },
+    {
+      "label": "crafts_diy",
+      "display_name": "Crafts & DIY",
+      "description": "Doing crafts: knitting, sewing, quilting, craft kits and supplies. A product that is itself crocheted or handmade does not count.",
+      "aliases": [
+        "crafter",
+        "knitter",
+        "sewing",
+        "quilter",
+        "diy",
+        "crafty"
+      ],
+      "category": [
+        "Crafts & Hobbies",
+        "Craft Kits",
+        "Activities, Crafts & Games"
+      ],
+      "phrases": [
+        "knitting",
+        "knitting needle",
+        "knitting needles",
+        "knit kit",
+        "knitting tags",
+        "crochet hook",
+        "crochet hooks",
+        "crochet kit",
+        "crochet pattern",
+        "crochet labels",
+        "sewing kit",
+        "sewing machine",
+        "sewing pattern",
+        "quilting",
+        "quilter",
+        "quilters",
+        "embroidery kit",
+        "embroidery hoop",
+        "cross stitch kit",
+        "cross stitch pattern",
+        "diy kit",
+        "craft kit",
+        "needlepoint kit",
+        "scrapbooking",
+        "yarn"
+      ],
+      "books_title_phrases": [
+        "knitting",
+        "crochet",
+        "quilting",
+        "sewing",
+        "embroidery",
+        "cross stitch"
+      ]
+    },
+    {
+      "label": "tabletop_games",
+      "display_name": "Board & Card Games",
+      "description": "Board games, card games, tabletop RPGs and collectible card games.",
+      "aliases": [
+        "board games",
+        "card games",
+        "game night",
+        "d&d",
+        "tabletop"
+      ],
+      "category": [
+        "Board Games",
+        "Card Games",
+        "Game Accessories",
+        "Casino Equipment",
+        "Stacking Games"
+      ],
+      "phrases": [
+        "board game",
+        "board games",
+        "card game",
+        "card games",
+        "tabletop",
+        "dungeons and dragons",
+        "dungeons & dragons",
+        "d&d",
+        "dnd",
+        "magic the gathering",
+        "yu-gi-oh",
+        "pokemon tcg",
+        "rpg dice",
+        "dice set",
+        "chess",
+        "chess set"
+      ]
+    },
+    {
+      "label": "puzzles",
+      "display_name": "Puzzles",
+      "description": "Jigsaw puzzles, brain teasers, crosswords and logic puzzles.",
+      "aliases": [
+        "puzzles",
+        "jigsaw",
+        "crosswords",
+        "sudoku",
+        "brain teasers"
+      ],
+      "category": [
+        "Puzzles",
+        "Jigsaw Puzzles",
+        "Brain Teasers",
+        {
+          "segment": "Puzzles & Games",
+          "ancestor": "Humor & Entertainment"
+        }
+      ],
+      "phrases": [
+        "jigsaw",
+        "jigsaw puzzle",
+        "puzzle",
+        "puzzles",
+        "brain teaser",
+        "brain teasers",
+        "crossword",
+        "sudoku",
+        "word search",
+        "maze",
+        "mazes",
+        "rubik"
+      ],
+      "books_title_phrases": [
+        "crossword",
+        "crosswords",
+        "sudoku",
+        "word search",
+        "mazes",
+        "puzzle book",
+        "logic puzzles"
+      ]
+    },
+    {
+      "label": "vehicles_cars",
+      "display_name": "Vehicles & Cars",
+      "description": "Cars, trucks, trains, RC vehicles and transportation. Car decals and accessories do not count.",
+      "aliases": [
+        "car guy",
+        "car enthusiast",
+        "trucks",
+        "trains",
+        "rc cars"
+      ],
+      "category": [
+        {
+          "segment": "Automotive",
+          "ancestor": "Engineering & Transportation"
+        },
+        {
+          "segment": "Transportation",
+          "ancestor": "Engineering & Transportation"
+        },
+        {
+          "segment": "Vehicles",
+          "domains": [
+            "Toys & Games"
+          ]
+        },
+        "Remote & App Controlled Vehicles",
+        "Remote & App Controlled Vehicle Parts",
+        "Cars, Trucks, Boats & Planes",
+        "Play Figure Vehicles",
+        "Die-Cast Vehicles"
+      ],
+      "phrases": [
+        "diecast",
+        "die-cast",
+        "die cast",
+        "hot wheels",
+        "matchbox",
+        "monster truck",
+        "rc car",
+        "rc truck",
+        "race car",
+        "racecar",
+        "train set",
+        "model train",
+        "tractor",
+        "fire truck"
+      ],
+      "suppress_text_in_categories": [
+        "Car & Vehicle Accessories",
+        "Decals"
+      ]
+    },
+    {
+      "label": "superheroes_comics",
+      "display_name": "Superheroes & Comics",
+      "description": "Comic books, graphic novels and superheroes.",
+      "aliases": [
+        "marvel fan",
+        "dc fan",
+        "superheroes",
+        "comic books",
+        "graphic novels"
+      ],
+      "category": [
+        "Comics & Graphic Novels",
+        "Graphic Novels"
+      ],
+      "theme": [
+        "Superhero"
+      ],
+      "phrases": [
+        "superhero",
+        "superheroes",
+        "marvel",
+        "avengers",
+        "batman",
+        "spider-man",
+        "spiderman",
+        "superman",
+        "wonder woman",
+        "dc comics",
+        "x-men",
+        "comic book",
+        "comic books"
+      ],
+      "exclude": [
+        "marvel at"
+      ],
+      "match_features": false
+    },
+    {
+      "label": "anime_manga",
+      "display_name": "Anime & Manga",
+      "description": "Japanese animation and manga franchises (including Pokemon).",
+      "aliases": [
+        "anime fan",
+        "manga",
+        "otaku",
+        "pokemon",
+        "studio ghibli"
+      ],
+      "category": [
+        "Manga"
+      ],
+      "phrases": [
+        "anime",
+        "manga",
+        "naruto",
+        "demon slayer",
+        "one piece",
+        "dragon ball",
+        "chainsaw man",
+        "my hero academia",
+        "pokemon",
+        "pokémon",
+        "studio ghibli",
+        "totoro",
+        "sailor moon",
+        "yu-gi-oh",
+        "yugioh"
+      ],
+      "books_title_phrases": [
+        "manga",
+        "anime",
+        "pokemon",
+        "pokémon"
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "version": "1.1.0",
+      "changes": [
+        "feature_evidence=corroborating_only",
+        "text_suppression for party_supplies and infant_nursery",
+        "theme_max_values=2",
+        "anime_manga: removed details.Theme=Anime (seller-entered on non-anime card games); added yu-gi-oh phrases",
+        "matcher guards (all text rules): runs of 5+ short list items, compatibility clauses (fit for / compatible with), cross-sell sentences in features"
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "changes": [
+        "initial 31 labels"
+      ]
+    }
+  ]
+}
