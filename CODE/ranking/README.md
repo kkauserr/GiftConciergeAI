@@ -93,8 +93,8 @@ out = ranker.recommend(constraints, semantic_results=semantic_list)
 - **Quality**: `(n * avg + m * C) / (n + m)` with C = corpus mean rating and m = median rating count. One 5-star rating counts for less than thousands of 4.7s.
 - **Popularity**: `log(1 + rating_count)` divided by the 99th-percentile value.
 - **Budget fit**: highest when price is about 70% of `budget_max` (or the middle of the range if `budget_min` is given). Neutral when there's no budget.
-- **Default weights**: relevance 0.55, quality 0.20, popularity 0.10, budget fit 0.15. Replace them after tuning.
-- **MMR** (λ = 0.7) re-orders the top 50. Item similarity = 0.6 text cosine + 0.25 same category + 0.15 same domain.
+- **Default weights** (tuned on the 12 labelled dev queries, 900-product sample): relevance 0.7, quality 0.1, popularity 0.0, budget fit 0.2. Re-tune on the larger subset.
+- **MMR** (λ = 0.9, tuned) re-orders the top 50. Item similarity = 0.6 text cosine + 0.25 same category + 0.15 same domain.
 
 ## Tuning the weights
 
@@ -103,6 +103,18 @@ python -m CODE.ranking.tune_weights pool                      # writes CODE/rank
 # fill the grade column: 2 = great gift, 1 = okay, 0 = not relevant
 python -m CODE.ranking.tune_weights tune
 ```
+
+## Current results (900-product sample, 12 dev queries, tuned weights)
+
+| Config | Constraint satisfaction | nDCG@10 | P@10 | Intra-list similarity |
+|---|---:|---:|---:|---:|
+| BM25 only | 0.817 | 0.654 | 0.592 | 0.283 |
+| TF-IDF only | 0.775 | 0.583 | 0.525 | 0.274 |
+| BM25 + filters | 1.000 | 0.709 | 0.633 | 0.262 |
+| Full (filters + ranking + MMR) | 1.000 | 0.737 | 0.633 | 0.258 |
+| Full without MMR | 1.000 | 0.756 | 0.658 | 0.273 |
+
+MMR costs some nDCG but makes the list more varied. nDCG doesn't reward variety, so this trade-off is expected. These are development numbers only: the sample is small and the same queries were used for tuning.
 
 ## Full corpus (on Sol)
 
