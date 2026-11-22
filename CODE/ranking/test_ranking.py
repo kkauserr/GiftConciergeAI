@@ -31,6 +31,23 @@ def test_exclusions():
     assert check_product(ROW, {"exclusions": ["ox"]}) == []
 
 
+def test_kids_items_for_adults():
+    kid = {**ROW, "age_min": None, "title": "Coffee Costume for Kids"}
+    assert check_product(kid, {"recipient_age": 22}) == ["kids_item"]
+    assert check_product(kid, {"recipient_age": 8}) == []
+    assert check_product(kid, {}) == []
+    assert check_product({**kid, "title": "Baby Shower Bingo"}, {"recipient_age": 30, "occasion": "baby shower"}) == []
+    book = {**ROW, "age_min": None, "title": "Edda", "categories": "Books > Children's Books"}
+    assert check_product(book, {"recipient_age": 50}) == ["kids_item"]
+
+
+def test_broad_exclusions_expand():
+    costume = {**ROW, "title": "Cappuccino Costume", "categories": "Toys & Games > Costumes"}
+    assert check_product(costume, {"exclusions": ["wearable"]}) == ["excluded:wearable"]
+    rings = {**ROW, "domain": "Books", "title": "The Lord of the Rings", "categories": "Books > Fantasy"}
+    assert check_product(rings, {"exclusions": ["wearable"]}) == []
+
+
 def test_rrf_rewards_agreement():
     fused, ranks = rrf({"bm25": [("a", 9), ("b", 5), ("c", 1)], "semantic": [("d", 0.9), ("b", 0.8), ("e", 0.1)]})
     order = [a for a, _ in fused]

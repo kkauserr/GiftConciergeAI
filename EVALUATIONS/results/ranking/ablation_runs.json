@@ -22260,5 +22260,2331 @@
     }
    }
   ]
+ },
+ "with_interest_split": {
+  "dev01": [
+   {
+    "rank": 1,
+    "parent_asin": "B092QQ8HVY",
+    "title": "Mocoosy 18 Pack Dinosaur Party Favor Bags with Handles - Dinosaur Gift Bags for Kids Birthday, Dino Goodie Candy Treat Bags for Boys Girls Dinosaur Birthday Party Supplies Rainbow Colors",
+    "domain": "Toys & Games",
+    "price": 15.99,
+    "average_rating": 4.7,
+    "rating_number": 513,
+    "final_score": 0.9256,
+    "signals": {
+     "relevance": 0.9619,
+     "quality": 0.9224,
+     "popularity": 0.767,
+     "budget_fit": 0.8
+    },
+    "sources": {
+     "bm25_rank": 2
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B08XPG83J4",
+    "title": "Yancan Dinosaur Birthday Decorations Party Supplies Included Birthday Banner Hat Sash Dinosaur Balloons for Boys Kids Birthday Decor",
+    "domain": "Toys & Games",
+    "price": 11.99,
+    "average_rating": 4.6,
+    "rating_number": 450,
+    "final_score": 0.887,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8981,
+     "popularity": 0.751,
+     "budget_fit": 0.486
+    },
+    "sources": {
+     "bm25_rank": 1
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B0BW5XV8YW",
+    "title": "Piggy Bank for Boys, Large Unbreakable Coin Bank, Cute Dinosaur Toys Gift for Kids Boys and Girls Age 6 7 8 9 10 11 12 Birthday Christmas Baby Shower",
+    "domain": "Toys & Games",
+    "price": 17.99,
+    "average_rating": 4.8,
+    "rating_number": 14,
+    "final_score": 0.7879,
+    "signals": {
+     "relevance": 0.7343,
+     "quality": 0.8941,
+     "popularity": 0.3328,
+     "budget_fit": 0.9226
+    },
+    "sources": {
+     "bm25_rank": 3
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "1683239822",
+    "title": "Triceratops (Three Horned Face)! Fun Facts about the Triceratops - Dinosaurs for Children and Kids Edition - Children's Biological Science of Dinosaurs Books",
+    "domain": "Books",
+    "price": 9.25,
+    "average_rating": 4.2,
+    "rating_number": 5,
+    "final_score": 0.6419,
+    "signals": {
+     "relevance": 0.7127,
+     "quality": 0.8439,
+     "popularity": 0.2202,
+     "budget_fit": 0.2931
+    },
+    "sources": {
+     "bm25_rank": 4
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B01DL5C7U6",
+    "title": "Brontosaurus Dinosaur Art Print, Natural History Poster, Natural History Dinosaur Print, Dinosaur Brontosaurus Poster, Dinosaur Art Print",
+    "domain": "Handmade Products",
+    "price": 7.0,
+    "average_rating": 5.0,
+    "rating_number": 1,
+    "final_score": 0.5928,
+    "signals": {
+     "relevance": 0.6736,
+     "quality": 0.8618,
+     "popularity": 0.0852,
+     "budget_fit": 0.1751
+    },
+    "sources": {
+     "bm25_rank": 5
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "0500652600",
+    "title": "The Library Book",
+    "domain": "Books",
+    "price": 10.92,
+    "average_rating": 5.0,
+    "rating_number": 5,
+    "final_score": 0.4366,
+    "signals": {
+     "relevance": 0.3816,
+     "quality": 0.8839,
+     "popularity": 0.2202,
+     "budget_fit": 0.4053
+    },
+    "sources": {
+     "bm25_rank": 8
+    }
+   }
+  ],
+  "dev02": [
+   {
+    "rank": 1,
+    "parent_asin": "B07T3HPL92",
+    "title": "Best Friend Necklace Personalized Friendship Gifts Women Handmade Jewelry Long Distance Couple Mother's Day Gift for Mom State Charm Mother Daughter Matching Necklaces Birthday Family Gifts -CN-LDS",
+    "domain": "Handmade Products",
+    "price": 25.5,
+    "average_rating": 4.6,
+    "rating_number": 1595,
+    "final_score": 0.9116,
+    "signals": {
+     "relevance": 0.9597,
+     "quality": 0.8994,
+     "popularity": 0.9062,
+     "budget_fit": 0.7492
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 4
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B079W378ZW",
+    "title": "Tagua Necklace Red Chips Handmade Fair Trade, Adjustable by Florama Natural Jewelry",
+    "domain": "Handmade Products",
+    "price": 28.0,
+    "average_rating": 4.9,
+    "rating_number": 11,
+    "final_score": 0.8442,
+    "signals": {
+     "relevance": 0.8336,
+     "quality": 0.8975,
+     "popularity": 0.3053,
+     "budget_fit": 0.8549
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 10,
+     "bm25_interest2_rank": 19
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B087X2CXVZ",
+    "title": "Aqua Druzy Glass Wave Necklace, Dream higher than the sky and deeper than the Ocean pendant, Blue Wave Pendant, Gift for Her, Inspiration, Graduation, Sand and Surf Jewelry, Little Gift of Kindness",
+    "domain": "Handmade Products",
+    "price": 18.0,
+    "average_rating": 3.8,
+    "rating_number": 5,
+    "final_score": 0.8617,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8239,
+     "popularity": 0.2202,
+     "budget_fit": 0.3966
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 1
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B01EZBHPQ6",
+    "title": "Dainty 4 Sided Vertical Bar Necklace Initial necklace Personalized Name necklace Bridesmaid Gifts Mother's Day Gifts - D4BN",
+    "domain": "Handmade Products",
+    "price": 21.99,
+    "average_rating": 4.1,
+    "rating_number": 133,
+    "final_score": 0.8497,
+    "signals": {
+     "relevance": 0.9354,
+     "quality": 0.7854,
+     "popularity": 0.6018,
+     "budget_fit": 0.5818
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 8
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B07P61RYLQ",
+    "title": "Hamster Necklace - IBD - Guinea Pig Rodent Pet Lover Jewelry - Personalize Name Date - Pendant Size Options - Sterling Silver 14K Rose Gold Filled",
+    "domain": "Handmade Products",
+    "price": 39.12,
+    "average_rating": 4.6,
+    "rating_number": 19,
+    "final_score": 0.8263,
+    "signals": {
+     "relevance": 0.7845,
+     "quality": 0.8769,
+     "popularity": 0.3681,
+     "budget_fit": 0.9471
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 19,
+     "bm25_interest2_rank": 15
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B07KGGHVHH",
+    "title": "Sister Infinity Heart Necklace Sterling Silver. Gift from Brother to Sister. Sibling Gifts. Brother and Sister. Birthday Gift for Sister. Heart Jewelry.",
+    "domain": "Handmade Products",
+    "price": 39.85,
+    "average_rating": 4.7,
+    "rating_number": 111,
+    "final_score": 0.8087,
+    "signals": {
+     "relevance": 0.7597,
+     "quality": 0.9143,
+     "popularity": 0.5798,
+     "budget_fit": 0.9275
+    },
+    "sources": {
+     "bm25_rank": 7,
+     "bm25_interest1_rank": 15,
+     "bm25_interest2_rank": 27
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B016LIJZQ4",
+    "title": "White Druzy Quartz, Genuine Gemstone - Teardrop Sterling Silver Necklace - 18\" Length, Adult Jewelry Item",
+    "domain": "Handmade Products",
+    "price": 39.0,
+    "average_rating": 5.0,
+    "rating_number": 5,
+    "final_score": 0.7626,
+    "signals": {
+     "relevance": 0.6917,
+     "quality": 0.8839,
+     "popularity": 0.2202,
+     "budget_fit": 0.9501
+    },
+    "sources": {
+     "bm25_rank": 10,
+     "bm25_interest1_rank": 13,
+     "bm25_interest2_rank": 49
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B0BDKLRL4W",
+    "title": "Josphlies Handmade Mini Pearl Necklaces for Women,Mothers Day Gift18KGold Plated Natural Freshwater Pearls Necklaces,Choker Barque Pearl Pendant Necklaces Dainty Bridal Jewelry Gifts",
+    "domain": "Handmade Products",
+    "price": 19.99,
+    "average_rating": 4.8,
+    "rating_number": 7,
+    "final_score": 0.7288,
+    "signals": {
+     "relevance": 0.7765,
+     "quality": 0.8796,
+     "popularity": 0.2555,
+     "budget_fit": 0.4863
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 1,
+     "bm25_interest2_rank": 53
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B0B1ZJTL4B",
+    "title": "Meissa Sterling Silver Ring for Women Wrap Around Olive Leaf Branch Ring Adjustable Handmade Ring Paved Cubic Zirconia Stone Stackable Open Rings (Rose Gold)",
+    "domain": "Handmade Products",
+    "price": 26.99,
+    "average_rating": 4.2,
+    "rating_number": 14,
+    "final_score": 0.7137,
+    "signals": {
+     "relevance": 0.668,
+     "quality": 0.8323,
+     "popularity": 0.3328,
+     "budget_fit": 0.8144
+    },
+    "sources": {
+     "bm25_rank": 36,
+     "bm25_interest1_rank": 43,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B01M9EM59U",
+    "title": "YInahawaii Handmadewire wrapped seafoam sea glass bracelet, (Hawaii Gift Wrapped, Customizable Gift Message)",
+    "domain": "Handmade Products",
+    "price": 39.98,
+    "average_rating": 4.4,
+    "rating_number": 28,
+    "final_score": 0.7057,
+    "signals": {
+     "relevance": 0.6225,
+     "quality": 0.852,
+     "popularity": 0.4138,
+     "budget_fit": 0.9237
+    },
+    "sources": {
+     "bm25_rank": 20,
+     "bm25_interest1_rank": 27,
+     "bm25_interest2_rank": 35
+    }
+   }
+  ],
+  "dev03": [
+   {
+    "rank": 1,
+    "parent_asin": "B0B89V894W",
+    "title": "3DEGOS Skiff Ship DND Terrain 28mm for Dungeons and Dragons, D&D, Pathfinder, Warhammer 40k, RPG, Miniature, Tabletop, D and D, Dungeons and Dragons Gifts",
+    "domain": "Toys & Games",
+    "price": 17.49,
+    "average_rating": 2.5,
+    "rating_number": 2,
+    "final_score": 0.977,
+    "signals": {
+     "relevance": 0.9941,
+     "quality": 0.8113,
+     "popularity": 0.135,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 5,
+     "bm25_interest3_rank": 3
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B099DLC66F",
+    "title": "UDIXI Wooden DND Dice Set Box with Magnetic Lid for Storage, Sapele Dice Box for 7-Die Polygonal D&D Dice (Hexagonal - Dragon Pattern)",
+    "domain": "Toys & Games",
+    "price": 18.99,
+    "average_rating": 4.4,
+    "rating_number": 309,
+    "final_score": 0.9656,
+    "signals": {
+     "relevance": 0.9803,
+     "quality": 0.8503,
+     "popularity": 0.7049,
+     "budget_fit": 0.972
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 2,
+     "bm25_interest3_rank": 4
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B000VCFCVY",
+    "title": "Q-Workshop Dragon Black & White RPG Ornamented Dice Set 7 Polyhedral Pieces",
+    "domain": "Toys & Games",
+    "price": 14.0,
+    "average_rating": 4.2,
+    "rating_number": 110,
+    "final_score": 0.9296,
+    "signals": {
+     "relevance": 0.9683,
+     "quality": 0.8084,
+     "popularity": 0.5787,
+     "budget_fit": 0.8549
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 6,
+     "bm25_interest2_rank": 4,
+     "bm25_interest3_rank": 1
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B08YR7LYVT",
+    "title": "Haxtec DND Dice Set Red Yellow Iridescent Glitter Polyhedral D&D Dice for RPGs-Blood Galaxy",
+    "domain": "Toys & Games",
+    "price": 8.99,
+    "average_rating": 4.7,
+    "rating_number": 2405,
+    "final_score": 0.8716,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.9244,
+     "popularity": 0.9567,
+     "budget_fit": 0.3957
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 3,
+     "bm25_interest3_rank": 2
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "1589780981",
+    "title": "Legendary Dungeoneer: Wrath of the Serpent Goddess",
+    "domain": "Toys & Games",
+    "price": 19.95,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.624,
+    "signals": {
+     "relevance": 0.5029,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.926
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 5,
+     "bm25_interest2_rank": 9
+    }
+   }
+  ],
+  "dev04": [
+   {
+    "rank": 1,
+    "parent_asin": "9083256898",
+    "title": "Heart of Silk and Shadows: A Fae Fantasy Romance (Fae Isles)",
+    "domain": "Books",
+    "price": 11.99,
+    "average_rating": 4.4,
+    "rating_number": 481,
+    "final_score": 0.9073,
+    "signals": {
+     "relevance": 0.9112,
+     "quality": 0.8502,
+     "popularity": 0.7591,
+     "budget_fit": 0.9224
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 16,
+     "bm25_interest3_rank": 35
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "1598184547",
+    "title": "From the Earth to the Moon by Jules Verne, Fiction, Fantasy & Magic",
+    "domain": "Books",
+    "price": 7.36,
+    "average_rating": 4.3,
+    "rating_number": 418,
+    "final_score": 0.8654,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8264,
+     "popularity": 0.7419,
+     "budget_fit": 0.414
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 11,
+     "bm25_interest2_rank": 4,
+     "bm25_interest3_rank": 14
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "0671877534",
+    "title": "All the Way to the Gallows",
+    "domain": "Books",
+    "price": 6.99,
+    "average_rating": 3.8,
+    "rating_number": 35,
+    "final_score": 0.8203,
+    "signals": {
+     "relevance": 0.9569,
+     "quality": 0.7563,
+     "popularity": 0.4403,
+     "budget_fit": 0.3743
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 16,
+     "bm25_interest2_rank": 2,
+     "bm25_interest3_rank": 23
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "0670012181",
+    "title": "Edda",
+    "domain": "Books",
+    "price": 9.55,
+    "average_rating": 4.6,
+    "rating_number": 128,
+    "final_score": 0.7926,
+    "signals": {
+     "relevance": 0.8123,
+     "quality": 0.8939,
+     "popularity": 0.5972,
+     "budget_fit": 0.673
+    },
+    "sources": {
+     "bm25_rank": 11,
+     "bm25_interest1_rank": 22,
+     "bm25_interest2_rank": 8,
+     "bm25_interest3_rank": 48
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "0982599498",
+    "title": "Skeleton Play: A Fun, Rhyming Halloween Book for Kids! (1)",
+    "domain": "Books",
+    "price": 14.95,
+    "average_rating": 3.8,
+    "rating_number": 28,
+    "final_score": 0.7837,
+    "signals": {
+     "relevance": 0.7297,
+     "quality": 0.7645,
+     "popularity": 0.4138,
+     "budget_fit": 0.9821
+    },
+    "sources": {
+     "bm25_rank": 15,
+     "bm25_interest1_rank": 24,
+     "bm25_interest2_rank": 48,
+     "bm25_interest3_rank": 26
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "1641292156",
+    "title": "The Seep",
+    "domain": "Books",
+    "price": 12.89,
+    "average_rating": 4.2,
+    "rating_number": 344,
+    "final_score": 0.8312,
+    "signals": {
+     "relevance": 0.7939,
+     "quality": 0.803,
+     "popularity": 0.718,
+     "budget_fit": 0.9757
+    },
+    "sources": {
+     "bm25_rank": 13,
+     "bm25_interest1_rank": 21,
+     "bm25_interest2_rank": 23,
+     "bm25_interest3_rank": 29
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "1703608844",
+    "title": "The Old Child (The Lost Art of Magic)",
+    "domain": "Books",
+    "price": 16.95,
+    "average_rating": 5.0,
+    "rating_number": 1,
+    "final_score": 0.7724,
+    "signals": {
+     "relevance": 0.7402,
+     "quality": 0.8618,
+     "popularity": 0.0852,
+     "budget_fit": 0.8403
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 6
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B09VJTKRF1",
+    "title": "The Grim Hunt: Crown of Madness",
+    "domain": "Books",
+    "price": 14.99,
+    "average_rating": 4.2,
+    "rating_number": 14,
+    "final_score": 0.7685,
+    "signals": {
+     "relevance": 0.6988,
+     "quality": 0.8323,
+     "popularity": 0.3328,
+     "budget_fit": 0.9806
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 5,
+     "bm25_interest2_rank": 9
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B07GD54Z2J",
+    "title": "Time's Demon: BOOK II OF THE ISLEVALE CYCLE",
+    "domain": "Books",
+    "price": 5.99,
+    "average_rating": 4.3,
+    "rating_number": 26,
+    "final_score": 0.7142,
+    "signals": {
+     "relevance": 0.8214,
+     "quality": 0.838,
+     "popularity": 0.405,
+     "budget_fit": 0.2771
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 54,
+     "bm25_interest3_rank": 36
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "125023655X",
+    "title": "Cleo Porter and the Body Electric",
+    "domain": "Books",
+    "price": 9.59,
+    "average_rating": 4.5,
+    "rating_number": 188,
+    "final_score": 0.7572,
+    "signals": {
+     "relevance": 0.7634,
+     "quality": 0.8731,
+     "popularity": 0.6441,
+     "budget_fit": 0.6778
+    },
+    "sources": {
+     "bm25_rank": 17,
+     "bm25_interest1_rank": 26,
+     "bm25_interest2_rank": 38,
+     "bm25_interest3_rank": 17
+    }
+   }
+  ],
+  "dev05": [
+   {
+    "rank": 1,
+    "parent_asin": "B01BYCH44W",
+    "title": "Handmade Snowflake Home Decorations - Snow Ornament for Christmas Tree - Winter Gift Ideas for Boss",
+    "domain": "Handmade Products",
+    "price": 18.95,
+    "average_rating": 4.7,
+    "rating_number": 3,
+    "final_score": 0.9252,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8641,
+     "popularity": 0.1703,
+     "budget_fit": 0.6938
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B017E6ADCM",
+    "title": "Jamaica Vacation Souvenir Gift Christmas Glass Ornament Jamaican Flag Palm Tree Hand Painted Handmade Personalized W109 139 CA87",
+    "domain": "Handmade Products",
+    "price": 21.99,
+    "average_rating": 4.6,
+    "rating_number": 12,
+    "final_score": 0.8929,
+    "signals": {
+     "relevance": 0.9056,
+     "quality": 0.8718,
+     "popularity": 0.3152,
+     "budget_fit": 0.8592
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 6,
+     "bm25_interest2_rank": 12
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B08PTC369Y",
+    "title": "Wire Heart Tree Topper For Christmas Holiday Decor In Custom Color",
+    "domain": "Handmade Products",
+    "price": 29.0,
+    "average_rating": 4.4,
+    "rating_number": 9,
+    "final_score": 0.8464,
+    "signals": {
+     "relevance": 0.8047,
+     "quality": 0.8534,
+     "popularity": 0.2829,
+     "budget_fit": 0.9888
+    },
+    "sources": {
+     "bm25_rank": 18,
+     "bm25_interest1_rank": 27,
+     "bm25_interest2_rank": 5
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B075TWMRBN",
+    "title": "Personalized Dachshund Through the Snow Pet Christmas Tree Ornament",
+    "domain": "Handmade Products",
+    "price": 17.95,
+    "average_rating": 5.0,
+    "rating_number": 1,
+    "final_score": 0.8816,
+    "signals": {
+     "relevance": 0.9552,
+     "quality": 0.8618,
+     "popularity": 0.0852,
+     "budget_fit": 0.6338
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 6
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B07HB811XM",
+    "title": "Our First Christmas As Mr. & Mrs. Personalized 2018 Ornament",
+    "domain": "Handmade Products",
+    "price": 18.99,
+    "average_rating": 4.3,
+    "rating_number": 2,
+    "final_score": 0.8688,
+    "signals": {
+     "relevance": 0.9205,
+     "quality": 0.8522,
+     "popularity": 0.135,
+     "budget_fit": 0.6962
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 5,
+     "bm25_interest2_rank": 11
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B016JBUMQU",
+    "title": "Marie Curie - Famous Scientists Glass Christmas Ornament",
+    "domain": "Handmade Products",
+    "price": 22.5,
+    "average_rating": 5.0,
+    "rating_number": 5,
+    "final_score": 0.8588,
+    "signals": {
+     "relevance": 0.8484,
+     "quality": 0.8839,
+     "popularity": 0.2202,
+     "budget_fit": 0.8825
+    },
+    "sources": {
+     "bm25_rank": 9,
+     "bm25_interest1_rank": 9,
+     "bm25_interest2_rank": 19
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B016NSGE16",
+    "title": "In Memory Memorial Ornament Wish You Were Here Christmas in Heaven Personalized Bereavement Gift",
+    "domain": "Handmade Products",
+    "price": 28.95,
+    "average_rating": 3.8,
+    "rating_number": 9,
+    "final_score": 0.8564,
+    "signals": {
+     "relevance": 0.8254,
+     "quality": 0.8068,
+     "popularity": 0.2829,
+     "budget_fit": 0.9895
+    },
+    "sources": {
+     "bm25_rank": 10,
+     "bm25_interest1_rank": 8,
+     "bm25_interest2_rank": 26
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B07YYXK65T",
+    "title": "Personalized Our First Christmas in Our New Home Ornament ~ Free Personalization",
+    "domain": "Handmade Products",
+    "price": 17.95,
+    "average_rating": 4.5,
+    "rating_number": 57,
+    "final_score": 0.8341,
+    "signals": {
+     "relevance": 0.8863,
+     "quality": 0.8698,
+     "popularity": 0.4989,
+     "budget_fit": 0.6338
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 7,
+     "bm25_interest2_rank": 13
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "067174822X",
+    "title": "Christmas Secret",
+    "domain": "Books",
+    "price": 17.99,
+    "average_rating": 5.0,
+    "rating_number": 3,
+    "final_score": 0.7076,
+    "signals": {
+     "relevance": 0.7042,
+     "quality": 0.8738,
+     "popularity": 0.1703,
+     "budget_fit": 0.6362
+    },
+    "sources": {
+     "bm25_rank": 30,
+     "bm25_interest1_rank": 25,
+     "bm25_interest2_rank": 21
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B07D7JYK7F",
+    "title": "6 or 9 Feet NATURAL Wooden Casa House Round Beads Strand Garland Christmas Accent Farmhouse Boho Bohemian Scandinavian Chic Fixer Upper Magnolia Market Style",
+    "domain": "Handmade Products",
+    "price": 15.0,
+    "average_rating": 3.7,
+    "rating_number": 16,
+    "final_score": 0.7432,
+    "signals": {
+     "relevance": 0.8202,
+     "quality": 0.775,
+     "popularity": 0.3481,
+     "budget_fit": 0.4578
+    },
+    "sources": {
+     "bm25_rank": 12,
+     "bm25_interest1_rank": 14,
+     "bm25_interest2_rank": 17
+    }
+   }
+  ],
+  "dev06": [
+   {
+    "rank": 1,
+    "parent_asin": "B01MRV459X",
+    "title": "Duluth Labs Organic Chemistry Model Student Kit - (125 Pieces) - MM-003",
+    "domain": "Toys & Games",
+    "price": 26.95,
+    "average_rating": 4.7,
+    "rating_number": 654,
+    "final_score": 0.964,
+    "signals": {
+     "relevance": 0.9706,
+     "quality": 0.9229,
+     "popularity": 0.7968,
+     "budget_fit": 0.9616
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 22,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B08P5Q4B7X",
+    "title": "Verbs Flash Cards Volume 1 & 2 | 80 Action Language Development Educational Photo Cards | Speech Therapy Materials, ESL Materials",
+    "domain": "Toys & Games",
+    "price": 29.95,
+    "average_rating": 4.9,
+    "rating_number": 84,
+    "final_score": 0.9599,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.9519,
+     "popularity": 0.5459,
+     "budget_fit": 0.8237
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 16
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "0131703471",
+    "title": "Critical Thinking: Learn The Tools The Best Thinkers Use",
+    "domain": "Books",
+    "price": 19.98,
+    "average_rating": 4.5,
+    "rating_number": 54,
+    "final_score": 0.7603,
+    "signals": {
+     "relevance": 0.7118,
+     "quality": 0.8696,
+     "popularity": 0.4924,
+     "budget_fit": 0.8751
+    },
+    "sources": {
+     "bm25_rank": 17,
+     "bm25_interest1_rank": 44,
+     "bm25_interest2_rank": 32
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B007C33VTK",
+    "title": "CrystalAge Orange Calcite Pyramid - Medium - YCO4",
+    "domain": "Toys & Games",
+    "price": 16.09,
+    "average_rating": 3.8,
+    "rating_number": 5,
+    "final_score": 0.8311,
+    "signals": {
+     "relevance": 0.8896,
+     "quality": 0.8239,
+     "popularity": 0.2202,
+     "budget_fit": 0.6301
+    },
+    "sources": {
+     "bm25_rank": 7,
+     "bm25_interest1_rank": 26,
+     "bm25_interest2_rank": 10
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "1530178770",
+    "title": "More Together: 25 Years of Peer Practice at On Our Own Charlottesville",
+    "domain": "Books",
+    "price": 18.95,
+    "average_rating": 5.0,
+    "rating_number": 1,
+    "final_score": 0.7356,
+    "signals": {
+     "relevance": 0.6941,
+     "quality": 0.8618,
+     "popularity": 0.0852,
+     "budget_fit": 0.8178
+    },
+    "sources": {
+     "bm25_rank": 19,
+     "bm25_interest1_rank": 31,
+     "bm25_interest2_rank": 50
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B0BLHHD8MZ",
+    "title": "YEEBAY Pop Up Animals Eggs Toy with Music & Sound, Early Developmental Toy for 12-18 Months Baby, Infants & Toddlers,1 Year Old Girls & Boys",
+    "domain": "Toys & Games",
+    "price": 24.99,
+    "average_rating": 4.7,
+    "rating_number": 47,
+    "final_score": 0.7222,
+    "signals": {
+     "relevance": 0.6172,
+     "quality": 0.9041,
+     "popularity": 0.4757,
+     "budget_fit": 0.9984
+    },
+    "sources": {
+     "bm25_rank": 16,
+     "bm25_interest2_rank": 1
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "0321929543",
+    "title": "Adobe Premiere Pro CC: Visual Quickstart Guide (Visual Quickstart Guides)",
+    "domain": "Books",
+    "price": 28.85,
+    "average_rating": 4.4,
+    "rating_number": 33,
+    "final_score": 0.7051,
+    "signals": {
+     "relevance": 0.6331,
+     "quality": 0.8519,
+     "popularity": 0.4333,
+     "budget_fit": 0.8838
+    },
+    "sources": {
+     "bm25_rank": 25,
+     "bm25_interest1_rank": 46,
+     "bm25_interest2_rank": 51
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B005RUTZ8Q",
+    "title": "Molymod MMS-009 Inorganic/Organic Chemistry Molecular Model, Student Set (52 atom parts)",
+    "domain": "Toys & Games",
+    "price": 30.11,
+    "average_rating": 4.6,
+    "rating_number": 204,
+    "final_score": 0.7417,
+    "signals": {
+     "relevance": 0.699,
+     "quality": 0.896,
+     "popularity": 0.6541,
+     "budget_fit": 0.8142
+    },
+    "sources": {
+     "bm25_rank": 21,
+     "bm25_interest1_rank": 19,
+     "bm25_interest2_rank": 66
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B096K27SYK",
+    "title": "Wild Republic Octopus Plush, Stuffed Animal, Plush Toy, Gifts for Kids, Hug\u2019ems 10 inch",
+    "domain": "Toys & Games",
+    "price": 9.95,
+    "average_rating": 4.7,
+    "rating_number": 29305,
+    "final_score": 0.7138,
+    "signals": {
+     "relevance": 0.8158,
+     "quality": 0.925,
+     "popularity": 1.0,
+     "budget_fit": 0.2509
+    },
+    "sources": {
+     "bm25_rank": 11,
+     "bm25_interest1_rank": 40,
+     "bm25_interest2_rank": 13
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B000URJCVQ",
+    "title": "Learning Resources Student Grouping Pencils,Multicolor,4 1/2 x 4/2 in",
+    "domain": "Toys & Games",
+    "price": 19.09,
+    "average_rating": 4.7,
+    "rating_number": 705,
+    "final_score": 0.662,
+    "signals": {
+     "relevance": 0.5779,
+     "quality": 0.9231,
+     "popularity": 0.806,
+     "budget_fit": 0.826
+    },
+    "sources": {
+     "bm25_rank": 23,
+     "bm25_interest2_rank": 3
+    }
+   }
+  ],
+  "dev07": [
+   {
+    "rank": 1,
+    "parent_asin": "B08XQW2YPD",
+    "title": "Santorini New York, Strategy Board Game, for Adults and Kids Ages 8 and up",
+    "domain": "Toys & Games",
+    "price": 28.99,
+    "average_rating": 4.5,
+    "rating_number": 52,
+    "final_score": 0.9533,
+    "signals": {
+     "relevance": 0.9831,
+     "quality": 0.8694,
+     "popularity": 0.4879,
+     "budget_fit": 0.8908
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 5,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B00IGR5ERI",
+    "title": "Spin Master Games - Best of Movies & TV Board Game",
+    "domain": "Toys & Games",
+    "price": 22.72,
+    "average_rating": 4.3,
+    "rating_number": 473,
+    "final_score": 0.8689,
+    "signals": {
+     "relevance": 0.9469,
+     "quality": 0.8262,
+     "popularity": 0.7571,
+     "budget_fit": 0.6172
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 10
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B08NFD6RHQ",
+    "title": "Ravensburger Eibsee Lake Zugspitze Germany 1000 Piece Jigsaw Puzzles for Adults & Kids Age 14 Years Up - Landscape Puzzle, Amazon Exclusive",
+    "domain": "Toys & Games",
+    "price": 29.22,
+    "average_rating": 4.7,
+    "rating_number": 866,
+    "final_score": 0.7881,
+    "signals": {
+     "relevance": 0.7373,
+     "quality": 0.9234,
+     "popularity": 0.8313,
+     "budget_fit": 0.8986
+    },
+    "sources": {
+     "bm25_rank": 13,
+     "bm25_interest1_rank": 26,
+     "bm25_interest2_rank": 28
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B07Y5NRJYK",
+    "title": "Parks Neoprene Playmat: Protect Your Game and Play Outside or at a Restaurant (Includes Storage tub)",
+    "domain": "Toys & Games",
+    "price": 25.0,
+    "average_rating": 4.9,
+    "rating_number": 158,
+    "final_score": 0.7836,
+    "signals": {
+     "relevance": 0.7746,
+     "quality": 0.9615,
+     "popularity": 0.6228,
+     "budget_fit": 0.7261
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 72
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B0BP7H64R8",
+    "title": "Gentle Monster Wooden Colorful Stacking Board Games Builing Blocks for Kids Boys Girls, 54 Pcs Wood Balancing Blocks Montessori Toy Gift for Kids, Classic Game for Party with Storage Bag",
+    "domain": "Toys & Games",
+    "price": 16.99,
+    "average_rating": 4.7,
+    "rating_number": 2330,
+    "final_score": 0.7841,
+    "signals": {
+     "relevance": 0.8869,
+     "quality": 0.9244,
+     "popularity": 0.9528,
+     "budget_fit": 0.3542
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 21,
+     "bm25_interest2_rank": 4
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B0BRXZ6M7K",
+    "title": "World's Smallest Monopoly",
+    "domain": "Toys & Games",
+    "price": 8.49,
+    "average_rating": 4.6,
+    "rating_number": 4564,
+    "final_score": 0.8111,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8998,
+     "popularity": 1.0,
+     "budget_fit": 0.1055
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 3
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B07CL2BSM8",
+    "title": "OUR MOMENTS Kids: 100 Conversation Starter Cards for Families and Kids - Relationship Building - Car Travel, Road Trip & Card Game for Healthy Loving Family - Questions for Family Activities",
+    "domain": "Toys & Games",
+    "price": 19.95,
+    "average_rating": 4.6,
+    "rating_number": 2743,
+    "final_score": 0.7362,
+    "signals": {
+     "relevance": 0.7848,
+     "quality": 0.8997,
+     "popularity": 0.9728,
+     "budget_fit": 0.4844
+    },
+    "sources": {
+     "bm25_rank": 16,
+     "bm25_interest1_rank": 48,
+     "bm25_interest2_rank": 1
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B01GLJYHPW",
+    "title": "Hasbro Monopoly Jackpot Board Game",
+    "domain": "Toys & Games",
+    "price": 22.29,
+    "average_rating": 4.8,
+    "rating_number": 111,
+    "final_score": 0.7782,
+    "signals": {
+     "relevance": 0.8078,
+     "quality": 0.9355,
+     "popularity": 0.5798,
+     "budget_fit": 0.5963
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 1,
+     "bm25_interest2_rank": 68
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B096VQN51L",
+    "title": "Hover Ball Set with 2 Goals, USB Rechargeable with LED Light and Inflatable Soccer Ball, Air Floating Soccer with Safe Bumper for Indoor Outdoor Sports Ball Game, Football Toy for Boy Girl Best Gift",
+    "domain": "Toys & Games",
+    "price": 36.69,
+    "average_rating": 3.9,
+    "rating_number": 3995,
+    "final_score": 0.7022,
+    "signals": {
+     "relevance": 0.6164,
+     "quality": 0.7256,
+     "popularity": 1.0,
+     "budget_fit": 0.9909
+    },
+    "sources": {
+     "bm25_rank": 34,
+     "bm25_interest1_rank": 56,
+     "bm25_interest2_rank": 23
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B08FWVD8RC",
+    "title": "AMIGO None of a Kind Brainteaser, Party & Family Game",
+    "domain": "Toys & Games",
+    "price": 16.99,
+    "average_rating": 4.8,
+    "rating_number": 38,
+    "final_score": 0.7445,
+    "signals": {
+     "relevance": 0.8313,
+     "quality": 0.9172,
+     "popularity": 0.4502,
+     "budget_fit": 0.3542
+    },
+    "sources": {
+     "bm25_rank": 9,
+     "bm25_interest1_rank": 20,
+     "bm25_interest2_rank": 12
+    }
+   }
+  ],
+  "dev08": [
+   {
+    "rank": 1,
+    "parent_asin": "B08MLDRGRG",
+    "title": "Aesthetic Room Decor - Minimalist Line Art Silhouette Poster Set - 8x10 Abstract Contemporary Modern Wall Decor - Unique Matisse Style Gift for Women, Home, Bathroom, Living Room, Bedroom Decorations",
+    "domain": "Handmade Products",
+    "price": 18.95,
+    "average_rating": 4.6,
+    "rating_number": 74,
+    "final_score": 0.9814,
+    "signals": {
+     "relevance": 0.9995,
+     "quality": 0.8904,
+     "popularity": 0.5305,
+     "budget_fit": 0.9633
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 6,
+     "bm25_interest3_rank": 1
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B09P4RP2SJ",
+    "title": "Santorini Print Santorini Art Santorini Poster Travel Print Architecture Illustration Santorini Picture Santorini Greece Gift Idea Unframed 8x10",
+    "domain": "Handmade Products",
+    "price": 14.98,
+    "average_rating": 4.4,
+    "rating_number": 27,
+    "final_score": 0.9038,
+    "signals": {
+     "relevance": 0.9624,
+     "quality": 0.8521,
+     "popularity": 0.4094,
+     "budget_fit": 0.7246
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 1,
+     "bm25_interest2_rank": 1,
+     "bm25_interest3_rank": 16
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B0C62CW33Q",
+    "title": "Military Oath of Enlistment - Patriotic American Flag Wall Art Decor, Decoration - Gift for Soldiers, Army, Navy, Air Force, Marines, Coast Guard, Veterans, Vets-UNFRAMED Poster Print 8x10 Photo",
+    "domain": "Handmade Products",
+    "price": 12.95,
+    "average_rating": 4.6,
+    "rating_number": 165,
+    "final_score": 0.8923,
+    "signals": {
+     "relevance": 0.9863,
+     "quality": 0.8951,
+     "popularity": 0.6281,
+     "budget_fit": 0.5621
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 5,
+     "bm25_interest3_rank": 3
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B09C2P1TW2",
+    "title": "Goth Wall Art & Decor - Gothic Room Decor - Wiccan Wicca Witchcraft Supplies - Pagan Gifts - Medieval Midevil Decor - Creepy Scary Living Room Decorations - Spooky Skull Wall Decor Poster - Unframed",
+    "domain": "Handmade Products",
+    "price": 12.95,
+    "average_rating": 4.4,
+    "rating_number": 14,
+    "final_score": 0.8977,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8529,
+     "popularity": 0.3328,
+     "budget_fit": 0.5621
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 7,
+     "bm25_interest3_rank": 2
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B0BN4DZJ3K",
+    "title": "Vintage Anatomy Illustration Art, Dictionary Print, Antique Wall Art Home Decor, Modern Boho, Medical Posters, Farmhouse Decoration 8x10 Inches, Ready To Frame (Color Anatomy)",
+    "domain": "Handmade Products",
+    "price": 12.99,
+    "average_rating": 4.7,
+    "rating_number": 867,
+    "final_score": 0.8657,
+    "signals": {
+     "relevance": 0.9433,
+     "quality": 0.9234,
+     "popularity": 0.8314,
+     "budget_fit": 0.5653
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 8,
+     "bm25_interest2_rank": 8,
+     "bm25_interest3_rank": 6
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B07K6RS54W",
+    "title": "In a Field of Roses She is a Wildflower Woodland Nursery Prints Set of 3 Tribal Nursery Wall Decor Tribal Wall Decor for Nursery TeePee Art Baby Girl Nursery Wall Art",
+    "domain": "Handmade Products",
+    "price": 18.95,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.827,
+    "signals": {
+     "relevance": 0.7822,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.9633
+    },
+    "sources": {
+     "bm25_rank": 11,
+     "bm25_interest1_rank": 14,
+     "bm25_interest2_rank": 9,
+     "bm25_interest3_rank": 58
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B07XKZC4X4",
+    "title": "Caduceus Medical Symbol Abstract Wall Art, 11x14 inch Ready to Frame Print on White Background, Gift for Mom or Dad Doctors, Nurses, Vets and Medical Professionals, Clinic Decor",
+    "domain": "Handmade Products",
+    "price": 14.99,
+    "average_rating": 5.0,
+    "rating_number": 7,
+    "final_score": 0.805,
+    "signals": {
+     "relevance": 0.8153,
+     "quality": 0.8925,
+     "popularity": 0.2555,
+     "budget_fit": 0.7254
+    },
+    "sources": {
+     "bm25_rank": 7,
+     "bm25_interest1_rank": 6,
+     "bm25_interest2_rank": 23,
+     "bm25_interest3_rank": 36
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B07R63RN1Y",
+    "title": "Alice in Wonderland Wall Art, 8x10 Set of 4 Un Framed Decor Prints in Blue Tones. Upcycled Vintage Style Dictionary Page. Ideal for Book Lovers, English Teachers, Librarians and Lewis Carroll Fans",
+    "domain": "Handmade Products",
+    "price": 14.99,
+    "average_rating": 4.9,
+    "rating_number": 16,
+    "final_score": 0.7851,
+    "signals": {
+     "relevance": 0.7845,
+     "quality": 0.9083,
+     "popularity": 0.3481,
+     "budget_fit": 0.7254
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 9,
+     "bm25_interest2_rank": 20,
+     "bm25_interest3_rank": 51
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B018IQ5HBY",
+    "title": "Narnia Art Print",
+    "domain": "Handmade Products",
+    "price": 20.0,
+    "average_rating": 4.3,
+    "rating_number": 14,
+    "final_score": 0.7524,
+    "signals": {
+     "relevance": 0.6713,
+     "quality": 0.8426,
+     "popularity": 0.3328,
+     "budget_fit": 0.9912
+    },
+    "sources": {
+     "bm25_rank": 14,
+     "bm25_interest1_rank": 17,
+     "bm25_interest2_rank": 19,
+     "bm25_interest3_rank": 149
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B07DHDX7KL",
+    "title": "Food, Family, Love Prayer - Great Dining Room Decor, Minimalist Art Prints, Kitchen Table Display, Unique House Warming Gift New Home, Set of 3-11x14 Unframed Typography Art Prints",
+    "domain": "Handmade Products",
+    "price": 10.99,
+    "average_rating": 4.4,
+    "rating_number": 31,
+    "final_score": 0.7538,
+    "signals": {
+     "relevance": 0.838,
+     "quality": 0.8519,
+     "popularity": 0.4259,
+     "budget_fit": 0.4104
+    },
+    "sources": {
+     "bm25_rank": 17,
+     "bm25_interest1_rank": 33,
+     "bm25_interest2_rank": 3,
+     "bm25_interest3_rank": 10
+    }
+   }
+  ],
+  "dev09": [
+   {
+    "rank": 1,
+    "parent_asin": "B097HNLCDQ",
+    "title": "Playz Edible Poop! Food Science STEM Chemistry Kit - DIY Make Your Own Chocolates and Candy Experiments for Boy, Girls, Teenagers, & Kids Ages 8, 9, 10, 11, 12, 13+ Years Old",
+    "domain": "Toys & Games",
+    "price": 34.99,
+    "average_rating": 4.2,
+    "rating_number": 3046,
+    "final_score": 0.9367,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8004,
+     "popularity": 0.9857,
+     "budget_fit": 0.7833
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 1,
+     "bm25_interest2_rank": 1,
+     "bm25_interest3_rank": 1
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B0757KH7LJ",
+    "title": "Just My Style You*niverse Ultimate Chemistry Lab \u2013 STEM Chemistry Experiment Set \u2013 DIY Bath Bombs & Crystals for Kids Age 6+",
+    "domain": "Toys & Games",
+    "price": 21.97,
+    "average_rating": 4.5,
+    "rating_number": 141,
+    "final_score": 0.9176,
+    "signals": {
+     "relevance": 0.948,
+     "quality": 0.8725,
+     "popularity": 0.609,
+     "budget_fit": 0.8338
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 3,
+     "bm25_interest3_rank": 9
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B004FH9DNY",
+    "title": "Geoworld Mining Kit - Geodes",
+    "domain": "Toys & Games",
+    "price": 20.0,
+    "average_rating": 2.7,
+    "rating_number": 4,
+    "final_score": 0.8287,
+    "signals": {
+     "relevance": 0.8644,
+     "quality": 0.7833,
+     "popularity": 0.1978,
+     "budget_fit": 0.7261
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 47,
+     "bm25_interest3_rank": 3
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B005RUTZ8Q",
+    "title": "Molymod MMS-009 Inorganic/Organic Chemistry Molecular Model, Student Set (52 atom parts)",
+    "domain": "Toys & Games",
+    "price": 30.11,
+    "average_rating": 4.6,
+    "rating_number": 204,
+    "final_score": 0.8144,
+    "signals": {
+     "relevance": 0.756,
+     "quality": 0.896,
+     "popularity": 0.6541,
+     "budget_fit": 0.978
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 9,
+     "bm25_interest2_rank": 115,
+     "bm25_interest3_rank": 8
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B0BY8QD8KC",
+    "title": "Clixo Grab & Go Magnetic Toy for Kids - Flexible, Durable, Imagination-Boosting Magnet Building Toy. Educational Multi-Sensory STEM Experience. Great as a Travel Game. Ages 4-99. 18 Piece Pack",
+    "domain": "Toys & Games",
+    "price": 29.99,
+    "average_rating": 4.5,
+    "rating_number": 235,
+    "final_score": 0.7094,
+    "signals": {
+     "relevance": 0.6086,
+     "quality": 0.8734,
+     "popularity": 0.6714,
+     "budget_fit": 0.9804
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest2_rank": 28,
+     "bm25_interest3_rank": 5
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B0BKZWRTBK",
+    "title": "eveseed DIY Reborn Kits Already Painted 21 Inches Simulation Silicone Vinyl Babies Reborn Sleeping Doll DIY Kit Supplies",
+    "domain": "Toys & Games",
+    "price": 32.66,
+    "average_rating": 4.4,
+    "rating_number": 10,
+    "final_score": 0.7004,
+    "signals": {
+     "relevance": 0.6223,
+     "quality": 0.8533,
+     "popularity": 0.2946,
+     "budget_fit": 0.8971
+    },
+    "sources": {
+     "bm25_rank": 13,
+     "bm25_interest1_rank": 8,
+     "bm25_interest2_rank": 127,
+     "bm25_interest3_rank": 57
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B01MRV459X",
+    "title": "Duluth Labs Organic Chemistry Model Student Kit - (125 Pieces) - MM-003",
+    "domain": "Toys & Games",
+    "price": 26.95,
+    "average_rating": 4.7,
+    "rating_number": 654,
+    "final_score": 0.7461,
+    "signals": {
+     "relevance": 0.6498,
+     "quality": 0.9229,
+     "popularity": 0.7968,
+     "budget_fit": 0.9945
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 17
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B0B18XPG1F",
+    "title": "Arteza Kids Fantasy Painting Kit, 4 Canvases, 8 x 8 in, 24 Acrylic Paints, 4 Paint Brushes, 4 Palettes, Kids Activities Ages 6 and Up",
+    "domain": "Toys & Games",
+    "price": 26.99,
+    "average_rating": 4.7,
+    "rating_number": 35,
+    "final_score": 0.6874,
+    "signals": {
+     "relevance": 0.5692,
+     "quality": 0.8995,
+     "popularity": 0.4403,
+     "budget_fit": 0.9949
+    },
+    "sources": {
+     "bm25_rank": 16,
+     "bm25_interest1_rank": 21,
+     "bm25_interest2_rank": 58,
+     "bm25_interest3_rank": 138
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B07XB2J2D5",
+    "title": "Personalized 60th Birthday Birthstone Bangle Gifts for Women,The Best is Yet To Come 60th Birthday Expandable Charm Bracelet, Adjustable Bangle, Perfect 60th Birthday Gift Ideas",
+    "domain": "Handmade Products",
+    "price": 19.99,
+    "average_rating": 4.8,
+    "rating_number": 10,
+    "final_score": 0.5945,
+    "signals": {
+     "relevance": 0.5154,
+     "quality": 0.8866,
+     "popularity": 0.2946,
+     "budget_fit": 0.7256
+    },
+    "sources": {
+     "bm25_rank": 132,
+     "bm25_interest1_rank": 75,
+     "bm25_interest2_rank": 51,
+     "bm25_interest3_rank": 11
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B0C4D6B6LV",
+    "title": "Flower Bouquet Building Kit, Flower Building Blocks, Artificial Flowers Building Toys Creative Project for Adults Botanical Collection Compatible with Lego 547 PCS(Lavender/Rose/Hydrangea/Camellia",
+    "domain": "Toys & Games",
+    "price": 18.99,
+    "average_rating": 4.4,
+    "rating_number": 416,
+    "final_score": 0.6191,
+    "signals": {
+     "relevance": 0.5725,
+     "quality": 0.8502,
+     "popularity": 0.7413,
+     "budget_fit": 0.6664
+    },
+    "sources": {
+     "bm25_rank": 15,
+     "bm25_interest1_rank": 11,
+     "bm25_interest2_rank": 154,
+     "bm25_interest3_rank": 80
+    }
+   }
+  ],
+  "dev10": [
+   {
+    "rank": 1,
+    "parent_asin": "0809138735",
+    "title": "Catholicism Today, Third Edition: A Survey of Catholic Belief and Practice",
+    "domain": "Books",
+    "price": 14.95,
+    "average_rating": 4.4,
+    "rating_number": 5,
+    "final_score": 0.9049,
+    "signals": {
+     "relevance": 0.9078,
+     "quality": 0.8539,
+     "popularity": 0.2202,
+     "budget_fit": 0.9201
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 14,
+     "bm25_interest2_rank": 4
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B08VW8KLCQ",
+    "title": "BAT Badge Reel, Nurse Badge Reel, Halloween Bat Badge Clip, RN Badge Reel, Nurse Gift, Teacher Badge Reel, Retractable Badge ID Holder",
+    "domain": "Handmade Products",
+    "price": 13.95,
+    "average_rating": 4.5,
+    "rating_number": 22,
+    "final_score": 0.8545,
+    "signals": {
+     "relevance": 0.8539,
+     "quality": 0.8654,
+     "popularity": 0.3853,
+     "budget_fit": 0.851
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 1,
+     "bm25_interest2_rank": 29
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "0439116392",
+    "title": "Guided Reading: Making It Work: Two Teachers Share Their Insights, Strategies, and Lessons for Helping Every Child Become a Successful Reader (Teaching Strategies)",
+    "domain": "Books",
+    "price": 8.0,
+    "average_rating": 4.8,
+    "rating_number": 26,
+    "final_score": 0.8539,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.9087,
+     "popularity": 0.405,
+     "budget_fit": 0.315
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 1
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B07X5TTP21",
+    "title": "Vintage Propeller Airplane Patent Prints, 1 (11x14) Unframed Photos, Wall Art Decor Gifts Under 15 for Home Office Man Cave College Student Teacher Aircraft Mechanic Pilot Aviation NASA Engineer Fans",
+    "domain": "Handmade Products",
+    "price": 13.99,
+    "average_rating": 4.5,
+    "rating_number": 3,
+    "final_score": 0.8121,
+    "signals": {
+     "relevance": 0.7937,
+     "quality": 0.8575,
+     "popularity": 0.1703,
+     "budget_fit": 0.8541
+    },
+    "sources": {
+     "bm25_rank": 10,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 43
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "1530154685",
+    "title": "Grade Five Music Theory: for ABRSM Candidates (MyMusicTheory Complete Courses)",
+    "domain": "Books",
+    "price": 15.0,
+    "average_rating": 4.6,
+    "rating_number": 87,
+    "final_score": 0.806,
+    "signals": {
+     "relevance": 0.7604,
+     "quality": 0.8916,
+     "popularity": 0.5502,
+     "budget_fit": 0.9231
+    },
+    "sources": {
+     "bm25_rank": 15,
+     "bm25_interest1_rank": 26,
+     "bm25_interest2_rank": 16
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B07D3RLHH5",
+    "title": "FantasyParty Hand Puppet Realistic Shark Role Play Toy Latex Puppet for Both Adult and Children",
+    "domain": "Toys & Games",
+    "price": 13.99,
+    "average_rating": 4.6,
+    "rating_number": 478,
+    "final_score": 0.7883,
+    "signals": {
+     "relevance": 0.7538,
+     "quality": 0.8982,
+     "popularity": 0.7584,
+     "budget_fit": 0.8541
+    },
+    "sources": {
+     "bm25_rank": 12,
+     "bm25_interest1_rank": 7,
+     "bm25_interest2_rank": 51
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "080774008X",
+    "title": "Bambini: The Italian Approach to Infant/Toddler Care (Early Childhood Education Series)",
+    "domain": "Books",
+    "price": 10.15,
+    "average_rating": 4.3,
+    "rating_number": 12,
+    "final_score": 0.8321,
+    "signals": {
+     "relevance": 0.9251,
+     "quality": 0.8437,
+     "popularity": 0.3152,
+     "budget_fit": 0.5008
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 10,
+     "bm25_interest2_rank": 5
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "0435088432",
+    "title": "Sounds from the Heart: Learning to Listen to Girls",
+    "domain": "Books",
+    "price": 6.42,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.7608,
+    "signals": {
+     "relevance": 0.9035,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.2078
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 9,
+     "bm25_interest2_rank": 7
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "0439511674",
+    "title": "Play Time (Play With Series) (Sight Word Readers)",
+    "domain": "Books",
+    "price": 6.17,
+    "average_rating": 5.0,
+    "rating_number": 1,
+    "final_score": 0.8015,
+    "signals": {
+     "relevance": 0.9666,
+     "quality": 0.8618,
+     "popularity": 0.0852,
+     "budget_fit": 0.1934
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 6,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "1649901070",
+    "title": "LunaLu the Llamacorn",
+    "domain": "Books",
+    "price": 8.83,
+    "average_rating": 5.0,
+    "rating_number": 26,
+    "final_score": 0.735,
+    "signals": {
+     "relevance": 0.807,
+     "quality": 0.9369,
+     "popularity": 0.405,
+     "budget_fit": 0.3821
+    },
+    "sources": {
+     "bm25_rank": 11,
+     "bm25_interest1_rank": 5,
+     "bm25_interest2_rank": 33
+    }
+   }
+  ],
+  "dev11": [
+   {
+    "rank": 1,
+    "parent_asin": "B0B1ZMJGWC",
+    "title": "Musical Instruments Set Natural Wooden Musical Toys Preschool Educational Music Toys Set Bongo Drum Musical Instruments for Kids Preschool Educational Learning Toys (Drum, 13 Pcs)",
+    "domain": "Toys & Games",
+    "price": 48.99,
+    "average_rating": 4.3,
+    "rating_number": 21,
+    "final_score": 0.984,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.8396,
+     "popularity": 0.3798,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "1402766238",
+    "title": "Woodstock: Three Days That Rocked the World",
+    "domain": "Books",
+    "price": 35.81,
+    "average_rating": 4.8,
+    "rating_number": 246,
+    "final_score": 0.9757,
+    "signals": {
+     "relevance": 0.9734,
+     "quality": 0.9429,
+     "popularity": 0.677,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 7,
+     "bm25_interest2_rank": 1
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B07DJ48MS4",
+    "title": "Music Gives A Soul To The Universe And Life To Everything - 11x14 Unframed Typography Art Print Poster - Great Decor and Gift for Musicians and Music Teachers Under $15",
+    "domain": "Handmade Products",
+    "price": 10.99,
+    "average_rating": 4.7,
+    "rating_number": 22,
+    "final_score": 0.9187,
+    "signals": {
+     "relevance": 0.8993,
+     "quality": 0.8916,
+     "popularity": 0.3853,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 3,
+     "bm25_interest1_rank": 11,
+     "bm25_interest2_rank": 3
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "B06WWMK1LL",
+    "title": "ROBOTIME Love Story 3D Wooden Music Box Kit",
+    "domain": "Toys & Games",
+    "price": 46.95,
+    "average_rating": 5.0,
+    "rating_number": 1,
+    "final_score": 0.514,
+    "signals": {
+     "relevance": 0.3255,
+     "quality": 0.8618,
+     "popularity": 0.0852,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 3
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B01KMOINCA",
+    "title": "Guitar Music Decal Vinyl Sticker Playing Jazz Classical Instrument Laptop MacBook",
+    "domain": "Handmade Products",
+    "price": 3.99,
+    "average_rating": 3.8,
+    "rating_number": 5,
+    "final_score": 0.497,
+    "signals": {
+     "relevance": 0.3065,
+     "quality": 0.8239,
+     "popularity": 0.2202,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 4
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "1530154685",
+    "title": "Grade Five Music Theory: for ABRSM Candidates (MyMusicTheory Complete Courses)",
+    "domain": "Books",
+    "price": 15.0,
+    "average_rating": 4.6,
+    "rating_number": 87,
+    "final_score": 0.538,
+    "signals": {
+     "relevance": 0.3555,
+     "quality": 0.8916,
+     "popularity": 0.5502,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 1
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B0BLHHD8MZ",
+    "title": "YEEBAY Pop Up Animals Eggs Toy with Music & Sound, Early Developmental Toy for 12-18 Months Baby, Infants & Toddlers,1 Year Old Girls & Boys",
+    "domain": "Toys & Games",
+    "price": 24.99,
+    "average_rating": 4.7,
+    "rating_number": 47,
+    "final_score": 0.4921,
+    "signals": {
+     "relevance": 0.2882,
+     "quality": 0.9041,
+     "popularity": 0.4757,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 7,
+     "bm25_interest1_rank": 5
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B09JKLK1DG",
+    "title": "Butterfly Bubble Machine for Toddlers,Magic Bubble Wand for Kids,Musical Light Up Bubble Blower with 2Bubbles Refill,Automatic Butterfly Bubble Maker Toys for Girls,Birthday,Weddings,Outdoor&Indoor",
+    "domain": "Toys & Games",
+    "price": 14.99,
+    "average_rating": 4.3,
+    "rating_number": 42,
+    "final_score": 0.4727,
+    "signals": {
+     "relevance": 0.2704,
+     "quality": 0.8347,
+     "popularity": 0.4622,
+     "budget_fit": 1.0
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 6
+    }
+   }
+  ],
+  "dev12": [
+   {
+    "rank": 1,
+    "parent_asin": "B079ZH37LQ",
+    "title": "Custom Personalized My Humans are Getting Married Save the Date Pet Heart Wood Sign Dog Wooden Wedding Signage Engagement Photo Prop",
+    "domain": "Handmade Products",
+    "price": 29.99,
+    "average_rating": 5.0,
+    "rating_number": 3,
+    "final_score": 0.9005,
+    "signals": {
+     "relevance": 0.8784,
+     "quality": 0.8738,
+     "popularity": 0.1703,
+     "budget_fit": 0.991
+    },
+    "sources": {
+     "bm25_rank": 9,
+     "bm25_interest1_rank": 4,
+     "bm25_interest2_rank": 11
+    }
+   },
+   {
+    "rank": 2,
+    "parent_asin": "B08NWJCDY2",
+    "title": "Regal Dog Products Medium Orange Reflective Dog Collar with Custom Engraved Name Plate and Heavy Duty Center Ring | Waterproof Biothane Personalized Dog Collars - Other Sizes for Small & Large Dogs",
+    "domain": "Handmade Products",
+    "price": 18.99,
+    "average_rating": 4.6,
+    "rating_number": 36,
+    "final_score": 0.8605,
+    "signals": {
+     "relevance": 0.949,
+     "quality": 0.8839,
+     "popularity": 0.4437,
+     "budget_fit": 0.5389
+    },
+    "sources": {
+     "bm25_rank": 5,
+     "bm25_interest1_rank": 1,
+     "bm25_interest2_rank": 8
+    }
+   },
+   {
+    "rank": 3,
+    "parent_asin": "B07KQF151W",
+    "title": "Silver Basset Hound Ring, Sterling Silver Dog Ring, Basset Hound Jewelry, Silver Jewelry",
+    "domain": "Handmade Products",
+    "price": 42.0,
+    "average_rating": 3.6,
+    "rating_number": 7,
+    "final_score": 0.8448,
+    "signals": {
+     "relevance": 0.9074,
+     "quality": 0.8018,
+     "popularity": 0.2555,
+     "budget_fit": 0.6469
+    },
+    "sources": {
+     "bm25_rank": 4,
+     "bm25_interest1_rank": 12,
+     "bm25_interest2_rank": 4
+    }
+   },
+   {
+    "rank": 4,
+    "parent_asin": "1916260101",
+    "title": "Shane, Sheba and Sky: From Abandoned to Loved, How Three Rescue Dogs Transformed One Man's Life",
+    "domain": "Books",
+    "price": 5.51,
+    "average_rating": 4.9,
+    "rating_number": 75,
+    "final_score": 0.8088,
+    "signals": {
+     "relevance": 1.0,
+     "quality": 0.9497,
+     "popularity": 0.5321,
+     "budget_fit": 0.0694
+    },
+    "sources": {
+     "bm25_rank": 2,
+     "bm25_interest1_rank": 3,
+     "bm25_interest2_rank": 2
+    }
+   },
+   {
+    "rank": 5,
+    "parent_asin": "B016E3LXAC",
+    "title": "925 Sterling silver West Highland Terrier Dog Necklace",
+    "domain": "Handmade Products",
+    "price": 41.0,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.8384,
+    "signals": {
+     "relevance": 0.8737,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.7001
+    },
+    "sources": {
+     "bm25_rank": 6,
+     "bm25_interest1_rank": 14,
+     "bm25_interest2_rank": 5
+    }
+   },
+   {
+    "rank": 6,
+    "parent_asin": "B07JHH9118",
+    "title": "Chihuahua Cupcake Toppers, set of 6 different birthday dogs party decorations",
+    "domain": "Handmade Products",
+    "price": 11.95,
+    "average_rating": 4.9,
+    "rating_number": 13,
+    "final_score": 0.816,
+    "signals": {
+     "relevance": 0.9737,
+     "quality": 0.9022,
+     "popularity": 0.3243,
+     "budget_fit": 0.2209
+    },
+    "sources": {
+     "bm25_rank": 1,
+     "bm25_interest1_rank": 9,
+     "bm25_interest2_rank": 1
+    }
+   },
+   {
+    "rank": 7,
+    "parent_asin": "B08XH555RP",
+    "title": "Dog Leash Wall Hook. Never Walk Alone. Solid Steel. Gloss Black Color. With Screws. 18 Inches Wide.",
+    "domain": "Handmade Products",
+    "price": 37.95,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.777,
+    "signals": {
+     "relevance": 0.7436,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.8484
+    },
+    "sources": {
+     "bm25_rank": 16,
+     "bm25_interest1_rank": 13,
+     "bm25_interest2_rank": 17
+    }
+   },
+   {
+    "rank": 8,
+    "parent_asin": "B07ZTWW4JZ",
+    "title": "Purple Gingham Dog Collar - Spring Puppy Easter Check Fabric - Checker plaid buffalo white - Adjustable cotton fabric - Handmade by Britches4Stitches",
+    "domain": "Handmade Products",
+    "price": 15.99,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.8082,
+    "signals": {
+     "relevance": 0.9201,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.3866
+    },
+    "sources": {
+     "bm25_rank": 7,
+     "bm25_interest1_rank": 2,
+     "bm25_interest2_rank": 9
+    }
+   },
+   {
+    "rank": 9,
+    "parent_asin": "B07P9TGWWV",
+    "title": "Teacup Chihuahua Stencil - Dog Cat Feline Silhouette Dog Cat Animal Lover DIY Template Reusable Laser Cut Mylar Template for Painting Home Decor DIY Crafts - The Artful Stencil",
+    "domain": "Handmade Products",
+    "price": 12.95,
+    "average_rating": 5.0,
+    "rating_number": 2,
+    "final_score": 0.7274,
+    "signals": {
+     "relevance": 0.8417,
+     "quality": 0.8681,
+     "popularity": 0.135,
+     "budget_fit": 0.2568
+    },
+    "sources": {
+     "bm25_rank": 8,
+     "bm25_interest1_rank": 16,
+     "bm25_interest2_rank": 6
+    }
+   },
+   {
+    "rank": 10,
+    "parent_asin": "B0B49TY8WY",
+    "title": "Dogs Cats ID Tags Personalized Lovely Symbols Pets Collar Name Accessories Simple Custom Engraved Products",
+    "domain": "Handmade Products",
+    "price": 5.69,
+    "average_rating": 4.7,
+    "rating_number": 673,
+    "final_score": 0.7077,
+    "signals": {
+     "relevance": 0.8585,
+     "quality": 0.923,
+     "popularity": 0.8003,
+     "budget_fit": 0.072
+    },
+    "sources": {
+     "bm25_rank": 10,
+     "bm25_interest1_rank": 5,
+     "bm25_interest2_rank": 12
+    }
+   }
+  ]
  }
 }

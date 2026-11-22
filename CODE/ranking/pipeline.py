@@ -13,6 +13,7 @@ from CODE.retrieval.bm25_baseline import BM25Retriever, Catalog, TfidfRetriever,
 class RankConfig:
     lexical: str = "bm25"
     use_fusion: bool = True
+    split_interests: bool = False
     use_filters: bool = True
     use_ranking: bool = True
     use_mmr: bool = True
@@ -35,14 +36,28 @@ class GiftRanker:
         cfg = config or RankConfig()
         t0 = time.perf_counter()
         query = keyword_query(constraints)
-        lexical = self.retrievers[cfg.lexical].search(query, cfg.pool_size)
+        retriever = self.retrievers[cfg.lexical]
+        lexical = retriever.search(query, cfg.pool_size)
         semantic = normalize_results(semantic_results)[: cfg.pool_size]
 
+        lists = {cfg.lexical: lexical}
+        interests = constraints.get("interests") or []
+        if cfg.split_interests and len(interests) > 1:
+            for i, interest in enumerate(interests, 1):
+                sub = dict(constraints, interests=[interest])
+                lists[f"{cfg.lexical}_interest{i}"] = retriever.search(keyword_query(sub), cfg.pool_size)
+        n_lex = len(lists)
+        list_weights = {name: 1.0 / n_lex for name in lists}
         if cfg.use_fusion and semantic:
-            candidates, source_ranks = rrf({cfg.lexical: lexical, "semantic": semantic}, k=cfg.rrf_k)
+            lists["semantic"] = semantic
+            list_weights["semantic"] = 1.0
+
+        if len(lists) > 1:
+            candidates, source_ranks = rrf(lists, k=cfg.rrf_k, weights=list_weights)
         else:
             candidates = lexical
             source_ranks = {a: {f"{cfg.lexical}_rank": i} for i, (a, _) in enumerate(lexical, 1)}
+        n_candidates = len(candidates)
 
         dropped = {}
         if cfg.use_filters:
@@ -74,7 +89,7 @@ class GiftRanker:
         return {
             "query": query,
             "constraints": constraints,
-            "n_candidates": len(lexical) + len(semantic),
+            "n_candidates": n_candidates,
             "n_after_filters": len(candidates),
             "dropped": dropped,
             "latency_ms": round((time.perf_counter() - t0) * 1000, 1),
