@@ -7,9 +7,11 @@
         GiftConciergeAPI.resetSession(sessionId)          -> Promise<void>
 
     Where responses come from:
-        default            mock backend (mock-backend.js), for frontend work only
-        ?api=<base url>    real backend: POST <base>/recommend, POST <base>/reset
-        ?api=same-origin   real backend served from the same host as this page
+        served by CODE/backend (http://localhost:8000)   real backend, detected via GET /health
+        opened as a file, or no backend answering        mock backend (mock-backend.js)
+        ?api=<base url>    force the real backend at that URL (POST <base>/recommend, /reset)
+        ?api=same-origin   force the real backend on this page's host
+        ?mock=1            force the mock
         window.GIFT_CONCIERGE_CONFIG = { apiBase: "...", useMock: false } also works.
 
     normalizeResponse() turns whatever the backend returns into the one shape
@@ -33,20 +35,43 @@ window.GiftConciergeAPI = (() => {
         }
     }
 
-    function resolveConfig() {
-        const config = { apiBase: "", useMock: true, ...(window.GIFT_CONCIERGE_CONFIG || {}) };
-        const apiParam = new URLSearchParams(window.location.search).get("api");
+    const config = { apiBase: "", useMock: true, source: "mock" };
 
-        if (apiParam) {
-            config.useMock = false;
-            config.apiBase = apiParam === "same-origin" ? "" : apiParam;
+    async function backendAnswers(base) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 1500);
+        try {
+            const response = await fetch(`${base}/health`, { signal: controller.signal });
+            const body = response.ok ? await response.json() : null;
+            return Boolean(body && body.service === "gift-concierge");
+        } catch {
+            return false;
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    // Decided once, before the first request.
+    const ready = (async () => {
+        const explicit = window.GIFT_CONCIERGE_CONFIG || {};
+        const params = new URLSearchParams(window.location.search);
+        const apiParam = params.get("api");
+
+        if (typeof explicit.useMock === "boolean") {
+            Object.assign(config, explicit, { source: "config" });
+        } else if (params.get("mock") === "1") {
+            Object.assign(config, { useMock: true, source: "?mock=1" });
+        } else if (apiParam) {
+            Object.assign(config, { useMock: false, apiBase: apiParam === "same-origin" ? "" : apiParam, source: "?api" });
+        } else if (/^https?:$/.test(window.location.protocol) && await backendAnswers("")) {
+            Object.assign(config, { useMock: false, apiBase: "", source: "detected backend" });
         }
 
         config.apiBase = String(config.apiBase || "").replace(/\/+$/, "");
-        return config;
-    }
-
-    const config = resolveConfig();
+        if (window.console) {
+            console.info(`[Gift Concierge] using ${config.useMock ? "mock backend" : `backend at ${config.apiBase || window.location.origin}`} (${config.source})`);
+        }
+    })();
 
 
     /* ---------- transport ---------- */
@@ -83,6 +108,7 @@ window.GiftConciergeAPI = (() => {
     }
 
     async function sendMessage(sessionId, message) {
+        await ready;
         let raw;
 
         if (config.useMock) {
@@ -103,6 +129,7 @@ window.GiftConciergeAPI = (() => {
             return;
         }
 
+        await ready;
         if (config.useMock) {
             window.MockGiftConcierge.reset(sessionId);
             return;
@@ -270,6 +297,7 @@ window.GiftConciergeAPI = (() => {
 
     return {
         config,
+        ready,
         sendMessage,
         resetSession,
         newSessionId,
