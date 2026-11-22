@@ -15,9 +15,13 @@ API calls.
 
 import json
 import logging
+import re
 from typing import Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator
+
+from llm.exclusions import EXCLUSION_GROUPS, normalize_exclusions
+from llm.interest_labels import interest_labels, labels_for, prompt_hints
 
 log = logging.getLogger(__name__)
 
@@ -57,6 +61,24 @@ def _clean_text(value):
     return value or None
 
 
+def short_recipient(recipient):
+    """"my 8 year old nephew" -> "nephew" (the shared contract's form)."""
+    if not recipient:
+        return None
+    text = re.sub(r"^(?:my|our|the|an?)\s+", "", recipient.strip(), flags=re.I)
+    text = re.sub(r"^\d+(?:\.\d+)?[- ](?:years?|yrs?|months?)[- ]old\s+", "", text, flags=re.I)
+    return text or None
+
+
+class InterestLabel(BaseModel):
+    """KG label the LLM assigned to one interest (see interest_labels.py)."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    interest: str
+    label: str
+
+
 class TurnDelta(BaseModel):
     """Constraints stated in a single user message."""
 
@@ -65,6 +87,7 @@ class TurnDelta(BaseModel):
     recipient: Optional[str] = None
     occasion: Optional[str] = None
     interests_add: list[str] = Field(default_factory=list)
+    interest_labels: list[InterestLabel] = Field(default_factory=list)
     interests_remove: list[str] = Field(default_factory=list)
     replace_interests: bool = False
     exclusions_add: list[str] = Field(default_factory=list)
@@ -106,6 +129,8 @@ class GiftConstraints(BaseModel):
     age: Optional[float] = Field(default=None, ge=0, le=120)
     age_group: Optional[AgeGroup] = None
     category_preference: Optional[Category] = None
+    # {interest: KG label} from extraction; bookkeeping, not a user constraint.
+    interest_label_map: dict[str, str] = Field(default_factory=dict, exclude=True)
 
     def has_budget(self):
         return self.budget_min is not None or self.budget_max is not None
@@ -118,11 +143,35 @@ class GiftConstraints(BaseModel):
             return list(AGE_GROUP_RANGES[self.age_group])
         return None
 
-    def to_handoff(self):
-        """Constraints JSON for ranking/filtering and explanation."""
-        data = self.model_dump()
-        data["target_age_range"] = self.target_age_range()
-        return data
+    def to_handoff(self, clarification_question=None):
+        """Shared constraints JSON (ranking, KG, frontend, explanation).
+
+        First block: the agreed contract. Second block: our extra keys.
+        `exclusions` is normalized for the ranking filter; show
+        `exclusions_stated` to users.
+        """
+        age = self.age
+        if age is not None and float(age).is_integer():
+            age = int(age)
+        return {
+            "recipient": short_recipient(self.recipient),
+            "recipient_age": age,
+            "occasion": self.occasion,
+            "interests": list(self.interests),
+            "keywords": [],
+            "budget_min": self.budget_min,
+            "budget_max": self.budget_max,
+            "exclusions": normalize_exclusions(self.exclusions),
+            "needs_clarification": clarification_question is not None,
+            "clarification_question": clarification_question,
+
+            "exclusions_stated": list(self.exclusions),
+            "interest_labels": labels_for(self.interests, self.interest_label_map),
+            "category_preference": self.category_preference,
+            "age_group": self.age_group,
+            "target_age_range": self.target_age_range(),
+            "budget_flexible": self.budget_flexible,
+        }
 
 
 def _nullable(schema):
@@ -145,6 +194,20 @@ TURN_DELTA_SCHEMA = {
         "recipient": _nullable({"type": "string"}),
         "occasion": _nullable({"type": "string"}),
         "interests_add": _STR_LIST,
+        "interest_labels": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["interest", "label"],
+                "properties": {
+                    "interest": {"type": "string"},
+                    # enum comes from the KG vocabulary when it is available
+                    "label": {"type": "string", **({"enum": interest_labels()}
+                                                   if interest_labels() else {})},
+                },
+            },
+        },
         "interests_remove": _STR_LIST,
         "replace_interests": {"type": "boolean"},
         "exclusions_add": _STR_LIST,
@@ -174,11 +237,18 @@ Fields:
 - occasion: e.g. "birthday", "christmas", "graduation", "housewarming".
 - interests_add: hobbies/likes/themes newly mentioned, short lowercase noun phrases \
 ("dinosaurs", "mystery novels", "knitting").
+- interest_labels: for each entry of interests_add that clearly fits one of the labels \
+below, {"interest": <exact interests_add string>, "label": <label>}. Keep the specific \
+interest in interests_add ("star wars") and give its label here (scifi_fantasy). Leave \
+out interests that fit no label; never force the closest one. "Reading" has no label.
 - interests_remove: interests from the current state the user takes back or says \
 the recipient no longer likes ("she's not into puzzles anymore" -> ["puzzles"]).
 - replace_interests: true only if the user replaces the old interests \
 ("instead", "forget X, she likes Y", "actually only Y").
-- exclusions_add: things to avoid ("no books", "nothing with batteries", "hates plush toys").
+- exclusions_add: things to avoid, short lowercase noun phrases ("no books" -> "books", \
+"no mugs" -> "mugs"). When the user rules out a whole kind of product, use the exact \
+group name: <<GROUPS>>. "nothing wearable" / "nothing to wear" -> "wearable"; "no clothes" \
+-> "clothing"; "nothing with batteries" -> "electronic"; "hates plush toys" -> "stuffed animals".
 - budget_min / budget_max: USD. "under $50" -> max 50. "at least $30" -> min 30. \
 "$20-40" -> 20 and 40. "around $50" -> min 40, max 60. A single new amount such as \
 "actually $150" or "my budget is $150" -> max 150.
@@ -192,7 +262,14 @@ dollar change if stated ("$20 cheaper" -> 20), else null.
 of product ("a book", "a toy or game", "something handmade").
 
 If the message contradicts itself, still extract exactly what it says (e.g. both a \
-min above the max); the system will ask the user to clarify."""
+min above the max); the system will ask the user to clarify.
+
+Interest labels (label: example phrasings):
+<<LABELS>>"""
+EXTRACTION_SYSTEM_PROMPT = (
+    EXTRACTION_SYSTEM_PROMPT
+    .replace("<<GROUPS>>", ", ".join(f'"{g}"' for g in EXCLUSION_GROUPS))
+    .replace("<<LABELS>>", prompt_hints() or "  (none available: return [])"))
 
 
 class ExtractionResult(BaseModel):

@@ -16,7 +16,7 @@ from llm.llm_client import FakeLLMClient
 def full_delta(**overrides):
     """A complete strict-schema response with every key present."""
     base = {name: None for name in TURN_DELTA_SCHEMA["properties"]}
-    base.update(interests_add=[], interests_remove=[], exclusions_add=[],
+    base.update(interests_add=[], interest_labels=[], interests_remove=[], exclusions_add=[],
                 replace_interests=False, no_budget_preference=False)
     base.update(overrides)
     return base
@@ -82,9 +82,11 @@ def test_empty_delta():
 def test_constraints_handoff_shape():
     c = GiftConstraints(recipient="niece", interests=["art"], budget_max=30, age_group="child")
     out = c.to_handoff()
-    assert set(out) == {"recipient", "occasion", "interests", "exclusions", "budget_min",
-                        "budget_max", "budget_flexible", "age", "age_group",
-                        "category_preference", "target_age_range"}
+    assert set(out) == {"recipient", "recipient_age", "occasion", "interests", "keywords",
+                        "budget_min", "budget_max", "exclusions", "needs_clarification",
+                        "clarification_question", "exclusions_stated", "interest_labels",
+                        "category_preference", "age_group", "target_age_range",
+                        "budget_flexible"}
     assert out["target_age_range"] == [4, 12]
     assert GiftConstraints(age=7, age_group="child").target_age_range() == [7, 7]
 

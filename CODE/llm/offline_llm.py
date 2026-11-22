@@ -24,7 +24,7 @@ def _terms(text):
 def extract(message):
     m = message.lower()
     d = {name: None for name in TURN_DELTA_SCHEMA["properties"]}
-    d.update(interests_add=[], interests_remove=[], exclusions_add=[],
+    d.update(interests_add=[], interest_labels=[], interests_remove=[], exclusions_add=[],
              replace_interests=False, no_budget_preference=False)
 
     if re.search(r"no (budget|limit)|budget (doesn't|does not) matter|any price", m):
@@ -70,6 +70,9 @@ def extract(message):
     for r in re.finditer(r"\bno ([a-z\- ]+?)(?=,|\.|$| and | but | please)", m):
         if not re.match(r"(budget|limit|longer)", r.group(1)):
             d["exclusions_add"].append(r.group(1).strip())
+
+    if re.search(r"\bnothing (?:wearable|to wear)\b", m):
+        d["exclusions_add"].append("wearable")
 
     for word, category in (("handmade", "Handmade Products"), ("book", "Books"),
                            ("toy", "Toys & Games"), ("game", "Toys & Games")):

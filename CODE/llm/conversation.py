@@ -5,7 +5,7 @@
       -> DialogueState.apply_delta (conflict rules)   dialogue_state.py
       -> next_question? -> ask ONE question           clarification.py
       -> build_query_text -> retriever.search(top_n)  retrieval/semantic_search.py
-      -> ranker(retrieved, constraints, products)     Disha's stage (stub for now)
+      -> ranker(retrieved, constraints, products)     ranking_adapter.py, or the stub
       -> explain_recommendations (RAG)                explanation.py
 
 Every turn returns a dict (see TurnResponse keys in CODE/README.md) so a
@@ -21,7 +21,7 @@ from llm.explanation import explain_recommendations
 
 class GiftConcierge:
     def __init__(self, llm, retriever, products, ranker=stub_ranker.rank, kg_facts=None,
-                 top_n=100, top_k=5, log_path=None):
+                 top_n=200, top_k=5, log_path=None):
         self.llm = llm
         self.retriever = retriever
         self.products = products
@@ -34,6 +34,9 @@ class GiftConcierge:
 
     def _reply(self, kind, message, **extra):
         self.last_assistant = message
+        if kind == "question":
+            extra["constraints"] = self.state.constraints.to_handoff(
+                clarification_question=message)
         return {"type": kind, "message": message, **extra}
 
     def handle(self, user_message):
@@ -69,8 +72,12 @@ class GiftConcierge:
                 slot="no_results", query_text=query_text, retrieved=retrieved,
                 ranked=ranked, **base)
 
+        kg_facts = self.kg_facts
+        if hasattr(kg_facts, "facts_for"):
+            kg_facts = kg_facts.facts_for([r["parent_asin"] for r in ranked],
+                                          base["constraints"]["interest_labels"])
         explained = explain_recommendations(self.llm, ranked, self.products,
-                                            self.state.constraints, self.kg_facts, self.top_k)
+                                            self.state.constraints, kg_facts, self.top_k)
         lines = ["Here are some ideas:"]
         for item in explained["explanations"]:
             product = self.products[item["parent_asin"]]

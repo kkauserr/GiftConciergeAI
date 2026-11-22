@@ -28,7 +28,7 @@ like {"subject": ..., "relation": ..., "object": ...} (or {"text": ...}).
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from typing import Protocol
+from typing import Optional, Protocol
 
 log = logging.getLogger(__name__)
 
@@ -48,6 +48,7 @@ class Evidence:
     parent_asin: str
     field: str
     text: str
+    path_id: Optional[str] = None   # KG reasoning path (kg evidence only)
 
 
 @dataclass
@@ -94,9 +95,9 @@ def collect_evidence(product, pid, kg=None):
     asin = product["parent_asin"]
     ev = []
 
-    def add(suffix, field_name, text):
+    def add(suffix, field_name, text, path_id=None):
         if text is not None and str(text).strip():
-            ev.append(Evidence(f"{pid}.{suffix}", asin, field_name, _clip(text)))
+            ev.append(Evidence(f"{pid}.{suffix}", asin, field_name, _clip(text), path_id))
 
     add("title", "title", product.get("title"))
     price = product.get("price_num", product.get("price"))
@@ -146,7 +147,8 @@ def collect_evidence(product, pid, kg=None):
         add(f"review[{j}]", "review_samples", stars + body)
 
     for j, fact in enumerate(get_kg_facts(kg, asin)[:MAX_KG_FACTS]):
-        add(f"kg[{j}]", "kg", _fact_text(fact))
+        add(f"kg[{j}]", "kg", _fact_text(fact),
+            fact.get("path_id") if isinstance(fact, dict) else None)
     return ev
 
 
@@ -179,12 +181,19 @@ you relied on (use the exact IDs, e.g. "P1.feature[0]"). Never use evidence from
 a different product. Do not invent features, prices, ratings, reviews or facts, \
 and do not use outside knowledge about the product. If the evidence only weakly \
 matches the shopper's request, say so plainly instead of overstating the fit. \
+Keep the wording of knowledge-graph (kg) lines: "theme" means themed, not made for \
+that hobby; "the listing says" stays the seller's claim; review counts stay as given. \
+A "Caution:" line is a drawback, never praise. \
 Write 1-2 sentences (max 50 words) per product, addressed to the shopper. Do not \
 put evidence IDs in the explanation text. Return one entry per product ID."""
 
 
 def _constraints_summary(constraints):
     data = constraints.to_handoff() if hasattr(constraints, "to_handoff") else dict(constraints)
+    if "exclusions_stated" in data:   # the normalized list is only for the filter
+        data["exclusions"] = data.pop("exclusions_stated")
+    for key in ("needs_clarification", "clarification_question", "interest_labels"):
+        data.pop(key, None)
     return {k: v for k, v in data.items() if v not in (None, [], False)}
 
 

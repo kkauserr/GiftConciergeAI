@@ -11,8 +11,9 @@
         --turns "gift for my 8 year old nephew" "he loves dinosaurs and space" \
                 "under $30" "cheaper" "actually he's into lego instead"
 
-Uses the stub ranker (CODE/llm/stub_ranker.py) until the real ranking stage is
-ready. Builds the sample index first if it does not exist yet.
+Uses the stub ranker unless --rank-index points at a built BM25 index, and adds
+knowledge-graph evidence with --kg. Builds the sample index first if it does not
+exist yet.
 """
 
 import argparse
@@ -53,7 +54,7 @@ def show_details(response, products):
         top = response["retrieved"][:5]
         print("  [semantic top5]", ", ".join(
             f"{h['parent_asin']}({h['score']:.3f})" for h in top))
-        print(f"  [stub ranker] kept {len(response['ranked'])} of {len(response['retrieved'])}")
+        print(f"  [ranker] kept {len(response['ranked'])} of {len(response['retrieved'])}")
     for item in response.get("explanations", []):
         print(f"  [evidence #{item['rank']}] {item['evidence_ids']}"
               + (f" invalid={item['invalid_citations']}" if item["invalid_citations"] else "")
@@ -68,7 +69,9 @@ def main():
     parser.add_argument("--verbose", "-v", action="store_true")
     parser.add_argument("--corpus", default=str(SAMPLE_CORPUS))
     parser.add_argument("--index-dir", default=str(SAMPLE_INDEX_DIR))
-    parser.add_argument("--top-n", type=int, default=100)
+    parser.add_argument("--top-n", type=int, default=200)
+    parser.add_argument("--rank-index", help="use Disha's GiftRanker, e.g. indexes/sample")
+    parser.add_argument("--kg", action="store_true", help="add knowledge-graph evidence")
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--log", default=str(REPO_ROOT / "logs" / "state_changes.jsonl"))
     args = parser.parse_args()
@@ -88,10 +91,20 @@ def main():
     from retrieval.semantic_search import SemanticRetriever
     retriever = SemanticRetriever(args.index_dir)
     products = load_products(args.corpus)
-    bot = GiftConcierge(llm, retriever, products, top_n=args.top_n, top_k=args.top_k,
+    extra = {}
+    if args.rank_index:
+        sys.path.insert(0, str(REPO_ROOT))
+        from CODE.ranking.pipeline import GiftRanker
+        from llm.ranking_adapter import HybridRanker
+        extra["ranker"] = HybridRanker(GiftRanker(args.rank_index, load_tfidf=False))
+    if args.kg:
+        from knowledge_graph.api import load_kg
+        from llm.kg_adapter import KGEvidence
+        extra["kg_facts"] = KGEvidence(load_kg(args.corpus))
+    bot = GiftConcierge(llm, retriever, products, **extra, top_n=args.top_n, top_k=args.top_k,
                         log_path=args.log)
 
-    print("Gift Concierge demo (sample corpus, stub ranker). Ctrl+C or 'quit' to exit.")
+    print("Gift Concierge demo. Ctrl+C or 'quit' to exit.")
     print("Bot: Hi! Who are you shopping for?")
 
     turns = iter(args.turns) if args.turns else None

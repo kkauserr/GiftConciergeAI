@@ -268,6 +268,10 @@ class DialogueState:
         adds = [t for t in d.interests_add if ok(t)]
         removes = [t for t in d.interests_remove if ok(t)]
 
+        for item in d.interest_labels:
+            key = " ".join(item.interest.lower().split())
+            self.constraints.interest_label_map[key] = item.label
+
         if d.replace_interests and adds:
             self._set("interests", list(adds), "replaced_instead")
         else:

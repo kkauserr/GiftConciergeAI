@@ -78,7 +78,8 @@ def test_explanations_track_used_evidence_and_invalid_citations():
     assert first["evidence_ids"] == ["P1.title", "P1.age", "P1.feature[0]"]
     assert first["invalid_citations"] == ["P1.made_up", "P2.title"]  # cross-product dropped
     assert first["used_evidence"][2] == {"id": "P1.feature[0]", "parent_asin": "A1",
-                                         "field": "features", "text": "Includes 12 dinosaur fossils"}
+                                         "field": "features", "text": "Includes 12 dinosaur fossils",
+                                         "path_id": None}
     assert second["fallback"] is False and second["invalid_citations"] == []
     assert set(out["evidence"]) == {"P1", "P2"}
 
@@ -110,11 +111,15 @@ def test_missing_or_failed_explanations_fall_back_to_metadata():
     assert all(x["fallback"] for x in out["explanations"])
 
 
-def test_top_k_and_sample_products_without_reviews():
+def test_top_k_and_sample_review_evidence():
     sample = load_products(SAMPLE_CORPUS)
     asins = list(sample)[:8]
     ranked = [{"parent_asin": a, "score": 1.0, "rank": i + 1} for i, a in enumerate(asins)]
     out = explain_recommendations(FakeLLMClient([{"explanations": []}]), ranked, sample,
                                   GiftConstraints(), top_k=3)
     assert len(out["explanations"]) == 3
-    assert all(not any("review" in e["id"] for e in evs) for evs in out["evidence"].values())
+    # works with the sample before and after the review join
+    for evs in out["evidence"].values():
+        product = sample[evs[0]["parent_asin"]]
+        has_reviews = bool(product.get("review_count") or product.get("review_samples"))
+        assert any("review" in e["id"] for e in evs) == has_reviews

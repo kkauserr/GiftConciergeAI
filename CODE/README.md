@@ -9,8 +9,8 @@ user message
   -> constraint extraction (LLM, JSON schema)      llm/constraints.py
   -> dialogue state + conflict rules               llm/dialogue_state.py
   -> one clarifying question if needed             llm/clarification.py
-  -> query text -> semantic top-100                retrieval/semantic_search.py
-  -> BM25 / RRF / filtering / ranking   (Disha)    llm/stub_ranker.py until ready
+  -> query text -> semantic top-200                retrieval/semantic_search.py
+  -> BM25 / RRF / filtering / ranking   (Disha)    llm/ranking_adapter.py (or stub)
   -> RAG explanation (+ KG facts, Jenna)           llm/explanation.py
 ```
 
@@ -47,7 +47,7 @@ Model: `BAAI/bge-small-en-v1.5`. Vectors are L2-normalized, so the inner-product
 
 ### For Disha: retrieval output and constraints JSON
 
-**Semantic results** come from `SemanticRetriever(index_dir).search(query_text, top_n=100)`:
+**Semantic results** come from `SemanticRetriever(index_dir).search(query_text, top_n=200)`:
 
 ```json
 [
@@ -60,32 +60,58 @@ Model: `BAAI/bge-small-en-v1.5`. Vectors are L2-normalized, so the inner-product
 - `score` is cosine similarity in [-1, 1].
 - `search_batch([q1, q2], top_n)` returns one such list per query.
 
-**Constraints JSON** comes from `GiftConstraints.to_handoff()`. Every key is always present:
+**Constraints JSON** comes from `GiftConstraints.to_handoff()` and is the `constraints` key of every turn response. Every key is always present:
 
 ```json
 {
-  "recipient": "my 8 year old nephew",
-  "occasion": "birthday",
-  "interests": ["dinosaurs", "space"],
-  "exclusions": ["puzzle"],
+  "recipient": "sister",
+  "recipient_age": 22,
+  "occasion": "graduation",
+  "interests": ["coffee", "reading"],
+  "keywords": [],
   "budget_min": null,
-  "budget_max": 22.5,
-  "budget_flexible": false,
-  "age": 8.0,
+  "budget_max": 80,
+  "exclusions": ["wearable"],
+  "needs_clarification": false,
+  "clarification_question": null,
+
+  "exclusions_stated": ["wearable"],
+  "interest_labels": ["coffee_tea"],
+  "category_preference": null,
   "age_group": null,
-  "category_preference": "Toys & Games",
-  "target_age_range": [8.0, 8.0]
+  "target_age_range": [22, 22],
+  "budget_flexible": false
 }
 ```
 
-- `category_preference` is one of `"Books"`, `"Handmade Products"`, `"Toys & Games"`, or `null`. It matches the product `domain` field.
-- `age_group` is one of `baby`, `toddler`, `child`, `teen`, `adult`, `senior`, or `null`.
-- `target_age_range` is `[min, max]` in years, with `null` meaning no bound. It comes from `age`, or else from `age_group`. Compare it to the product `age_min`/`age_max`.
-- `budget_flexible: true` means the user explicitly said budget doesn't matter.
-- Exclusions are lowercase free text, such as "batteries" or "plush toys". Apply them as filters on title, categories and features.
-- The retrieval query text leaves out budget and exclusions on purpose. They're for your hard filters.
+The first block is the format agreed with ranking and the frontend. The second block adds:
 
-**The interface your ranker should expose** (the conversation loop calls it like this):
+- `exclusions_stated`: what the user actually said. **Show this in the UI**; `exclusions` is normalized for the filter.
+- `interest_labels`: KG labels (`interests.json`) for `query_interests`. Free-text interests without a label stay in `interests` only.
+- `category_preference`: `"Books"`, `"Handmade Products"`, `"Toys & Games"`, or `null`. It matches the product `domain` field.
+- `age_group`: `baby`, `toddler`, `child`, `teen`, `adult`, `senior`, or `null`. `target_age_range` is `[min, max]` years, with `null` meaning no bound.
+- `budget_flexible: true`: the user explicitly said budget doesn't matter.
+
+**Broad exclusions** (`llm/exclusions.py`). `wearable`, `clothing`, `jewelry`, `food` and `decor` are sent as the group name, and `CODE/ranking/filters.py` expands them. `stuffed animals`, `scented` and `electronic` aren't in `filters.py`, so concrete words are sent for those. Other terms pass through unchanged.
+
+The retrieval query text leaves out budget and exclusions on purpose. They're for the hard filters.
+
+**Semantic results for the ablation** (top 200 per query, `{qid: [[parent_asin, score], ...]}`):
+
+```bash
+python CODE/retrieval/export_semantic.py --queries CODE/ranking/dev_queries.json --out semantic_dev.json
+python -m CODE.ranking.ablation --semantic-file semantic_dev.json --labels CODE/ranking/dev_labels.csv
+```
+
+**Running the loop with the real ranker and KG** (after `python -m CODE.retrieval.bm25_baseline build`):
+
+```bash
+python CODE/llm/demo_cli.py --rank-index indexes/sample --kg
+```
+
+`llm/ranking_adapter.py` wraps `GiftRanker` and also applies `category_preference` and age-group filtering, which `GiftRanker` doesn't have.
+
+**Ranker interface** (what the conversation loop calls; `HybridRanker` implements it):
 
 ```python
 rank(retrieved, constraints, products, top_k=5) -> [{"parent_asin", "score", "rank"}]
@@ -94,11 +120,13 @@ rank(retrieved, constraints, products, top_k=5) -> [{"parent_asin", "score", "ra
 #   products    {parent_asin: product record}
 ```
 
-Pass it in with `GiftConcierge(..., ranker=your_rank)`. The placeholder is `CODE/llm/stub_ranker.py`. It applies price, category, exclusion and age filters, then sorts by semantic score plus a small rating boost.
+Without a `ranker` argument the loop uses `CODE/llm/stub_ranker.py`. It applies price, category, exclusion and age filters, then sorts by semantic score plus a small rating boost.
 
 ---
 
 ### For Jenna: KG facts in explanations
+
+`llm/kg_adapter.py` (`KGEvidence(load_kg())`) calls `get_evidence()` with the ranked ASINs and `interest_labels`. It uses only `assertable_claims` and `cautions`, and keeps each `path_id` in `used_evidence`.
 
 `explain_recommendations(..., kg_facts=...)` accepts either of these:
 
@@ -118,7 +146,7 @@ A fact can be a string, `{"subject": ..., "relation": ..., "object": ...}`, or `
 | `type` | always | `"question"` or `"recommendations"` |
 | `message` | always | text shown to the user |
 | `slot` | questions | `interests`, `budget`, `conflict:<kind>`, `rephrase`, `no_results` |
-| `turn`, `constraints` | always | turn number and the constraints JSON |
+| `turn`, `constraints` | always | turn number and the constraints JSON (on questions, `needs_clarification` is true and `clarification_question` holds the text) |
 | `state_changes` | always | `[{turn, field, old, new, rule, utterance, timestamp}]` |
 | `conflicts` | always | `[{kind, fields, question, details}]` |
 | `extraction_error` | always | `null`, or the error if extraction failed |
@@ -147,8 +175,6 @@ Each explanation:
 - `fallback: true` means the LLM produced no explanation, so a metadata template (title, price, rating) was used instead. Leave these out of LLM faithfulness scores.
 
 Evidence IDs per product: `title`, `price`, `rating`, `category`, `age`, `brand`, `feature[j]` (up to 4), `description[0]` (only when there are no features), `review_stats`, `review[j]` (up to 3, most helpful first), `kg[j]`.
-
-> **Note:** `DATA/samples/sample_corpus_v2.jsonl` comes from the corpus before the review join, so it has no review fields. On the sample, explanations cite metadata only. Review evidence shows up once we use a sample from `final_product_corpus_v2.jsonl`.
 
 ---
 
