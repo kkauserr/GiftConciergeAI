@@ -87,24 +87,30 @@ def parse_age(details):
     """
     Extract minimum and maximum recommended ages in years.
 
-    Returns:
-        (age_min, age_max)
-
     Examples:
-        "7 - 10 years"    -> (7.0, 10.0)
-        "13 years and up" -> (13.0, None)
-        204 months        -> (17.0, None)
+        "7 - 10 years"          -> (7.0, 10.0)
+        "36 months - 8 years"   -> (3.0, 8.0)
+        "18 months - 3 years"   -> (1.5, 3.0)
+        "13 years and up"       -> (13.0, None)
+        "6 - 12 months"         -> (0.5, 1.0)
     """
     if not isinstance(details, dict):
         return None, None
 
-    # Most useful direct age fields, in priority order.
     age_keys = [
         "Reading age",
         "Manufacturer recommended age",
         "Our Recommended age",
         "Reading Interest (Min. Age)",
     ]
+
+    def to_years(number, unit):
+        value = float(number)
+
+        if unit and (unit.startswith("month") or unit.startswith("mo")):
+            return value / 12.0
+
+        return value
 
     for key in age_keys:
         value = details.get(key)
@@ -113,20 +119,62 @@ def parse_age(details):
             continue
 
         text = str(value).lower().replace(",", "")
+
+        # Mixed-unit range:
+        # "36 months - 8 years"
+        mixed_range = re.search(
+            r"(\d+(?:\.\d+)?)\s*(months?|mos?)\s*[-–]\s*"
+            r"(\d+(?:\.\d+)?)\s*(years?|yrs?)",
+            text
+        )
+
+        if mixed_range:
+            first, first_unit, second, second_unit = mixed_range.groups()
+
+            age_min = round(to_years(first, first_unit), 1)
+            age_max = round(to_years(second, second_unit), 1)
+
+            if age_min > age_max:
+                return None, None
+
+            return age_min, age_max
+
+        # Same-unit range:
+        # "7 - 10 years"
+        # "6 - 12 months"
+        same_range = re.search(
+            r"(\d+(?:\.\d+)?)\s*[-–]\s*(\d+(?:\.\d+)?)\s*"
+            r"(months?|mos?|years?|yrs?)",
+            text
+        )
+
+        if same_range:
+            first, second, unit = same_range.groups()
+
+            age_min = round(to_years(first, unit), 1)
+            age_max = round(to_years(second, unit), 1)
+
+            if age_min > age_max:
+                return None, None
+
+            return age_min, age_max
+
+        # Single age:
+        # "13 years and up"
+        single = re.search(
+            r"(\d+(?:\.\d+)?)\s*(months?|mos?|years?|yrs?)",
+            text
+        )
+
+        if single:
+            number, unit = single.groups()
+            return round(to_years(number, unit), 1), None
+
+        # Last fallback for a plain numeric value.
         numbers = re.findall(r"\d+(?:\.\d+)?", text)
 
-        if not numbers:
-            continue
-
-        numbers = [float(n) for n in numbers]
-
-        # Example: "7 - 10 years"
-        if len(numbers) >= 2:
-            return numbers[0], numbers[1]
-
-        # Example: "13 years and up"
         if len(numbers) == 1:
-            return numbers[0], None
+            return float(numbers[0]), None
 
     # Some Amazon records store minimum age directly in months.
     months = details.get("Manufacturer Minimum Age (MONTHS)")

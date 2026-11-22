@@ -1,4 +1,4 @@
-INPUT_FILE = "/scratch/jkauser/gift-concierge/data/processed_products.jsonl"
+INPUT_FILE = "/scratch/jkauser/gift-concierge/data/final_product_corpus_v2.jsonl"
 OUTPUT_FILE = "DATA/samples/sample_corpus_v2.jsonl"
 
 # Final v2 retained counts
