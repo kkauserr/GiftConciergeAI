@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from llm.llm_client import LLMClient, LLMConfigError, LLMResponseError
+from llm.llm_client import LLMClient, LLMConfigError, LLMResponseError, v1_base_url
 
 
 class MockCompletions:
@@ -48,6 +48,22 @@ def test_invalid_json_and_refusal_raise():
     client, _ = make_client(None, refusal="no")
     with pytest.raises(LLMResponseError, match="refused"):
         client.complete("x")
+
+
+@pytest.mark.parametrize("deployment,reasoning", [
+    ("gpt-5-mini", True), ("o4-mini", True), ("gpt-4.1-mini", False), ("gpt-4o", False)])
+def test_reasoning_models_get_effort_instead_of_temperature(deployment, reasoning):
+    _, mock = make_client("hi")
+    LLMClient(None, None, deployment,
+              client=SimpleNamespace(chat=SimpleNamespace(completions=mock))).complete("x")
+    assert ("temperature" in mock.last) is not reasoning
+    assert mock.last.get("reasoning_effort") == ("low" if reasoning else None)
+
+
+def test_v1_base_url():
+    base = "https://r.services.ai.azure.com/openai/v1"
+    assert v1_base_url(base + "/responses") == v1_base_url(base) == base + "/"
+    assert v1_base_url("https://r.openai.azure.com/") is None
 
 
 def test_from_env_reports_missing_vars(monkeypatch, tmp_path):
