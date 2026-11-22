@@ -27,241 +27,147 @@
             </div>
         </div>
 
-        <div class="course-label">CSE573</div>
+        <div class="navbar-actions">
+            <button id="start-over-button" class="start-over-button hidden" type="button">
+                <span aria-hidden="true">↺</span>
+                Start over
+            </button>
+
+            <div class="course-label">CSE573</div>
+        </div>
     </header>
-</div>
-    <!-- LOADING VIEW -->
-    <section id="loading-view" class="loading-view hidden">
-
-        <div class="loading-orb">
-            <div class="loading-orb-inner">✦</div>
-        </div>
-
-        <span class="section-eyebrow">CURATING YOUR MATCHES</span>
-
-        <h2>Finding gifts they'll actually love.</h2>
-
-        <p class="loading-description">
-            We're turning your preferences into thoughtful,
-            evidence-grounded recommendations.
-        </p>
-
-        <div class="loading-steps">
-
-            <div class="loading-step" id="loading-step-1">
-                <span class="step-icon">1</span>
-                <div>
-                    <strong>Understanding your request</strong>
-                    <small>Identifying interests, budget and preferences</small>
-                </div>
-            </div>
-
-            <div class="loading-step" id="loading-step-2">
-                <span class="step-icon">2</span>
-                <div>
-                    <strong>Searching relevant gifts</strong>
-                    <small>Finding products that match what matters</small>
-                </div>
-            </div>
-
-            <div class="loading-step" id="loading-step-3">
-                <span class="step-icon">3</span>
-                <div>
-                    <strong>Ranking the best matches</strong>
-                    <small>Balancing relevance, quality and budget</small>
-                </div>
-            </div>
-
-            <div class="loading-step" id="loading-step-4">
-                <span class="step-icon">4</span>
-                <div>
-                    <strong>Checking the evidence</strong>
-                    <small>Reviewing product and customer signals</small>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-    <!-- END LOADING VIEW -->
-<!-- CLARIFICATION VIEW -->
-<section id="clarification-view" class="clarification-view hidden">
-
-    <div class="clarification-icon">✦</div>
-
-    <span class="section-eyebrow">ONE QUICK QUESTION</span>
-
-    <h2>A little more would help.</h2>
-
-    <p id="clarification-question" class="clarification-question">
-        What budget are you working with?
-    </p>
-
-    <div class="clarification-options">
-        <button class="clarification-option">Under $25</button>
-        <button class="clarification-option">$25–$50</button>
-        <button class="clarification-option">$50–$100</button>
-        <button class="clarification-option">No limit</button>
-    </div>
-
-    <div class="clarification-divider">
-        <span>or tell us more</span>
-    </div>
-
-    <div class="clarification-input-row">
-        <input
-            id="clarification-input"
-            type="text"
-            placeholder="e.g. Around $60, preferably something practical..."
-        >
-
-        <button id="clarification-submit">
-            Continue
-            <span>→</span>
-        </button>
-    </div>
-
-    <button id="clarification-back" class="clarification-back">
-        ← Edit my request
-    </button>
-
-</section>
-<!-- END CLARIFICATION VIEW -->
 
     <main class="hero">
-        <div id="search-view">
-        <div class="eyebrow">
-            <span class="spark">✦</span>
-            AI-POWERED GIFT DISCOVERY
-        </div>
 
-        <h1>
-            Find the gift.<br>
-            <span>Skip the endless search.</span>
-        </h1>
+        <!-- LANDING: shown until the first message is sent -->
+        <div id="search-view" class="landing">
 
-        <p class="hero-description">
-            Tell us about the person you're shopping for.
-            Gift Concierge finds thoughtful recommendations
-            tailored to them.
-        </p>
+            <div class="eyebrow">
+                <span class="spark">✦</span>
+                AI-POWERED GIFT DISCOVERY
+            </div>
 
+            <h1>
+                Find the gift.<br>
+                <span>Skip the endless search.</span>
+            </h1>
 
-        <section class="search-card">
+            <p class="hero-description">
+                Tell us about the person you're shopping for.
+                Gift Concierge finds thoughtful recommendations
+                tailored to them.
+            </p>
 
-            <label for="gift-request">WHO ARE YOU SHOPPING FOR?</label>
+            <form id="search-form" class="search-card">
 
-            <textarea
-                id="gift-request"
-                placeholder="e.g. I need a graduation gift for my 22-year-old sister. She loves coffee, Formula 1, and reading. Budget is $80. Nothing wearable."
-            ></textarea>
+                <label for="gift-request">WHO ARE YOU SHOPPING FOR?</label>
 
-            <div class="search-footer">
+                <textarea
+                    id="gift-request"
+                    placeholder="e.g. I need a graduation gift for my 22-year-old sister. She loves coffee, Formula 1, and reading. Budget is $80. Nothing wearable."
+                ></textarea>
 
-                <div class="helper-text">
-                    <span>✦</span>
-                    Include interests, occasion, budget or anything they dislike
+                <div class="search-footer">
+
+                    <div class="helper-text">
+                        <span>✦</span>
+                        Include interests, occasion, budget or anything they dislike
+                    </div>
+
+                    <button id="find-gifts-button" type="submit">
+                        Find Gifts
+                        <span>→</span>
+                    </button>
+
                 </div>
 
-                <button id="find-gifts-button">
-                    Find Gifts
-                    <span>→</span>
-                </button>
+            </form>
 
+            <div class="example-section">
+                <span class="example-label">TRY AN EXAMPLE</span>
+
+                <div class="example-chips">
+                    <button class="example-chip" type="button">
+                        🎓 Graduation gift
+                    </button>
+
+                    <button class="example-chip" type="button">
+                        🎂 Birthday surprise
+                    </button>
+
+                    <button class="example-chip" type="button">
+                        💙 Gift for Dad
+                    </button>
+                </div>
             </div>
+        </div>
+        <!-- END LANDING -->
+
+
+        <!-- CONVERSATION: one continuous thread; recommendations render inside assistant turns -->
+        <section id="concierge-workspace" class="concierge-workspace hidden" aria-label="Conversation with Gift Concierge">
+
+            <div id="concierge-messages" class="concierge-messages" role="log" aria-live="polite"></div>
+
+            <form id="concierge-composer" class="concierge-composer">
+                <label class="visually-hidden" for="concierge-input">Message Gift Concierge</label>
+
+                <textarea
+                    id="concierge-input"
+                    rows="1"
+                    placeholder="Reply to Gift Concierge…"
+                ></textarea>
+
+                <button id="concierge-send" type="submit">
+                    Send
+                    <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <p class="composer-hint">Enter to send · Shift + Enter for a new line</p>
 
         </section>
-
-
-<!-- CONVERSATIONAL CONCIERGE -->
-<section id="concierge-workspace" class="concierge-workspace hidden">
-
-    <div id="concierge-messages" class="concierge-messages">
-        <!-- Conversation messages will be added here by JavaScript -->
-    </div>
-
-    <div id="concierge-progress" class="concierge-progress hidden">
-
-        <div class="concierge-progress-step" data-step="1">
-            <span class="progress-icon">1</span>
-            <div>
-                <strong>Understanding your request</strong>
-                <small>Identifying interests, budget and preferences</small>
-            </div>
-        </div>
-
-        <div class="concierge-progress-step" data-step="2">
-            <span class="progress-icon">2</span>
-            <div>
-                <strong>Searching relevant gifts</strong>
-                <small>Finding products that match what matters</small>
-            </div>
-        </div>
-
-        <div class="concierge-progress-step" data-step="3">
-            <span class="progress-icon">3</span>
-            <div>
-                <strong>Ranking the best matches</strong>
-                <small>Balancing relevance, quality and budget</small>
-            </div>
-        </div>
-
-        <div class="concierge-progress-step" data-step="4">
-            <span class="progress-icon">4</span>
-            <div>
-                <strong>Checking the evidence</strong>
-                <small>Reviewing product and customer signals</small>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="concierge-options" class="concierge-options hidden"></div>
-
-<!-- RESULTS VIEW -->
-<section id="results-section" class="results-section hidden">
-
-    <div id="preference-summary" class="preference-summary"></div>
-
-    <div id="recommendation-grid" class="recommendation-grid"></div>
-
-</section>
-<!-- END RESULTS VIEW -->
-    <div id="concierge-input-row" class="concierge-input-row hidden">
-        <input
-            id="concierge-input"
-            type="text"
-            placeholder="Tell Gift Concierge more..."
-        >
-
-        <button id="concierge-send">
-            Send
-            <span>→</span>
-        </button>
-    </div>
-
-</section>
-<!-- END CONVERSATIONAL CONCIERGE -->
-
-        <div class="example-section">
-            <span class="example-label">TRY AN EXAMPLE</span>
-
-            <div class="example-chips">
-                <button class="example-chip">
-                    🎓 Graduation gift
-                </button>
-
-                <button class="example-chip">
-                    🎂 Birthday surprise
-                </button>
-
-                <button class="example-chip">
-                    💙 Gift for Dad
-                </button>
-            </div>
-        </div>
+        <!-- END CONVERSATION -->
 
     </main>
+
+
+    <!-- Progress shown inside the pending assistant turn. Cloned per request, removed when the response arrives. -->
+    <template id="progress-template">
+        <div class="concierge-progress" aria-label="Gift Concierge is working on your request">
+            <div class="concierge-progress-step">
+                <span class="progress-icon">1</span>
+                <div>
+                    <strong>Understanding your preferences</strong>
+                    <small>Interests, budget and anything to avoid</small>
+                </div>
+            </div>
+
+            <div class="concierge-progress-step">
+                <span class="progress-icon">2</span>
+                <div>
+                    <strong>Searching relevant gifts</strong>
+                    <small>Looking across books, handmade finds and games</small>
+                </div>
+            </div>
+
+            <div class="concierge-progress-step">
+                <span class="progress-icon">3</span>
+                <div>
+                    <strong>Comparing the strongest matches</strong>
+                    <small>Balancing fit, quality and budget</small>
+                </div>
+            </div>
+
+            <div class="concierge-progress-step">
+                <span class="progress-icon">4</span>
+                <div>
+                    <strong>Preparing recommendations</strong>
+                    <small>Checking product details and reviews</small>
+                </div>
+            </div>
+        </div>
+    </template>
 
 
     <footer>
@@ -273,6 +179,13 @@
     </footer>
 
 
+    <!--
+        Load order: mock backend (temporary, delete when the real API is live),
+        then the API/service layer, then the UI.
+        Switch to the real backend with ?api=http://localhost:8000 (see README.md).
+    -->
+    <script src="mock-backend.js"></script>
+    <script src="api.js"></script>
     <script src="app.js"></script>
 
 </body>
