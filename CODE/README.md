@@ -94,7 +94,7 @@ The first block is the format agreed with ranking and the frontend. The second b
 
 **Broad exclusions** (`llm/exclusions.py`). `wearable`, `clothing`, `jewelry`, `food` and `decor` are sent as the group name, and `CODE/ranking/filters.py` expands them. `stuffed animals`, `scented` and `electronic` aren't in `filters.py`, so concrete words are sent for those. Other terms pass through unchanged.
 
-The retrieval query text leaves out budget and exclusions on purpose. They're for the hard filters.
+The semantic query text is just the interests and keywords (plus an explicit category). It leaves out budget and exclusions on purpose. They're for the hard filters.
 
 **Semantic results for the ablation** (top 200 per query, `{qid: [[parent_asin, score], ...]}`):
 

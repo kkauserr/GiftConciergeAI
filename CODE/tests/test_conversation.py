@@ -80,7 +80,7 @@ def test_full_conversation_flow():
 
     r3 = bot.handle("under $50")
     assert r3["type"] == "recommendations"
-    assert r3["query_text"] == "gift for my 7 year old nephew, age 7 who likes dinosaurs"
+    assert r3["query_text"] == "dinosaurs"
     assert [x["parent_asin"] for x in r3["ranked"]] == ["T1", "T2", "B1"]
     assert r3["explanations"][0]["evidence_ids"] == ["P1.title"]
     assert r3["constraints"]["budget_max"] == 50

@@ -320,11 +320,23 @@ def extract_turn(llm, message, state=None, last_assistant=None, max_attempts=2):
 
 
 def build_query_text(constraints):
-    """Natural-language retrieval query from the constraints.
+    """Semantic retrieval query from the constraints.
+
+    Just the interests when there are any: on the 12 dev queries, recipient, age,
+    occasion and the word "gift" pulled in party supplies and birthday decorations
+    (semantic-only nDCG@10 0.480 -> 0.630 without them). Adding product words
+    ("dinosaur toys, dinosaur books") also hurt. Without interests we fall back to
+    a sentence. An explicit category is kept in both cases.
 
     Budget and exclusions are deliberately left out: they are hard filters for
     the ranking stage, and negations ("no books") hurt dense retrieval.
     """
+    if constraints.interests:
+        query = ", ".join(constraints.interests)
+        noun = {"Books": "books", "Toys & Games": "toys and games",
+                "Handmade Products": "handmade"}.get(constraints.category_preference)
+        return f"{query}, {noun}" if noun else query
+
     parts = []
     who = constraints.recipient or "someone"
     if constraints.age is not None:
@@ -340,8 +352,6 @@ def build_query_text(constraints):
     elif constraints.category_preference == "Handmade Products":
         gift = "handmade gift"
     parts.append(f"{gift} for {who}")
-    if constraints.interests:
-        parts.append("who likes " + ", ".join(constraints.interests))
     if constraints.occasion:
         parts.append(f"for {constraints.occasion}")
     return " ".join(parts)

@@ -186,4 +186,4 @@ def test_semantic_export_format():
                                                 "interests": ["dinosaur"], "budget_max": 30}}], r)
     assert out == {"q1": [["A", 0.5]]}
     assert r.top_n == 200
-    assert r.queries == ["gift for nephew, age 7 who likes dinosaur"]
+    assert r.queries == ["dinosaur"]

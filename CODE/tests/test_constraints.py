@@ -134,11 +134,14 @@ def test_query_text_uses_preferences_not_filters():
                         occasion="birthday", budget_max=40, exclusions=["books"],
                         category_preference="Toys & Games")
     q = build_query_text(c)
-    assert q == "toy or game gift for my nephew, age 7 who likes dinosaurs, space for birthday"
+    assert q == "dinosaurs, space, toys and games"
+    c.category_preference = None
+    assert build_query_text(c) == "dinosaurs, space"
     assert "40" not in q and "books" not in q
 
 
 def test_query_text_minimal():
     assert build_query_text(GiftConstraints()) == "gift for someone"
-    assert build_query_text(GiftConstraints(age_group="teen", interests=["anime"])) == \
-        "gift for someone (teen) who likes anime"
+    assert build_query_text(GiftConstraints(age_group="teen", interests=["anime"])) == "anime"
+    assert build_query_text(GiftConstraints(recipient="my nephew", age=7, occasion="birthday")) == \
+        "gift for my nephew, age 7 for birthday"
