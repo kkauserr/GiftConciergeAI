@@ -39,6 +39,5 @@ venv/
 *_*.out
 *_*.err
 
-# Knowledge graph exports (python -m knowledge_graph.build_kg --out DIR)
-CODE/kg_output/
-kg_export*/
+# Retrieval indexes (rebuild locally)
+indexes/
