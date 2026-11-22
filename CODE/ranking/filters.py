@@ -8,6 +8,28 @@ DOMAIN_ALIASES = {
     "handmade": "Handmade Products", "handmade products": "Handmade Products",
 }
 
+EXCLUSION_EXPANSIONS = {
+    "wearable": ["costume", "shirt", "t-shirt", "dress", "hat", "socks", "scarf", "hoodie", "sweater",
+                 "jacket", "pajamas", "apron", "necklace", "bracelet", "earring", "anklet", "pendant",
+                 "jewelry", "wristwatch", "purse", "tote bag"],
+    "clothing": ["costume", "shirt", "t-shirt", "dress", "hat", "socks", "scarf", "hoodie", "sweater",
+                 "jacket", "pajamas", "apron", "onesie", "leggings"],
+    "jewelry": ["necklace", "bracelet", "earring", "anklet", "pendant", "bangle", "brooch", "jewelry"],
+    "food": ["candy", "chocolate", "snack", "cookie", "edible", "gummy", "gourmet food"],
+    "decor": ["home decor", "decoration", "wall art", "art print", "poster", "ornament", "decal", "figurine"],
+}
+EXCLUSION_EXPANSIONS["wearables"] = EXCLUSION_EXPANSIONS["wearable"]
+EXCLUSION_EXPANSIONS["clothes"] = EXCLUSION_EXPANSIONS["apparel"] = EXCLUSION_EXPANSIONS["clothing"]
+EXCLUSION_EXPANSIONS["jewellery"] = EXCLUSION_EXPANSIONS["jewelry"]
+EXCLUSION_EXPANSIONS["edible"] = EXCLUSION_EXPANSIONS["edibles"] = EXCLUSION_EXPANSIONS["food"]
+EXCLUSION_EXPANSIONS["home decor"] = EXCLUSION_EXPANSIONS["decor"]
+
+ADULT_AGE = 13
+KIDS_PATTERN = re.compile(
+    r"\b(kids?|kid's|toddlers?|bab(y|ies)|infants?|newborns?|child|children|children's|childrens|"
+    r"preschool(ers)?|pre-kindergarten|kindergarten|nursery)\b"
+)
+
 
 def _exclusion_pattern(term):
     words = term.lower().split()
@@ -40,11 +62,17 @@ def check_product(row, constraints):
             reasons.append("too_old")
 
     text = " ".join(str(row.get(c) or "") for c in ("title", "categories", "specific_category")).lower()
+
+    occasion = str(constraints.get("occasion") or "").lower()
+    if age is not None and age >= ADULT_AGE and "baby" not in occasion and KIDS_PATTERN.search(text):
+        reasons.append("kids_item")
+
     for term in constraints.get("exclusions") or []:
         term = term.strip().lower()
         if not term:
             continue
-        if DOMAIN_ALIASES.get(term) == row.get("domain") or _exclusion_pattern(term).search(text):
+        terms = [term] + EXCLUSION_EXPANSIONS.get(term, [])
+        if DOMAIN_ALIASES.get(term) == row.get("domain") or any(_exclusion_pattern(t).search(text) for t in terms):
             reasons.append(f"excluded:{term}")
 
     return reasons

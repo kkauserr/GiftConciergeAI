@@ -59,8 +59,9 @@ python -m CODE.ranking.ablation --semantic-standin           # tests the fusion 
 ```
 
 - `interests` are counted twice in the BM25 query, `occasion` once. `recipient` is not used for search.
-- `exclusions` can be a domain (`books`, `toys`, `handmade`) or any word/phrase matched against title and categories.
-- `recipient_age` only removes products that state an age range; products with no age info stay in.
+- `exclusions` can be a domain (`books`, `toys`, `handmade`), a broad group (`wearable`, `clothing`, `jewelry`, `food`, `decor`, expanded to concrete words in `filters.py`), or any word/phrase matched against title and categories. For anything else, the LLM should pass concrete words (e.g. "no electronics" → `["electronic", "battery", "charger"]`).
+- `recipient_age` removes products whose age range doesn't fit. For recipients aged 13+, it also removes products whose title or category says kids, toddler, baby, children's, preschool etc. (skipped when the occasion mentions a baby, e.g. a baby shower).
+- `keywords` are extra search words. Vague interests like "reading" match poorly in BM25 (the word appears in thousands of book descriptions), so the LLM should add concrete gift words here (e.g. `["novel", "bookmark", "book lover"]`).
 
 **Semantic results in** (from semantic retrieval): top ~200 as `[[parent_asin, score], ...]` or `[{"parent_asin": ..., "score": ...}, ...]`, best first.
 
@@ -113,8 +114,9 @@ python -m CODE.ranking.tune_weights tune
 | BM25 + filters | 1.000 | 0.709 | 0.633 | 0.262 |
 | Full (filters + ranking + MMR) | 1.000 | 0.737 | 0.633 | 0.258 |
 | Full without MMR | 1.000 | 0.756 | 0.658 | 0.273 |
+| Full + per-interest search | 1.000 | 0.662 | 0.592 | 0.258 |
 
-MMR costs some nDCG but makes the list more varied. nDCG doesn't reward variety, so this trade-off is expected. These are development numbers only: the sample is small and the same queries were used for tuning.
+Per-interest search (`split_interests`) runs one BM25 search per interest and merges them. It was tried to stop one interest drowning out another, but it hurt, because single-word interests are weak BM25 queries. It's off by default. MMR costs some nDCG but makes the list more varied. nDCG doesn't reward variety, so this trade-off is expected. These are development numbers only: the sample is small and the same queries were used for tuning.
 
 ## Full corpus (on Sol)
 

@@ -7,7 +7,7 @@ SLIM_DROP = ["description", "details", "features", "review_samples"]
 
 def main():
     p = argparse.ArgumentParser(description="Random per-domain subset of the final corpus for ranking development")
-    p.add_argument("--input", default="/scratch/jkauser/gift-concierge/data/final_product_corpus_v2_fixed.jsonl")
+    p.add_argument("--input", default="/scratch/jkauser/gift-concierge/data/final_product_corpus_v2.jsonl")
     p.add_argument("--output", default="dev_subset_v2.jsonl")
     p.add_argument("--per-domain", type=int, default=20000)
     p.add_argument("--seed", type=int, default=573)

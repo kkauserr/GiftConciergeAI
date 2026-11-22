@@ -26,6 +26,7 @@ def build_configs(has_semantic):
         configs[f"no_{sig}"] = c
     c = copy.deepcopy(full); c.use_mmr = False; configs["no_mmr"] = c
     c = copy.deepcopy(full); c.min_relevance = 0.0; configs["no_relevance_gate"] = c
+    c = copy.deepcopy(full); c.split_interests = True; configs["with_interest_split"] = c
     if has_semantic:
         c = copy.deepcopy(full); c.use_fusion = False; configs["no_fusion"] = c
     return configs
