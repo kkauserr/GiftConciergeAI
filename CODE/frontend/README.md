@@ -16,11 +16,14 @@ The UI never decides anything about gifts. Everything it shows comes from the re
 
 ## Running
 
-| URL | Backend used |
+| How you open it | Backend used |
 |---|---|
-| `index.html` | Mock backend (default) |
-| `index.html?api=http://localhost:8000` | Real backend at that base URL |
-| `index.html?api=same-origin` | Real backend served from the same host as the page |
+| `http://localhost:8000` (served by `CODE/backend`) | Real backend, detected automatically via `GET /health` |
+| `index.html` opened as a file, or no backend answering | Mock backend |
+| `…?api=http://localhost:8000` | Force the real backend at that URL |
+| `…?mock=1` | Force the mock |
+
+The browser console prints which one is in use. See `CODE/backend/README.md` to start the backend.
 
 Mock-only test hooks: put `#error` in a message to simulate a network failure, or `#malformed` for an unreadable response.
 
@@ -89,8 +92,6 @@ Notes:
 
 Request: `{ "session_id": "3f6c…" }`. Called on **Start over**. Optional: if it fails, the next conversation uses a new session id anyway.
 
-## What the backend needs to provide
+## Backend
 
-1. A small HTTP layer (e.g. FastAPI) exposing `/recommend` and `/reset`, holding one `GiftConcierge` per `session_id`, with CORS allowed for the page's origin.
-2. Product details for each ranked item: title, price, rating, rating count, category, and `image_url` (from `CODE/data/build_image_lookup.py`).
-3. A short user-facing `message` for recommendation turns. `handle()` currently puts a plain-text list of products in `message`; the cards replace that, so the UI ignores it when the raw shape is returned.
+`CODE/backend` implements this contract on top of `GiftConcierge.handle()`: one conversation per `session_id`, product details from the corpus, `image_url` from the `build_image_lookup.py` output, and `amazon_url` from `parent_asin`.
