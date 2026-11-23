@@ -27,6 +27,7 @@ full-corpus files.
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Optional
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CODE_DIR = REPO_ROOT / "CODE"
@@ -61,8 +62,8 @@ class Settings:
     retriever: str = "auto"
     rank_index: Path = REPO_ROOT / "indexes" / "sample"
     kg: str = "auto"
-    kg_export: Path | None = None
-    image_lookup: Path | None = None
+    kg_export: Optional[Path] = None
+    image_lookup: Optional[Path] = None
     top_k: int = 5
     session_ttl_minutes: int = 120
     max_sessions: int = 200
