@@ -1,0 +1,24 @@
+
+cheaper preserves recipient and interest
+Final state: {'recipient': 'my sister', 'occasion': None, 'interests': ['coffee'], 'exclusions': [], 'budget_min': None, 'budget_max': 37.5, 'budget_flexible': False, 'age': None, 'age_group': None, 'category_preference': None}
+PASS
+
+explicit budget update preserves other fields
+Final state: {'recipient': 'my nephew', 'occasion': 'birthday', 'interests': ['dinosaurs'], 'exclusions': [], 'budget_min': None, 'budget_max': 60.0, 'budget_flexible': False, 'age': None, 'age_group': None, 'category_preference': None}
+PASS
+
+new interest is added
+Final state: {'recipient': 'my friend', 'occasion': None, 'interests': ['hiking', 'photography'], 'exclusions': [], 'budget_min': None, 'budget_max': 50.0, 'budget_flexible': False, 'age': None, 'age_group': None, 'category_preference': None}
+PASS
+
+exclusion added without losing earlier state
+Final state: {'recipient': 'my mom', 'occasion': None, 'interests': ['mystery books'], 'exclusions': ['hardcover books'], 'budget_min': None, 'budget_max': 30.0, 'budget_flexible': False, 'age': None, 'age_group': 'adult', 'category_preference': None}
+PASS
+
+occasion change preserves recipient and interests
+Final state: {'recipient': 'my dad', 'occasion': 'christmas', 'interests': ['golf'], 'exclusions': [], 'budget_min': None, 'budget_max': 50.0, 'budget_flexible': False, 'age': None, 'age_group': 'adult', 'category_preference': None}
+PASS
+
+--- Multi-turn Consistency Evaluation ---
+Passed: 5/5
+Consistency: 1.000

@@ -1,0 +1,49 @@
+[
+    {
+      "qid": "p1",
+      "request": "Birthday gift for a 7 year old who loves dinosaurs, under $35",
+      "constraints": {
+        "recipient_age": 7,
+        "occasion": "birthday",
+        "interests": ["dinosaurs"],
+        "budget_max": 35
+      }
+    },
+    {
+      "qid": "p2",
+      "request": "Gift for a friend who loves coffee and reading, under $50",
+      "constraints": {
+        "recipient": "friend",
+        "interests": ["coffee", "reading"],
+        "budget_max": 50
+      }
+    },
+    {
+      "qid": "p3",
+      "request": "Housewarming gift for someone who likes plants and home decor, under $40",
+      "constraints": {
+        "occasion": "housewarming",
+        "interests": ["plants", "home decor"],
+        "budget_max": 40
+      }
+    },
+    {
+      "qid": "p4",
+      "request": "Christmas gift for my dad who likes golf, under $50",
+      "constraints": {
+        "recipient": "dad",
+        "occasion": "christmas",
+        "interests": ["golf"],
+        "budget_max": 50
+      }
+    },
+    {
+      "qid": "p5",
+      "request": "Gift for a 10 year old who likes art, under $25",
+      "constraints": {
+        "recipient_age": 10,
+        "interests": ["art"],
+        "budget_max": 25
+      }
+    }
+  ]
