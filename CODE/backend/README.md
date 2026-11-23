@@ -59,15 +59,11 @@ The demo runs on the 60K dev subset (20K each from Books, Handmade and Toys & Ga
 |---|---|---|
 | Corpus | `/scratch/jkauser/gift-concierge/data/dev_subset_v2.jsonl` | `make_dev_subset.py` |
 | Image lookup | `/scratch/jkauser/gift-concierge/data/dev60k_image_lookup.json` | `build_image_lookup.py` |
-| Semantic index | `/scratch/jkauser/gift-concierge/embeddings/dev60k_v2` | `embed_corpus.py` + `build_faiss_index.py` (Shashank) |
+| Semantic index | `/scratch/jkauser/gift-concierge/indexes/semantic-dev60k` | `embed_corpus.py` + `build_faiss_index.py` (Shashank) |
 | BM25 index | `indexes/dev60k` (in the repo checkout) | `bm25_baseline build` (Disha) |
 | KG export | `/scratch/jkauser/gift-concierge/kg_dev60k` | `knowledge_graph.build_kg --out` (Jenna) |
 
-Override any of them by exporting the variable first. All three indexes must be built from the same `dev_subset_v2.jsonl`. The repo doesn't record where the existing 60K FAISS index lives, so if it isn't at the default above, point to it:
-
-```bash
-export GC_SEMANTIC_INDEX=/scratch/<user>/gift-concierge/embeddings/<dev60k index dir>
-```
+Override any of them by exporting the variable first (for example, `GC_SEMANTIC_INDEX=/scratch/<user>/…`). All three indexes must be built from the same `dev_subset_v2.jsonl`.
 
 On Sol, from the repo root (with the merged branches and the pip installs above):
 
