@@ -12,38 +12,49 @@ browser ──POST /recommend──► app.py ──► GiftConcierge.handle()  
 
 The components are wired the same way as `CODE/llm/demo_cli.py`.
 
-## Requirements
-
-The backend needs the LLM layer from the `shashank-g/semantic-llm` branch. Without it, the server still starts and serves the frontend, but `/health` and `/recommend` say the layer is missing, and the chat shows an error message.
+## Install
 
 ```bash
-pip install -r requirements.txt \
-            -r CODE/backend/requirements.txt \
-            -r CODE/ranking/requirements.txt \
-            -r CODE/knowledge_graph/requirements.txt
+pip install torch --index-url https://download.pytorch.org/whl/cpu   # Linux/Windows without an NVIDIA GPU
+pip install -r requirements.txt                                      # from the repo root: the whole application
 ```
 
-## Run (from the repo root)
+The root `requirements.txt` covers everything the backend serves (LLM layer, BGE + FAISS, BM25 ranking, knowledge graph, Starlette/Uvicorn). Python 3.9 to 3.12. `CODE/backend/requirements.txt` just points to it.
+
+## Grader demo: 900-product sample (`demo900.sh`)
+
+Fully reproducible from committed files; see the **Quick Start** in the root `README.md` for the full walkthrough from clone to browser.
 
 ```bash
-# one-time builds for the 900-product sample
-python CODE/retrieval/embed_corpus.py          # semantic index -> DATA/embeddings/sample_v2
-python CODE/retrieval/build_faiss_index.py
-python -m CODE.retrieval.bm25_baseline build   # BM25 index    -> indexes/sample
+bash CODE/backend/demo900.sh prepare    # BM25, BGE + FAISS and KG into artifacts/demo900/ (gitignored)
+bash CODE/backend/demo900.sh check      # packages + every artifact covers the 900 products
+bash CODE/backend/demo900.sh serve      # http://localhost:8000
+```
 
-# start (real LLM: fill in FOUNDRY_* in .env first)
-uvicorn CODE.backend.app:app --port 8000
-# no credentials yet: rule-based demo extractor (not for evaluation)
-GC_LLM=offline uvicorn CODE.backend.app:app --port 8000
+| What | Path |
+|---|---|
+| Corpus | `DATA/samples/sample_corpus_v2.jsonl` |
+| Image lookup | `DATA/samples/sample_image_lookup.json` (optional; placeholders without it) |
+| BM25 index | `artifacts/demo900/bm25` |
+| Semantic index | `artifacts/demo900/semantic` |
+| KG export | `artifacts/demo900/kg` |
+
+`demo900.sh` uses `GC_LLM=auto`: Foundry when `.env` has `FOUNDRY_*` credentials, otherwise Shashank's offline extractor. Only the LLM changes; retrieval, ranking, KG, backend and frontend are identical. `prepare --force` rebuilds every artifact from scratch.
+
+## Run manually
+
+```bash
+uvicorn CODE.backend.app:app --port 8000                  # settings from GC_* variables (config.py)
+GC_LLM=offline uvicorn CODE.backend.app:app --port 8000   # without Foundry credentials
 ```
 
 Open **http://localhost:8000**. The page detects the backend on its own; a page opened as a file uses the mock instead.
 
-Check **http://localhost:8000/health** to see which components are live. Anything missing falls back and is reported there:
+Check **http://localhost:8000/health** to see which components are live. When run manually (default `GC_RETRIEVER=auto`, `GC_KG=auto`), anything missing falls back and is reported there. `demo900.sh` and `dev60k.sh` instead require the semantic index and the KG.
 
 | Component | When available | Fallback |
 |---|---|---|
-| LLM | `FOUNDRY_*` in `.env` | none: set `GC_LLM=offline` explicitly |
+| LLM | `FOUNDRY_*` in `.env` | `GC_LLM=auto` or `offline`: rule-based extractor |
 | Semantic retrieval | FAISS + sentence-transformers + index in `GC_SEMANTIC_INDEX` | TF-IDF stand-in (dev only) |
 | Ranking | BM25 index in `GC_RANK_INDEX` and `bm25s` installed | the LLM layer's stub ranker |
 | Knowledge graph | `networkx` installed | explanations from product data only |
@@ -53,7 +64,7 @@ For evaluation or the demo, `/health` should show `foundry`, `semantic`, `GiftRa
 
 ## Class demo on Sol (60K corpus)
 
-The demo runs on the 60K dev subset (20K each from Books, Handmade and Toys & Games), which lives on Sol, not in Git. `dev60k.sh` holds the paths:
+Not reproducible from GitHub: the corpus and its indexes live on Sol because of their size. The demo runs on the 60K dev subset (20K each from Books, Handmade and Toys & Games), which lives on Sol, not in Git. `dev60k.sh` holds the paths:
 
 | What | Default path | Built by |
 |---|---|---|
@@ -88,13 +99,17 @@ Before the demo, check two things:
 
 ## Product images
 
-Cards show the image whose URL is in the lookup file written by `CODE/data/build_image_lookup.py` (`{parent_asin: image_url}`). Either copy that file to `DATA/images/image_lookup.json` (the default location) or point to it:
+Cards show the image whose URL is in a lookup file `{parent_asin: image_url}` written by `CODE/data/build_image_lookup.py` from the raw Amazon metadata (on Sol). The frontend only renders `image_url`; the lookup is read by the backend.
 
 ```bash
-GC_IMAGE_LOOKUP=/scratch/jkauser/gift-concierge/data/dev60k_image_lookup.json uvicorn CODE.backend.app:app
+# 60K demo (defaults) -> /scratch/jkauser/gift-concierge/data/dev60k_image_lookup.json
+python CODE/data/build_image_lookup.py
+# 900-product sample -> commit the small output so graders get images
+python CODE/data/build_image_lookup.py --subset DATA/samples/sample_corpus_v2.jsonl \
+    --out DATA/samples/sample_image_lookup.json
 ```
 
-The lookup must cover the corpus being served. The current script builds it for `dev_subset_v2.jsonl`; run it over the sample (or the full corpus) for those products. Products without an image show the category placeholder. "View on Amazon" links always work, since they are built from `parent_asin`.
+`GC_IMAGE_LOOKUP` points the server at a lookup file; the lookup must cover the corpus being served. Products without an image show the category placeholder. "View on Amazon" links always work, since they are built from `parent_asin`.
 
 ## Settings
 

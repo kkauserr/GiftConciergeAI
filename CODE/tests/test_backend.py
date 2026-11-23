@@ -113,6 +113,32 @@ def test_image_lookup_value_formats(engine):
         engine.images = saved
 
 
+def _no_credentials(monkeypatch):
+    """Simulate a machine without FOUNDRY_* credentials, even if a developer has a .env."""
+    from llm import llm_client
+
+    def from_env(*args, **kwargs):
+        raise llm_client.LLMConfigError("Missing FOUNDRY_* (simulated)")
+
+    monkeypatch.setattr(llm_client.LLMClient, "from_env", from_env)
+
+
+def test_auto_llm_falls_back_to_offline_without_credentials(monkeypatch):
+    _no_credentials(monkeypatch)
+    settings = Settings(llm="auto", corpus=SAMPLE, retriever="tfidf",
+                        rank_index=REPO_ROOT / "no-such-index", kg="off")
+    engine = Engine(settings)
+    assert engine.status["llm"].startswith("offline (auto")
+    reply = engine.new_conversation().handle("gift for my nephew who loves dinosaurs, under $30")
+    assert reply["type"] == "recommendations"
+
+
+def test_foundry_mode_requires_credentials(monkeypatch):
+    _no_credentials(monkeypatch)
+    with pytest.raises(EngineUnavailable, match="FOUNDRY"):
+        Engine(Settings(llm="foundry", corpus=SAMPLE, retriever="tfidf", kg="off"))
+
+
 def test_missing_corpus_is_reported(tmp_path):
     with pytest.raises(EngineUnavailable, match="corpus not found"):
         Engine(Settings(llm="offline", corpus=tmp_path / "missing.jsonl", kg="off"))

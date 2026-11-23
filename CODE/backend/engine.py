@@ -91,23 +91,30 @@ class Engine:
     # ---- components ----
 
     def _build_llm(self):
-        if self.settings.llm == "offline":
-            from llm.offline_llm import OfflineLLM
+        """foundry: require credentials. offline: rule-based extractor.
+        auto: Foundry when FOUNDRY_* credentials exist, otherwise offline.
+        Only the LLM is substituted; retrieval, ranking and KG stay the same."""
+        mode = self.settings.llm
 
-            self.status["llm"] = "offline (rule-based demo extractor, not for evaluation)"
-            log.warning("GC_LLM=offline: using the rule-based demo extractor.")
-            return OfflineLLM()
+        if mode != "offline":
+            try:
+                from llm.llm_client import LLMClient, LLMConfigError
 
-        from llm.llm_client import LLMClient, LLMConfigError
+                client = LLMClient.from_env()
+                self.status["llm"] = f"foundry ({client.deployment})"
+                return client
+            except Exception as exc:   # LLMConfigError, or the openai package missing
+                if mode != "auto":
+                    raise EngineUnavailable(
+                        f"{exc} Fill in FOUNDRY_* in .env, or set GC_LLM=offline to try the demo extractor."
+                    ) from exc
+                log.warning("No usable Foundry credentials (%s); using the offline demo extractor.", exc)
 
-        try:
-            client = LLMClient.from_env()
-        except LLMConfigError as exc:
-            raise EngineUnavailable(
-                f"{exc} Fill in FOUNDRY_* in .env, or set GC_LLM=offline to try the demo extractor."
-            ) from exc
-        self.status["llm"] = f"foundry ({client.deployment})"
-        return client
+        from llm.offline_llm import OfflineLLM
+
+        reason = "auto: no Foundry credentials" if mode == "auto" else "GC_LLM=offline"
+        self.status["llm"] = f"offline ({reason}; rule-based demo extractor, not for evaluation)"
+        return OfflineLLM()
 
     def _build_retriever(self):
         mode = self.settings.retriever
@@ -181,6 +188,9 @@ class Engine:
         path = self.settings.image_lookup
         if not path:
             self.status["images"] = "none (set GC_IMAGE_LOOKUP to the build_image_lookup.py output)"
+            return {}
+        if not path.exists():
+            self.status["images"] = f"none (file not found: {path}); cards show placeholders"
             return {}
         try:
             with open(path, encoding="utf-8") as infile:

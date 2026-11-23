@@ -1,11 +1,42 @@
-# Semantic retrieval + LLM/conversation layer (CODE/retrieval, CODE/llm)
+# Gift Concierge: everything needed to run the full application
+# (frontend + backend + LLM layer + semantic retrieval + BM25 ranking + knowledge graph).
+#
+#   pip install -r requirements.txt
+#
+# Python 3.9 to 3.12 (Sol runs 3.9). No upper version caps: pip picks the newest
+# release that supports your Python (e.g. numpy 2.0.x and networkx 3.2.x on 3.9).
+#
+# PyTorch: on Linux/Windows without an NVIDIA GPU, install the CPU build FIRST,
+# otherwise pip downloads ~2-3 GB of CUDA libraries:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# macOS needs nothing special.
+#
+# Tests and evaluation extras (pytest, tabulate): requirements-dev.txt
+
+# Numerics and data
 numpy>=2.0
-faiss-cpu>=1.9
-sentence-transformers>=3.0
+scipy>=1.13
+pandas>=2.2.2
+pyarrow>=15            # BM25 index catalog is stored as Parquet
+scikit-learn>=1.4
+
+# Classical retrieval and ranking (CODE/retrieval/bm25_baseline.py, CODE/ranking)
+bm25s>=0.2.13
+PyStemmer>=2.2
+
+# Semantic retrieval (BGE embeddings + FAISS)
 torch>=2.4
+sentence-transformers>=3.0
+faiss-cpu>=1.9
+
+# LLM layer
 openai>=1.55
 pydantic>=2.7
 python-dotenv>=1.0
 
-# Tests
-pytest>=8.0
+# Knowledge graph
+networkx>=3.0
+
+# Backend server (CODE/backend)
+starlette>=0.37
+uvicorn>=0.29

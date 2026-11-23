@@ -6,8 +6,8 @@ Reads the same GC_* settings as the server (see config.py) and checks:
   * the image lookup covers the corpus                    (GC_IMAGE_LOOKUP)
   * the FAISS index was built from this corpus            (GC_SEMANTIC_INDEX, row_to_asin.txt)
   * the BM25 index was built from this corpus             (GC_RANK_INDEX, catalog.parquet)
-  * the knowledge-graph export exists                     (GC_KG_EXPORT, optional)
-  * LLM credentials are configured                        (.env FOUNDRY_*, unless GC_LLM=offline)
+  * the knowledge-graph export was built from this corpus (GC_KG_EXPORT, optional)
+  * LLM credentials are configured                        (.env FOUNDRY_*; auto/offline fall back)
 
 An index built from a different corpus is the classic demo failure: retrieval
 returns ASINs the server has no product record for, and cards silently vanish.
@@ -43,7 +43,36 @@ def coverage(index_asins, corpus):
     return inside / len(index_asins), inside / len(corpus)
 
 
-def main():
+# import name -> pip package (all in the root requirements.txt)
+REQUIRED_MODULES = {
+    "numpy": "numpy", "scipy": "scipy", "pandas": "pandas", "pyarrow": "pyarrow",
+    "sklearn": "scikit-learn", "bm25s": "bm25s", "Stemmer": "PyStemmer",
+    "torch": "torch", "sentence_transformers": "sentence-transformers", "faiss": "faiss-cpu",
+    "openai": "openai", "pydantic": "pydantic", "dotenv": "python-dotenv",
+    "networkx": "networkx", "starlette": "starlette", "uvicorn": "uvicorn",
+}
+
+
+def check_dependencies(report):
+    import importlib.util
+
+    version = sys.version_info
+    report(OK if version >= (3, 9) else FAIL, "python",
+           f"{sys.version.split()[0]} ({sys.executable})" + ("" if version >= (3, 9) else ": needs 3.9+"))
+    missing = [pkg for mod, pkg in REQUIRED_MODULES.items() if importlib.util.find_spec(mod) is None]
+    if missing:
+        report(FAIL, "packages", f"missing {', '.join(missing)}: pip install -r requirements.txt")
+    else:
+        report(OK, "packages", f"all {len(REQUIRED_MODULES)} required packages installed")
+
+
+def main(argv=None):
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Gift Concierge preflight")
+    parser.add_argument("--deps-only", action="store_true", help="only check Python and packages")
+    args = parser.parse_args(argv)
+
     s = Settings.from_env()
     results = []
 
@@ -52,6 +81,12 @@ def main():
         print(f"[{level}] {name:<18} {detail}")
 
     print("Gift Concierge preflight\n")
+    check_dependencies(report)
+    if args.deps_only:
+        if FAIL in results:
+            print("\nInstall the missing packages first.")
+            return 1
+        return 0
 
     if not s.corpus.exists():
         report(FAIL, "corpus", f"not found: {s.corpus}")
@@ -105,21 +140,37 @@ def main():
     if s.kg == "off":
         report(WARN, "knowledge graph", "GC_KG=off")
     elif s.kg_export:
-        found = s.kg_export.exists() and any(s.kg_export.iterdir())
-        report(OK if found else FAIL, "knowledge graph",
-               f"export {'found' if found else 'missing'}: {s.kg_export}")
+        nodes = s.kg_export / "nodes.jsonl"
+        if not nodes.exists():
+            report(FAIL, "knowledge graph", f"export missing: no nodes.jsonl in {s.kg_export}")
+        else:
+            products = set()
+            with open(nodes, encoding="utf-8") as infile:
+                for line in infile:
+                    node = json.loads(line)
+                    if node.get("type") == "Product" and node.get("parent_asin"):
+                        products.add(node["parent_asin"])
+            in_corpus, of_corpus = coverage(products, corpus)
+            level = OK if in_corpus > 0.99 and of_corpus > 0.95 else FAIL
+            report(level, "knowledge graph", f"{len(products):,} products; {in_corpus:.1%} in corpus, "
+                                             f"covers {of_corpus:.1%} of it")
     else:
         level = WARN if len(corpus) > 5000 else OK
         report(level, "knowledge graph", "no GC_KG_EXPORT: the graph is rebuilt at every start"
                + (" (slow at this size; build an export once)" if level == WARN else ""))
 
     # LLM
+    missing = [k for k in ("FOUNDRY_ENDPOINT", "FOUNDRY_API_KEY", "FOUNDRY_DEPLOYMENT") if not os.environ.get(k)]
     if s.llm == "offline":
         report(WARN, "llm", "GC_LLM=offline: rule-based demo extractor, not the real LLM")
+    elif not missing:
+        report(OK, "llm", f"Foundry deployment {os.environ['FOUNDRY_DEPLOYMENT']}"
+               + (" (auto)" if s.llm == "auto" else ""))
+    elif s.llm == "auto":
+        report(WARN, "llm", "no FOUNDRY_* in .env: offline demo extractor will be used "
+                            "(retrieval, ranking and KG are unchanged)")
     else:
-        missing = [k for k in ("FOUNDRY_ENDPOINT", "FOUNDRY_API_KEY", "FOUNDRY_DEPLOYMENT") if not os.environ.get(k)]
-        report(FAIL if missing else OK, "llm",
-               f"missing {', '.join(missing)} in .env" if missing else f"Foundry deployment {os.environ['FOUNDRY_DEPLOYMENT']}")
+        report(FAIL, "llm", f"missing {', '.join(missing)} in .env")
 
     blocked = FAIL in results
     print("\n" + ("Fix the FAIL lines before the demo." if blocked
