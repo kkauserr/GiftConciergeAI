@@ -1,0 +1,84 @@
+Loading models and indexes...
+
+=== Query 1 ===
+Birthday gift for my 8 year old nephew who loves dinosaurs, under $40
+
+Explanation: This 8-pack of take-apart, STEM-focused dinosaur toys lists ages including 8-12 and highlights learning/building and tool-set play, and it costs $24.99 so it fits your $40 budget.
+Evidence IDs: ['P1.title', 'P1.price', 'P1.age']
+Invalid citations: []
+
+Explanation: A dinosaur-themed personalized birthday T‑shirt priced at $17.98 could be an affordable, themed birthday present, but the listing evidence doesn't state sizes or age suitability so the fit for an 8‑year‑old is a weak match.
+Evidence IDs: ['P2.title', 'P2.price']
+Invalid citations: []
+
+Explanation: This 14‑pack of realistic educational dinosaur figures includes a play mat and book and is described as a STEM toy set; it’s priced at $19.99 and has a recommended age of 3+ so it fits your budget and the dinosaur interest.
+Evidence IDs: ['P3.title', 'P3.price', 'P3.age']
+Invalid citations: []
+
+=== Query 2 ===
+Graduation gift for my sister who likes coffee and reading, under $80
+
+Explanation: This is a book titled The Professional Barista's Handbook by Scott Rao, so it directly combines coffee content with a book format that a reading sibling could enjoy; it’s priced at $54.90 and carries an overall 4.0/5 rating with two 5-star verified-purchase reviews. Caution: none listed for this product.
+Evidence IDs: ['P1.title', 'P1.brand', 'P1.category', 'P1.price', 'P1.rating', 'P1.review_stats']
+Invalid citations: []
+
+Explanation: Coffee Gives Me Superpowers is an illustrated book about coffee (the listing says it’s about the most awesome beverage), costs $10.82 so it’s an inexpensive pick under your budget, and it’s highly rated (4.7/5 from 249 ratings) with strong review counts. Caution: none listed for this product.
+Evidence IDs: ['P2.title', 'P2.price', 'P2.rating', 'P2.category', 'P2.review_stats', 'P2.brand']
+Invalid citations: []
+
+Explanation: 50 Italian Coffee Breaks is a short-activities book that links coffee-themed breaks with language practice, priced at $8.97 and rated 4.7/5; this is a more niche fit combining coffee and reading/language study rather than a general coffee book. Caution: none listed for this product.
+Evidence IDs: ['P3.title', 'P3.price', 'P3.rating', 'P3.category', 'P3.brand', 'P3.review_stats']
+Invalid citations: []
+
+=== Query 3 ===
+Christmas gift for my dad who enjoys golf, under $50
+
+Explanation: For your golf-loving dad, this golf-ball beer glass is a golf-themed Christmas gift and is priced at $28, which fits your $50 budget; it also shows a strong average rating (4.7/5).
+Evidence IDs: ['P1.title', 'P1.price', 'P1.rating']
+Invalid citations: []
+
+Explanation: This is a kids’ golf play set (ages indicated in the title) and is inexpensive at $25.99, so it’s relevant to golf but is only a weak fit for an adult dad rather than a grown golfer.
+Evidence IDs: ['P2.title', 'P2.price']
+Invalid citations: []
+
+Explanation: This is a golf coaching book titled to build a lasting game and is priced at $39, under your $50 limit; its high average rating (4.7/5) suggests other golfers found it useful.
+Evidence IDs: ['P3.title', 'P3.price', 'P3.rating']
+Invalid citations: []
+
+=== Query 4 ===
+Housewarming gift for a friend who likes plants and home decor, under $40
+
+Explanation: This handmade ceramic plant pot is explicitly a planter/vase priced within your budget, so it directly suits a friend who likes plants and home decor; it also has a perfect average rating from the available reviews. Caution: none listed for this product.
+Evidence IDs: ['P1.title', 'P1.price', 'P1.category', 'P1.rating', 'P1.review_stats']
+Invalid citations: []
+
+Explanation: This vintage farmhouse plant wall decor set is botanical-themed home decor that fits a plant-loving friend and is well under your budget; the listing shows a strong average rating from shoppers. Caution: none listed for this product.
+Evidence IDs: ['P2.title', 'P2.price', 'P2.rating', 'P2.review_stats']
+Invalid citations: []
+
+Explanation: The Practical Houseplant Book is a low-cost option that directly matches an interest in plants and has a high average rating from many reviewers, making it an economical housewarming gift. Caution: none listed for this product.
+Evidence IDs: ['P3.title', 'P3.price', 'P3.rating', 'P3.review_stats']
+Invalid citations: []
+
+=== Query 5 ===
+Birthday gift for my 10 year old niece who likes art, under $25
+
+Explanation: This ready-to-frame vintage dictionary art print is an affordable decorative gift option at $14.99 and has generally positive feedback (4.4/5), but the listing is adult-focused art décor so it may be a weak fit for a 10-year-old child who prefers hands-on art activities.
+Evidence IDs: ['P1.title', 'P1.price', 'P1.rating']
+Invalid citations: []
+
+Explanation: This Kraftic sand art kit is a hands-on arts-and-crafts activity (DIY sand art bottles and bags) that suits an art-interested child and fits your budget at $21.99; customer ratings are strong (4.6/5) with multiple verified-purchase reviews.
+Evidence IDs: ['P2.title', 'P2.price', 'P2.rating', 'P2.review_stats']
+Invalid citations: []
+
+Explanation: This set of two Japanese-style 8x10 unframed art prints is an inexpensive way to give themed wall art at $14.95 with positive ratings (4.4/5); however, the listing appears focused on home décor and may be a weak fit for an active 10-year-old who prefers making art.
+Evidence IDs: ['P3.title', 'P3.price', 'P3.rating']
+Invalid citations: []
+
+--- Explanation Faithfulness Evaluation ---
+Explanations evaluated: 15
+Valid-citation explanations: 15/15
+Citation validity: 1.000
+Evidence coverage: 1.000
+Invalid citations total: 0
+Fallback explanations: 0
