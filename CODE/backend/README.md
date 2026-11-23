@@ -63,7 +63,11 @@ The demo runs on the 60K dev subset (20K each from Books, Handmade and Toys & Ga
 | BM25 index | `indexes/dev60k` (in the repo checkout) | `bm25_baseline build` (Disha) |
 | KG export | `/scratch/jkauser/gift-concierge/kg_dev60k` | `knowledge_graph.build_kg --out` (Jenna) |
 
-Override any of them by exporting the variable first (for example, `GC_SEMANTIC_INDEX=/scratch/<user>/…`). All three indexes must be built from the same `dev_subset_v2.jsonl`.
+Override any of them by exporting the variable first. All three indexes must be built from the same `dev_subset_v2.jsonl`. The repo doesn't record where the existing 60K FAISS index lives, so if it isn't at the default above, point to it:
+
+```bash
+export GC_SEMANTIC_INDEX=/scratch/<user>/gift-concierge/embeddings/<dev60k index dir>
+```
 
 On Sol, from the repo root (with the merged branches and the pip installs above):
 
@@ -112,6 +116,14 @@ All settings are environment variables, documented at the top of `config.py`: `G
 | `GET /` | | the frontend |
 
 Errors are JSON `{"error": "..."}`: 400 for a bad request, 503 when the engine couldn't start, 500 when the pipeline fails on a message (the conversation is kept).
+
+## Tests
+
+`CODE/tests/test_backend.py` runs a real `GiftConcierge` conversation through the engine with the offline LLM on the 900-product sample, so it needs no credentials or indexes. It checks the component report, the card fields (price, image, Amazon link), budget refinement, that evidence IDs stay out of responses, image lookup formats, and the session store.
+
+```bash
+python -m pytest CODE/tests/test_backend.py
+```
 
 ## Notes and limits
 
