@@ -17,7 +17,7 @@ GC_ROOT="${GC_ROOT:-/scratch/jkauser/gift-concierge}"
 export GC_CORPUS="${GC_CORPUS:-$GC_ROOT/data/dev_subset_v2.jsonl}"
 export GC_IMAGE_LOOKUP="${GC_IMAGE_LOOKUP:-$GC_ROOT/data/dev60k_image_lookup.json}"
 # Built from the SAME corpus: semantic index (Shashank), BM25 index (Disha), KG export (Jenna)
-export GC_SEMANTIC_INDEX="${GC_SEMANTIC_INDEX:-$GC_ROOT/embeddings/dev60k_v2}"
+export GC_SEMANTIC_INDEX="${GC_SEMANTIC_INDEX:-$GC_ROOT/indexes/semantic-dev60k}"
 export GC_RANK_INDEX="${GC_RANK_INDEX:-indexes/dev60k}"   # Disha's existing 60K index (repo-relative)
 export GC_KG_EXPORT="${GC_KG_EXPORT:-$GC_ROOT/kg_dev60k}"
 # Demo: require the real components instead of silently falling back
