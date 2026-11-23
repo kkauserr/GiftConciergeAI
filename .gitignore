@@ -41,3 +41,6 @@ venv/
 
 # Retrieval indexes (rebuild locally)
 indexes/
+
+# Generated demo artifacts (indexes, embeddings, KG exports): rebuild with demo900.sh prepare
+artifacts/

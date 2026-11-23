@@ -1,9 +1,11 @@
+# Subset for working on ranking alone (BM25 index, ranking, tests, ablation).
+# The full application uses the root requirements.txt; keep versions in sync with it.
 bm25s>=0.2.13
-PyStemmer
-numpy
-scipy
-pandas
-pyarrow
-scikit-learn
-tabulate
-pytest
+PyStemmer>=2.2
+numpy>=2.0
+scipy>=1.13
+pandas>=2.2.2
+pyarrow>=15
+scikit-learn>=1.4
+tabulate>=0.9
+pytest>=8.0

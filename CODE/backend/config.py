@@ -4,8 +4,9 @@ Every path defaults to the 900-product development sample so the server runs
 locally with no setup beyond the pip installs. On Sol, point the paths at the
 full-corpus files.
 
-    GC_LLM               "foundry" (default; needs FOUNDRY_* in .env) or "offline"
-                         (Shashank's rule-based demo extractor; never for evaluation)
+    GC_LLM               "foundry" (default; needs FOUNDRY_* in .env), "offline"
+                         (Shashank's rule-based demo extractor; never for evaluation),
+                         or "auto" (Foundry when credentials exist, otherwise offline)
     GC_CORPUS            product corpus JSONL               [DATA/samples/sample_corpus_v2.jsonl]
     GC_SEMANTIC_INDEX    FAISS index dir from embed_corpus  [DATA/embeddings/sample_v2]
     GC_RETRIEVER         "auto" (default), "semantic" or "tfidf"

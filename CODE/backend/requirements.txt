@@ -1,9 +1,2 @@
-# HTTP layer for Gift Concierge (CODE/backend)
-starlette>=0.37
-uvicorn>=0.29
-python-dotenv>=1.0
-
-# The pipeline it serves has its own requirements:
-#   requirements.txt                       LLM layer + semantic retrieval (Shashank)
-#   CODE/ranking/requirements.txt          BM25 / RRF / ranking (Disha)
-#   CODE/knowledge_graph/requirements.txt  knowledge graph (Jenna)
+# The backend serves the whole pipeline, so it needs the full application requirements.
+-r ../../requirements.txt
